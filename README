@@ -1,0 +1,7 @@
+Dependencies
+============
+
+This plugin has additional dependencies to the usual kdevplatform:
+- executescript plugin
+- executebrowser plugin
+Make sure to install them before building xdebug.
