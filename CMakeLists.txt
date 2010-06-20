@@ -55,7 +55,6 @@ target_link_libraries(kdevxdebug
 install(TARGETS kdevxdebug DESTINATION ${PLUGIN_INSTALL_DIR})
 
 
-
 ########### next target ###############
 
 set(connectiontest_SRCS
@@ -70,8 +69,9 @@ target_link_libraries(connectiontest
     ${KDEVPLATFORM_TESTSHELL_LIBRARIES}
     ${KDEVPLATFORM_DEBUGGER_LIBRARIES}
     ${KDEVPLATFORM_TESTS_LIBRARIES}
+    ${KDEVPLATFORM_OUTPUTVIEW_LIBRARIES}
+    ${KDEVPLATFORM_UTIL_LIBRARIES}
 )
-
 
 
 ########### install files ###############
