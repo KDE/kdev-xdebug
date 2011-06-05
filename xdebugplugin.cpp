@@ -82,6 +82,8 @@ namespace XDebug
 XDebugPlugin::XDebugPlugin( QObject *parent, const QVariantList & ) :
     KDevelop::IPlugin( KDevXDebugDebuggerFactory::componentData(), parent )
 {
+    core()->debugController()->initializeUi();
+
     kDebug();
 //     connect(m_server, SIGNAL(sessionStarted(DebugSession*)), SLOT(sessionStarted(DebugSession*)));
 //     connect(m_server, SIGNAL(outputLine(DebugSession*,QString,KDevelop::IRunProvider::OutputTypes)), SLOT(outputLine(DebugSession*,QString,KDevelop::IRunProvider::OutputTypes)));
