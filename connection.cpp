@@ -135,7 +135,7 @@ void Connection::processInit(const QDomDocument &xml)
     sendCommand("stderr -c 1"); //copy stderr to IDE
     sendCommand("stdout -c 1"); //copy stdout to IDE
 
-    
+
 
     setState(DebugSession::StartingState);
 }
@@ -155,7 +155,9 @@ void Connection::processResponse(const QDomDocument &xml)
         if (el.nodeName() == "xdebug:message") {
             KUrl file = KUrl(el.attribute("filename"));
             int lineNum = el.attribute("lineno").toInt()-1;
-            emit showStepInSource(file, lineNum);
+            QString addr = KDevelop::ICore::self()->debugController()->currentSession()->currentAddr();
+
+            emit showStepInSource(file, lineNum, addr);
         }
     }
     if (xml.documentElement().attribute("command") == "feature_get" && xml.documentElement().attribute("feature_name") == "encoding") {
@@ -206,7 +208,7 @@ void Connection::processStream(const QDomDocument &xml)
             return;
         }
         */
-        
+
         QString c = m_codec->toUnicode(QByteArray::fromBase64(xml.documentElement().text().toAscii()));
         //kDebug() << c;
         emit output(c);

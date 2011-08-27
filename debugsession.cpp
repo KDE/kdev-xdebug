@@ -105,7 +105,7 @@ void DebugSession::incomingConnection()
     connect(m_connection, SIGNAL(initDone(QString)), SIGNAL(initDone(QString)));
     connect(m_connection, SIGNAL(stateChanged(KDevelop::IDebugSession::DebuggerState)), SIGNAL(stateChanged(KDevelop::IDebugSession::DebuggerState)));
     connect(m_connection, SIGNAL(stateChanged(KDevelop::IDebugSession::DebuggerState)), SLOT(_stateChanged(KDevelop::IDebugSession::DebuggerState)));
-    connect(m_connection, SIGNAL(showStepInSource(KUrl,int)), SIGNAL(showStepInSource(KUrl,int)));
+    connect(m_connection, SIGNAL(showStepInSource(KUrl,int,const QString &)), SIGNAL(showStepInSource(KUrl,int,const QString &)));
     connect(m_connection, SIGNAL(closed()), SLOT(connectionClosed()));
 
     if (!m_acceptMultipleConnections) {

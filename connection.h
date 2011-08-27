@@ -52,7 +52,7 @@ public:
     {
         return (m_scope->*m_method)(m_cookie, xml);
     }
-    
+
 private:
     Cookie* m_cookie;
     Handler* m_scope;
@@ -97,7 +97,7 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     void stateChanged(KDevelop::IDebugSession::DebuggerState status);
-    void showStepInSource(const KUrl &fileName, int lineNum);
+    void showStepInSource(const KUrl &fileName, int lineNum, const QString &addr);
     void output(QString content);
     void outputLine(QString content);
 //     void initDone(const QString& ideKey);
@@ -113,12 +113,12 @@ private:
     void processStream(const QDomDocument &xml);
 
     QTcpSocket* m_socket;
-    
+
     QString m_outputLine;
     DebugSession::DebuggerState m_currentState;
     QTextCodec* m_codec;
     StackModel* m_stackModel;
-    
+
     int m_lastTransactionId;
     QMap<int, CallbackBase*> m_callbacks;
 };
