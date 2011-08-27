@@ -32,6 +32,9 @@
 #include <KLocale>
 #include <KUrl>
 
+#include <interfaces/icore.h>
+#include <interfaces/idebugcontroller.h>
+
 #include "debugsession.h"
 
 namespace XDebug {
