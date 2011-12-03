@@ -158,9 +158,7 @@ void Connection::processResponse(const QDomDocument &xml)
         if (el.nodeName() == "xdebug:message") {
             KUrl file = KUrl(el.attribute("filename"));
             int lineNum = el.attribute("lineno").toInt()-1;
-            QString addr = KDevelop::ICore::self()->debugController()->currentSession()->currentAddr();
-
-            emit showStepInSource(file, lineNum, addr);
+            emit showStepInSource(file, lineNum, QString());
         }
     }
     if (xml.documentElement().attribute("command") == "feature_get" && xml.documentElement().attribute("feature_name") == "encoding") {
