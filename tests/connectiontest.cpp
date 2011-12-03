@@ -184,7 +184,7 @@ void ConnectionTest::testShowStepInSource()
 
     KDevelop::ICore::self()->debugController()->breakpointModel()->addCodeBreakpoint(url, 1);
 
-    QSignalSpy showStepInSourceSpy(&session, SIGNAL(showStepInSource(KUrl, int)));
+    QSignalSpy showStepInSourceSpy(&session, SIGNAL(showStepInSource(KUrl, int, QString)));
 
     job.start();
     session.waitForConnected();
@@ -226,8 +226,6 @@ void ConnectionTest::testMultipleSessions()
 
         TestLaunchConfiguration cfg(url);
         XDebugJob job(&session, &cfg);
-
-        QSignalSpy showStepInSourceSpy(&session, SIGNAL(showStepInSource(KUrl, int)));
 
         job.start();
         session.waitForConnected();
@@ -320,7 +318,7 @@ void ConnectionTest::testBreakpoint()
     job.start();
     session.waitForConnected();
 
-    QSignalSpy showStepInSourceSpy(&session, SIGNAL(showStepInSource(KUrl, int)));
+    QSignalSpy showStepInSourceSpy(&session, SIGNAL(showStepInSource(KUrl, int, QString)));
 
     session.waitForState(DebugSession::PausedState);
 
@@ -499,7 +497,7 @@ void ConnectionTest::testConditionalBreakpoint()
     job.start();
     session.waitForConnected();
 
-    QSignalSpy showStepInSourceSpy(&session, SIGNAL(showStepInSource(KUrl, int)));
+    QSignalSpy showStepInSourceSpy(&session, SIGNAL(showStepInSource(KUrl, int, QString)));
 
     session.waitForState(DebugSession::PausedState);
 
@@ -605,13 +603,13 @@ void ConnectionTest::testVariablesLocals()
     QModelIndex i = variableCollection()->index(1, 0);
     COMPARE_DATA(i, "Locals");
     QCOMPARE(variableCollection()->rowCount(i), 3);
-    COMPARE_DATA(variableCollection()->index(0, 0, i), "$foo");
-    COMPARE_DATA(variableCollection()->index(0, 1, i), "foo");
-    COMPARE_DATA(variableCollection()->index(1, 0, i), "$bar");
-    COMPARE_DATA(variableCollection()->index(1, 1, i), "123");
-    COMPARE_DATA(variableCollection()->index(2, 0, i), "$baz");
-    COMPARE_DATA(variableCollection()->index(2, 1, i), "");
-    i = variableCollection()->index(2, 0, i);
+    COMPARE_DATA(variableCollection()->index(2, 0, i), "$foo");
+    COMPARE_DATA(variableCollection()->index(2, 1, i), "foo");
+    COMPARE_DATA(variableCollection()->index(0, 0, i), "$bar");
+    COMPARE_DATA(variableCollection()->index(0, 1, i), "123");
+    COMPARE_DATA(variableCollection()->index(1, 0, i), "$baz");
+    COMPARE_DATA(variableCollection()->index(1, 1, i), "");
+    i = variableCollection()->index(1, 0, i);
     QCOMPARE(variableCollection()->rowCount(i), 3);
     COMPARE_DATA(variableCollection()->index(0, 0, i), "0");
     COMPARE_DATA(variableCollection()->index(0, 1, i), "1");
