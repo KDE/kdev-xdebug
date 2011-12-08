@@ -817,7 +817,7 @@ void ConnectionTest::testMultipleConnectionsClosed()
     session.connection()->close(); //close second connection
     QTest::qWait(1000);
 
-    firstConnection->close(); //close first connection _after_ second
+//     firstConnection->close(); //close first connection _after_ second
 
     QTest::qWait(1000);
     QCOMPARE(session.state(), DebugSession::NotStartedState); //well, it should be EndedState in reality, but this works too
