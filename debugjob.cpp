@@ -49,7 +49,7 @@
 #include <interfaces/iplugincontroller.h>
 #include <interfaces/icore.h>
 #include <util/processlinemaker.h>
-#include <executescript/iexecutescriptplugin.h>
+#include <iexecutescriptplugin.h>
 #include <iexecutebrowserplugin.h>
 
 
