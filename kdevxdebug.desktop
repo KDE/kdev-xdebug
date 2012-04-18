@@ -2,8 +2,25 @@
 Type=Service
 Exec=blubb
 Comment=This plugin provides a frontend for XDebug
+Comment[pt]=Este 'plugin' oferece uma interface para o XDebug
+Comment[pt_BR]=Este plugin fornece uma interface para o XDebug
+Comment[sv]=Insticksprogrammet tillhandahåller ett gränssnitt för Xdebug
+Comment[uk]=Цей додаток є оболонкою до XDebug
+Comment[x-test]=xxThis plugin provides a frontend for XDebugxx
 Name=XDebug Support
+Name[cs]=Podpora XDebug
+Name[pt]=Suporte para o XDebug
+Name[pt_BR]=Suporte ao XDebug
+Name[sv]=Stöd för Xdebug
+Name[uk]=Підтримка XDebug
+Name[x-test]=xxXDebug Supportxx
 GenericName=Debugger Frontend
+GenericName[cs]=Rozhraní pro ladicí nástroj
+GenericName[pt]=Interface do Depurador
+GenericName[pt_BR]=Interface do depurador
+GenericName[sv]=Avlusningsgränssnitt
+GenericName[uk]=Клієнтська програма зневадника
+GenericName[x-test]=xxDebugger Frontendxx
 
 Icon=debugger
 X-KDE-Library=kdevxdebug
