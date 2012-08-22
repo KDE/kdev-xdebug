@@ -100,7 +100,7 @@ QStringList XDebugLauncher::supportedModes() const
 
 QString XDebugLauncher::description() const
 {
-    return i18n("Executes a php script with xdebug enabled");
+    return i18n("Executes a PHP script with XDebug enabled");
 }
 
 XDebugBrowserLauncher::XDebugBrowserLauncher(XDebugPlugin* plugin)
