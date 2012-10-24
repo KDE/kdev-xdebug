@@ -66,6 +66,8 @@ XDebugJob::XDebugJob( DebugSession* session, KDevelop::ILaunchConfiguration* cfg
 
     session->setLaunchConfiguration(cfg);
 
+    setObjectName(cfg->name());
+
     IExecuteScriptPlugin* iface = KDevelop::ICore::self()->pluginController()->pluginForExtension("org.kdevelop.IExecuteScriptPlugin")->extension<IExecuteScriptPlugin>();
     Q_ASSERT(iface);
 
