@@ -80,6 +80,7 @@ private slots:
 
 private:
     KUrl m_url;
+    QString m_browser;
     DebugSession* m_session;
 };
 

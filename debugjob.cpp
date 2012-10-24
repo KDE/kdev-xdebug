@@ -274,6 +274,7 @@ XDebugBrowserJob::XDebugBrowserJob(DebugSession* session, KDevelop::ILaunchConfi
         setErrorText( err );
         return;
     }
+    m_browser = iface->browser(cfg);
 
     setObjectName(cfg->name());
 
@@ -285,18 +286,27 @@ XDebugBrowserJob::XDebugBrowserJob(DebugSession* session, KDevelop::ILaunchConfi
 void XDebugBrowserJob::start()
 {
     kDebug() << "launching?" << m_url;
-    if (m_url.isValid()) {
-        if (!m_session->listenForConnection()) {
-            kWarning() << "listening for connection failed";
-            emitResult();
-            return;
-        }
-        KUrl url = m_url;
-        url.addQueryItem("XDEBUG_SESSION_START", "kdev");
-        if (!QDesktopServices::openUrl(url)) {
+    if (!m_url.isValid()) {
+        emitResult();
+        return;
+    }
+    if (!m_session->listenForConnection()) {
+        kWarning() << "listening for connection failed";
+        emitResult();
+        return;
+    }
+    KUrl url = m_url;
+    url.addQueryItem("XDEBUG_SESSION_START", "kdev");
+    if (m_browser.isEmpty()) {
+        if (!QDesktopServices::openUrl(m_url)) {
             kWarning() << "openUrl failed, something went wrong when creating the job";
             emitResult();
         }
+    } else {
+        KProcess proc(this);
+        proc.setProgram(QStringList() << m_browser << m_url.url());
+        proc.execute();
+        emitResult();
     }
 }
 
