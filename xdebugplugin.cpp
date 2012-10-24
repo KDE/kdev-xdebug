@@ -64,7 +64,7 @@
 #include <interfaces/idebugcontroller.h>
 #include <interfaces/iplugincontroller.h>
 #include <interfaces/launchconfigurationtype.h>
-#include <iexecutescriptplugin.h>
+#include <executescript/iexecutescriptplugin.h>
 #include <iexecutebrowserplugin.h>
 
 #include "debugsession.h"

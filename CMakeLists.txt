@@ -12,16 +12,12 @@ find_package(KDevPlatform REQUIRED)
 find_path( EXECUTEBROWSER_INCLUDE_DIR iexecutebrowserplugin.h
  PATH_SUFFIXES kdevexecutebrowser )
 
-find_path( EXECUTESCRIPT_INCLUDE_DIR iexecutescriptplugin.h
- PATH_SUFFIXES kdevexecutescript )
-
 include_directories(
     ${KDEVPLATFORM_INCLUDE_DIR}
     ${KDE4_INCLUDES}
     ${CMAKE_CURRENT_BINARY_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${EXECUTEBROWSER_INCLUDE_DIR}
-    ${EXECUTESCRIPT_INCLUDE_DIR}
 )
 
 ########### next target ###############
