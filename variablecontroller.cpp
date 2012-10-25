@@ -99,6 +99,7 @@ void VariableController::handleContextNames(const QDomDocument &xml)
         QString id = el.attribute("id");
         QStringList args;
         args << QString("-c %0").arg(id);
+        Q_ASSERT(debugSession()->frameStackModel()->currentFrame() != -1);
         args << QString("-d %0").arg(debugSession()->frameStackModel()->currentFrame());
         KDevelop::Locals* locals = KDevelop::ICore::self()->debugController()->variableCollection()->locals(name);
         CallbackWithCookie<VariableController, KDevelop::Locals>* cb =
@@ -111,6 +112,8 @@ void VariableController::handleContextNames(const QDomDocument &xml)
 
 void VariableController::updateLocals()
 {
+    if (debugSession()->frameStackModel()->currentFrame() == -1) return;
+
     Callback<VariableController>* cb = new Callback<VariableController>(this, &VariableController::handleContextNames);
     QStringList args;
     args << QString("-d %0").arg(debugSession()->frameStackModel()->currentFrame());
