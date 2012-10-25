@@ -132,7 +132,7 @@ void ConnectionTest::testStdOutput()
             << "echo \"\\n\";";
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(QDir::currentPath() + "/" + file.fileName());
+    KUrl url(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -173,7 +173,7 @@ void ConnectionTest::testShowStepInSource()
             << "$i++;";
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(QDir::currentPath() + "/" + file.fileName());
+    KUrl url(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -216,7 +216,7 @@ void ConnectionTest::testMultipleSessions()
             << "$i++;";
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(QDir::currentPath() + "/" + file.fileName());
+    KUrl url(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -244,7 +244,7 @@ void ConnectionTest::testStackModel()
             << "echo 'y';";     // 6
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(QDir::currentPath() + "/" + file.fileName());
+    KUrl url(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -303,7 +303,7 @@ void ConnectionTest::testBreakpoint()
             << "echo 'y';";     // 6
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(QDir::currentPath() + "/" + file.fileName());
+    KUrl url(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -345,7 +345,7 @@ void ConnectionTest::testDisableBreakpoint()
             << "echo 'y';";     // 8
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(QDir::currentPath() + "/" + file.fileName());
+    KUrl url(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -393,7 +393,7 @@ void ConnectionTest::testChangeLocationBreakpoint()
             << "echo 'y';";     // 8
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(QDir::currentPath() + "/" + file.fileName());
+    KUrl url(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -435,7 +435,7 @@ void ConnectionTest::testDeleteBreakpoint()
             << "echo 'y';";     // 8
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(QDir::currentPath() + "/" + file.fileName());
+    KUrl url(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -479,7 +479,7 @@ void ConnectionTest::testConditionalBreakpoint()
             << "echo 'y';";    // 6
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(QDir::currentPath() + "/" + file.fileName());
+    KUrl url(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -520,7 +520,7 @@ void ConnectionTest::testBreakpointError()
             << "$i++;";         // 3
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(QDir::currentPath() + "/" + file.fileName());
+    KUrl url(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -580,7 +580,7 @@ void ConnectionTest::testVariablesLocals()
 */
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(QDir::currentPath() + "/" + file.fileName());
+    KUrl url(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -628,7 +628,7 @@ QStringList contents;
 
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(QDir::currentPath() + "/" + file.fileName());
+    KUrl url(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -671,7 +671,7 @@ void ConnectionTest::testVariableExpanding()
 
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(QDir::currentPath() + "/" + file.fileName());
+    KUrl url(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -724,7 +724,7 @@ void ConnectionTest::testPhpCrash()
             << "$i++;";
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(QDir::currentPath() + "/" + file.fileName());
+    KUrl url(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -754,7 +754,7 @@ void ConnectionTest::testConnectionClosed()
             << "$i++;";
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(QDir::currentPath() + "/" + file.fileName());
+    KUrl url(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -786,7 +786,7 @@ void ConnectionTest::testMultipleConnectionsClosed()
             << "$i++;";
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(QDir::currentPath() + "/" + file.fileName());
+    KUrl url(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -835,7 +835,7 @@ void ConnectionTest::testVariableUpdates()
 
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(QDir::currentPath() + "/" + file.fileName());
+    KUrl url(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 

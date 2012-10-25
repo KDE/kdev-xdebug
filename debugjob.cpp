@@ -182,6 +182,7 @@ void XDebugJob::start()
         m_session->listenForConnection();
 
         startOutput();
+        kDebug() << "starting" << m_proc->program().join(" ");
         appendLine( i18n("Starting: %1", m_proc->program().join(" ") ) );
         m_proc->start();
     } else
