@@ -190,8 +190,10 @@ void ConnectionTest::testShowStepInSource()
     session.waitForConnected();
 
     session.waitForState(DebugSession::PausedState);
+    QTest::qWait(100);
     session.stepInto();
     session.waitForState(DebugSession::PausedState);
+    QTest::qWait(100);
     session.run();
     session.waitForFinished();
 
@@ -322,6 +324,7 @@ void ConnectionTest::testBreakpoint()
 
     session.waitForState(DebugSession::PausedState);
 
+    QTest::qWait(100);
     session.run();
     session.waitForFinished();
     {
@@ -501,6 +504,7 @@ void ConnectionTest::testConditionalBreakpoint()
 
     session.waitForState(DebugSession::PausedState);
 
+    QTest::qWait(100);
     session.run();
     session.waitForFinished();
     {
