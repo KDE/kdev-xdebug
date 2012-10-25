@@ -78,6 +78,8 @@ public:
             QMetaObject::invokeMethod(m_callback, m_callbackMethod, Q_ARG(bool, hasValue));
         }
     }
+
+    virtual bool allowError() const { return false; }
 private:
     QPointer<Variable> m_variable;
     QObject *m_callback;

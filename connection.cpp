@@ -167,7 +167,17 @@ void Connection::processResponse(const QDomDocument &xml)
             m_codec = c;
         }
     }
-    {
+
+    CallbackBase* callback = 0;
+    if (xml.documentElement().hasAttribute("transaction_id")) {
+        int transactionId = xml.documentElement().attribute("transaction_id").toInt();
+        if (m_callbacks.contains(transactionId)) {
+            callback = m_callbacks[transactionId];
+            m_callbacks.remove(transactionId);
+        }
+    }
+    if (callback && !callback->allowError()) {
+        //if callback doesn't handle errors himself
         QDomElement el = xml.documentElement().firstChildElement();
         if (el.nodeName() == "error") {
             kWarning() << "error" << el.attribute("code") << "for transaction" << xml.documentElement().attribute("transaction_id");
@@ -175,13 +185,9 @@ void Connection::processResponse(const QDomDocument &xml)
             Q_ASSERT(false);
         }
     }
-    if (xml.documentElement().hasAttribute("transaction_id")) {
-        int transactionId = xml.documentElement().attribute("transaction_id").toInt();
-        if (m_callbacks.contains(transactionId)) {
-            m_callbacks[transactionId]->execute(xml);
-            delete m_callbacks[transactionId];
-            m_callbacks.remove(transactionId);
-        }
+    if (callback) {
+        callback->execute(xml);
+        delete callback;
     }
 }
 

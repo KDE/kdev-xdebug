@@ -39,13 +39,18 @@ class CallbackBase {
 public:
     virtual void execute(const QDomDocument &) = 0;
     virtual ~CallbackBase() {};
+
+    /**
+     * @return true if the callback handles errors himself. Else the callback won't be executed if an error is returned
+     */
+    virtual bool allowError() const = 0;
 };
 
 template<class Handler, class Cookie>
 class CallbackWithCookie : public CallbackBase {
 public:
-    CallbackWithCookie(Handler* scope, void (Handler::*method)(Cookie*, const QDomDocument &), Cookie* cookie = 0)
-        : m_cookie(cookie), m_scope(scope), m_method(method)
+    CallbackWithCookie(Handler* scope, void (Handler::*method)(Cookie*, const QDomDocument &), Cookie* cookie = 0, bool allowError = false)
+        : m_cookie(cookie), m_scope(scope), m_method(method), m_allowError(allowError)
     {}
 
     virtual void execute(const QDomDocument & xml)
@@ -53,17 +58,20 @@ public:
         return (m_scope->*m_method)(m_cookie, xml);
     }
 
+    virtual bool allowError() const { return m_allowError; }
+
 private:
     Cookie* m_cookie;
     Handler* m_scope;
     void (Handler::*m_method)(Cookie*, const QDomDocument &);
+    bool m_allowError;
 };
 
 template<class Handler>
 class Callback : public CallbackBase {
 public:
-    Callback(Handler* scope, void (Handler::*method)(const QDomDocument &))
-        : m_scope(scope), m_method(method)
+    Callback(Handler* scope, void (Handler::*method)(const QDomDocument &), bool allowError = false)
+        : m_scope(scope), m_method(method), m_allowError(allowError)
     {}
 
     virtual void execute(const QDomDocument & xml)
@@ -71,9 +79,12 @@ public:
         return (m_scope->*m_method)(xml);
     }
 
+    virtual bool allowError() const { return m_allowError; }
+
 private:
     Handler* m_scope;
     void (Handler::*m_method)(const QDomDocument &);
+    bool m_allowError;
 };
 
 class Connection : public QObject
