@@ -26,8 +26,7 @@
 #include <KIcon>
 #include <KLocalizedString>
 
-#include <debugger/util/pathmappings.h>
-
+#include "ui_launchconfigurationpage.h"
 #include "launchconfig.h"
 #include "debugsession.h"
 
@@ -42,12 +41,10 @@ KDevelop::LaunchConfigurationPage* ConfigPageFactory::createWidget( QWidget* par
 ConfigPage::ConfigPage( QWidget* parent )
     : LaunchConfigurationPage(parent)
 {
-    QVBoxLayout *verticalLayout = new QVBoxLayout(this);
-    this->setLayout(verticalLayout);
+    m_ui = new Ui::LaunchConfigurationWidget;
+    m_ui->setupUi(this);
 
-    m_pathMappings = new KDevelop::PathMappingsWidget;
-    connect(m_pathMappings, SIGNAL(changed()), SIGNAL(changed()));
-    verticalLayout->addWidget(m_pathMappings);
+    connect(m_ui->pathMappings, SIGNAL(changed()), SIGNAL(changed()));
 }
 
 KIcon ConfigPage::icon() const
@@ -57,12 +54,14 @@ KIcon ConfigPage::icon() const
 
 void ConfigPage::loadFromConfiguration( const KConfigGroup& cfg, KDevelop::IProject*  )
 {
-    m_pathMappings->loadFromConfiguration(cfg);
+    m_ui->pathMappings->loadFromConfiguration(cfg);
+    m_ui->remoteHost->setText(cfg.readEntry("RemoteHost", QString()));
 }
 
 void ConfigPage::saveToConfiguration( KConfigGroup cfg, KDevelop::IProject* ) const
 {
-    m_pathMappings->saveToConfiguration(cfg);
+    m_ui->pathMappings->saveToConfiguration(cfg);
+    cfg.writeEntry("RemoteHost", m_ui->remoteHost->text());
 }
 
 QString ConfigPage::title() const

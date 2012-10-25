@@ -38,6 +38,7 @@ set(kdevxdebug_PART_SRCS
     launchconfig.cpp
     launchconfigurationpage.cpp
 )
+kde4_add_ui_files(kdevxdebug_PART_SRCS launchconfigurationpage.ui)
 
 kde4_add_plugin(kdevxdebug ${kdevxdebug_PART_SRCS} ${kdevxdebugcore_PART_SRCS})
 

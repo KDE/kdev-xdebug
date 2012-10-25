@@ -24,8 +24,8 @@
 
 #include <interfaces/launchconfigurationpage.h>
 
-namespace KDevelop {
-    class PathMappingsWidget;
+namespace Ui {
+    class LaunchConfigurationWidget;
 }
 
 namespace XDebug
@@ -47,7 +47,7 @@ public:
     virtual void saveToConfiguration(KConfigGroup, KDevelop::IProject* = 0 ) const;
     virtual QString title() const;
 private:
-    KDevelop::PathMappingsWidget *m_pathMappings;
+    Ui::LaunchConfigurationWidget *m_ui;
 };
 
 }
