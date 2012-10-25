@@ -152,9 +152,14 @@ XDebugJob::XDebugJob( DebugSession* session, KDevelop::ILaunchConfiguration* cfg
     QStringList program;
     if (!remoteHost.isEmpty()) {
         program << "ssh";
-        program << remoteHost;
+        QStringList parts = remoteHost.split(":");
+        program << parts.first();
+        if (parts.length() > 1) {
+            program << "-p "+parts.at(1);
+        }
         program << "XDEBUG_CONFIG=\"remote_enable=1 \"";
     }
+    kDebug() << program;
     program << interpreter;
     program << "-d xdebug.remote_enable=1";
     program << "-d xdebug.remote_port="+QString::number(9000);
