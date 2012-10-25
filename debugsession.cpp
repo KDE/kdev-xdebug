@@ -105,7 +105,7 @@ void DebugSession::incomingConnection()
     connect(m_connection, SIGNAL(initDone(QString)), SIGNAL(initDone(QString)));
     connect(m_connection, SIGNAL(stateChanged(KDevelop::IDebugSession::DebuggerState)), SIGNAL(stateChanged(KDevelop::IDebugSession::DebuggerState)));
     connect(m_connection, SIGNAL(stateChanged(KDevelop::IDebugSession::DebuggerState)), SLOT(_stateChanged(KDevelop::IDebugSession::DebuggerState)));
-    connect(m_connection, SIGNAL(showStepInSource(KUrl, int, QString)), SIGNAL(showStepInSource(KUrl, int, QString)));
+    connect(m_connection, SIGNAL(currentPositionChanged(KUrl, int)), SLOT(currentPositionChanged(KUrl,int)));
     connect(m_connection, SIGNAL(closed()), SLOT(connectionClosed()));
 
     if (!m_acceptMultipleConnections) {
@@ -273,6 +273,12 @@ QPair<KUrl, int> DebugSession::convertToRemoteUrl(const QPair<KUrl, int>& localU
     ret.first = KDevelop::PathMappings::convertToRemoteUrl(m_launchConfiguration->config(), localUrl.first);
     return ret;
 }
+
+void DebugSession::currentPositionChanged(const KUrl& url, int line)
+{
+    setCurrentPosition(url, line, QString());
+}
+
 
 }
 

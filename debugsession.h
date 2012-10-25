@@ -87,6 +87,7 @@ private Q_SLOTS:
     void incomingConnection();
     void _stateChanged(KDevelop::IDebugSession::DebuggerState);
     void connectionClosed();
+    void currentPositionChanged(const KUrl &url, int line);
 private:
     void closeServer();
 

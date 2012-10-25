@@ -97,7 +97,7 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     void stateChanged(KDevelop::IDebugSession::DebuggerState status);
-    void showStepInSource(const KUrl &fileName, int lineNum, const QString &addr);
+    void currentPositionChanged(const KUrl &fileName, int lineNum);
     void output(QString content);
     void outputLine(QString content);
 //     void initDone(const QString& ideKey);
