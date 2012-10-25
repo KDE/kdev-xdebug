@@ -162,6 +162,8 @@ XDebugJob::XDebugJob( DebugSession* session, KDevelop::ILaunchConfiguration* cfg
     kDebug() << program;
     program << interpreter;
     program << "-d xdebug.remote_enable=1";
+    QString remoteHostSetting = cfg->config().readEntry("RemoteHost", QString());
+    if (!remoteHostSetting.isEmpty()) program << "-d xdebug.remote_host="+remoteHostSetting;
     program << "-d xdebug.remote_port="+QString::number(9000);
     program << "-d xdebug.idekey="+ideKey;
     program << script.toLocalFile();
