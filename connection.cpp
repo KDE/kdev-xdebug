@@ -196,9 +196,6 @@ void Connection::setState(DebugSession::DebuggerState state)
     kDebug() << state;
     if (m_currentState != state) {
         m_currentState = state;
-        if (state == DebugSession::StoppedState) {
-            close();
-        }
     }
     emit stateChanged(state);
 }

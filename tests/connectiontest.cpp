@@ -186,6 +186,7 @@ void ConnectionTest::testShowStepInSource()
 
     QSignalSpy showStepInSourceSpy(&session, SIGNAL(showStepInSource(KUrl, int, QString)));
 
+    kDebug() << "************************************************************************************";
     job.start();
     session.waitForConnected();
 

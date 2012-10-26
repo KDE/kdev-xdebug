@@ -126,13 +126,15 @@ void DebugSession::connectionClosed()
     m_connection = 0;
 }
 
-
 void DebugSession::_stateChanged(KDevelop::IDebugSession::DebuggerState state)
 {
+    kDebug() << state;
     if (state == StartingState) {
         run();
     } else if (state == PausedState) {
         raiseEvent(program_state_changed);
+    } else if (state == StoppingState) {
+        m_connection->sendCommand("stop");
     } else if (state == EndedState) {
         raiseEvent(debugger_exited);
         emit finished();
