@@ -131,7 +131,9 @@ XDebugJob::XDebugJob( DebugSession* session, KDevelop::ILaunchConfiguration* cfg
 
     setStandardToolView(KDevelop::IOutputView::RunView);
     setBehaviours(KDevelop::IOutputView::AllowUserClose | KDevelop::IOutputView::AutoScroll);
-    setModel( new KDevelop::OutputModel() );
+    KDevelop::OutputModel m = new KDevelop::OutputModel();
+    m->setFilteringStrategy(OutputModel::ScriptErrorFilter);
+    setModel( m );
 
     connect( m_lineMaker, SIGNAL(receivedStdoutLines(const QStringList&)), model(), SLOT(appendLines(QStringList)) );
     connect( m_proc, SIGNAL(error(QProcess::ProcessError)), SLOT(processError(QProcess::ProcessError)) );
