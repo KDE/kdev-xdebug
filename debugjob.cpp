@@ -132,7 +132,7 @@ XDebugJob::XDebugJob( DebugSession* session, KDevelop::ILaunchConfiguration* cfg
     setStandardToolView(KDevelop::IOutputView::RunView);
     setBehaviours(KDevelop::IOutputView::AllowUserClose | KDevelop::IOutputView::AutoScroll);
     KDevelop::OutputModel *m = new KDevelop::OutputModel();
-    m->setFilteringStrategy(OutputModel::ScriptErrorFilter);
+    m->setFilteringStrategy(KDevelop::OutputModel::ScriptErrorFilter);
     setModel( m );
 
     connect( m_lineMaker, SIGNAL(receivedStdoutLines(const QStringList&)), model(), SLOT(appendLines(QStringList)) );
