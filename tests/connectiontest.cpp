@@ -779,6 +779,48 @@ void ConnectionTest::testTooltipVariable()
     session.waitForFinished();
 }
 
+void ConnectionTest::testInvalidTooltipVariable()
+{
+    QStringList contents;
+    contents << "<?php"      // 1
+            << "$foo = 123;" // 2
+            << "echo '';";   // 3
+
+    QTemporaryFile file("xdebugtest");
+    file.open();
+    KUrl url(file.fileName());
+    file.write(contents.join("\n").toUtf8());
+    file.close();
+
+    DebugSession session;
+    KDevelop::ICore::self()->debugController()->addSession(&session);
+
+    TestLaunchConfiguration cfg(url);
+    XDebugJob job(&session, &cfg);
+
+    KDevelop::ICore::self()->debugController()->breakpointModel()->addCodeBreakpoint(url, 2);
+
+    job.start();
+    session.waitForConnected();
+
+    session.waitForState(DebugSession::PausedState);
+    QTest::qWait(1000);
+
+    KDevelop::TreeModel* model = new KDevelop::TreeModel(QVector<QString>() << "Name" << "Value", this);
+    TestTooltipRoot* tr = new TestTooltipRoot(model);
+    model->setRootItem(tr);
+
+    KDevelop::Variable* var = session.variableController()->createVariable(model, tr, "blah");
+    tr->init(var);
+    var->attachMaybe();
+    QTest::qWait(1000);
+
+    QCOMPARE(model->rowCount(), 1);
+    COMPARE_DATA(model->index(0, 0), "blah");
+    COMPARE_DATA(model->index(0, 1), "");
+    session.run();
+    session.waitForFinished();
+}
 
 void ConnectionTest::testPhpCrash()
 {

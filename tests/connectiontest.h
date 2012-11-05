@@ -47,6 +47,7 @@ private slots:
     void testVariablesSuperglobals();
     void testVariableExpanding();
     void testTooltipVariable();
+    void testInvalidTooltipVariable();
     void testPhpCrash();
     void testConnectionClosed();
     void testMultipleConnectionsClosed();
