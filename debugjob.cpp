@@ -308,13 +308,13 @@ void XDebugBrowserJob::start()
     KUrl url = m_url;
     url.addQueryItem("XDEBUG_SESSION_START", "kdev");
     if (m_browser.isEmpty()) {
-        if (!QDesktopServices::openUrl(m_url)) {
+        if (!QDesktopServices::openUrl(url)) {
             kWarning() << "openUrl failed, something went wrong when creating the job";
             emitResult();
         }
     } else {
         KProcess proc(this);
-        proc.setProgram(QStringList() << m_browser << m_url.url());
+        proc.setProgram(QStringList() << m_browser << url.url());
         proc.execute();
         emitResult();
     }
