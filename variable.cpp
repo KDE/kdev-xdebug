@@ -68,10 +68,17 @@ public:
 
         if (!m_variable) return;
 
-        QDomElement el = xml.documentElement().firstChildElement("property");
-        bool hasValue = !el.isNull();
-        if (hasValue) {
-            m_variable->handleProperty(el);
+        bool hasValue = false;
+        QDomElement el = xml.documentElement().firstChildElement();
+        if (el.nodeName() == "error") {
+            kDebug() << el.firstChildElement().text();
+            //hasValue=false
+        } else {
+            el = xml.documentElement().firstChildElement("property");
+            hasValue = !el.isNull();
+            if (hasValue) {
+                m_variable->handleProperty(el);
+            }
         }
 
         if (m_callback && m_callbackMethod) {
@@ -79,7 +86,7 @@ public:
         }
     }
 
-    virtual bool allowError() const { return false; }
+    virtual bool allowError() const { return true; }
 private:
     QPointer<Variable> m_variable;
     QObject *m_callback;
