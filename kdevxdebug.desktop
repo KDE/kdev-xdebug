@@ -36,6 +36,7 @@ Name[sv]=Stöd för Xdebug
 Name[uk]=Підтримка XDebug
 Name[x-test]=xxXDebug Supportxx
 GenericName=Debugger Frontend
+GenericName[bs]=Korisničko okruženje za ispravljač grešaka
 GenericName[cs]=Rozhraní pro ladicí nástroj
 GenericName[de]=Debugger-Oberfläche
 GenericName[es]=Interfaz del depurador
