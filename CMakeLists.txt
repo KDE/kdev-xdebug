@@ -1,13 +1,23 @@
 project(xdebug)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${xdebug_SOURCE_DIR}/cmake/)
 
+find_package(KDE4 REQUIRED)
+find_package(KDevPlatform 1.4.60 REQUIRED)
+
+set(KDEVUPLOAD_VERSION_MAJOR 1)
+set(KDEVUPLOAD_VERSION_MINOR 4)
+set(KDEVUPLOAD_VERSION_PATCH 60)
+
+configure_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/version.h.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/version.h"
+  @ONLY
+)
+
 remove_definitions( -DKDE_DEFAULT_DEBUG_AREA=24000 )
 add_definitions( -DKDE_DEFAULT_DEBUG_AREA=9046 )
 
-
 enable_testing()
-find_package(KDE4 REQUIRED)
-find_package(KDevPlatform REQUIRED)
 
 find_path( EXECUTEBROWSER_INCLUDE_DIR iexecutebrowserplugin.h
  PATH_SUFFIXES kdevexecutebrowser )
