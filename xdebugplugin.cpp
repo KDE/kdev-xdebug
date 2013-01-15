@@ -72,7 +72,7 @@
 #include "version.h"
 
 K_PLUGIN_FACTORY(KDevXDebugDebuggerFactory, registerPlugin<XDebug::XDebugPlugin>(); )
-K_EXPORT_PLUGIN(KDevXDebugDebuggerFactory(KAboutData("kdevxdebug", "kdevxdebug", ki18n("XDebug Support"), VERSION_STR, ki18n("Support for debugging PHP scripts in XDebug"), KAboutData::License_GPL)
+K_EXPORT_PLUGIN(KDevXDebugDebuggerFactory(KAboutData("kdevxdebug", "kdevxdebug", ki18n("XDebug Support"), KDEVXDEBUG_VERSION_STR, ki18n("Support for debugging PHP scripts in XDebug"), KAboutData::License_GPL)
     .addAuthor(ki18n("Niko Sams"), ki18n("Author"), "niko.sams@gmail.com", "http://nikosams.blogspot.com")
 ))
 
