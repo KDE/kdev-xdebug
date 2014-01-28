@@ -28,6 +28,7 @@
 
 #include <KDebug>
 #include <KProcess>
+#include <KLocalizedString>
 
 #include <interfaces/ilaunchconfiguration.h>
 #include <debugger/util/pathmappings.h>
@@ -63,7 +64,7 @@ void DebugSession::setAcceptMultipleConnections(bool v)
     m_acceptMultipleConnections = v;
 }
 
-bool DebugSession::listenForConnection()
+bool DebugSession::listenForConnection(QString& error)
 {
     Q_ASSERT(!m_server);
     m_server = new QTcpServer(this);
@@ -71,6 +72,7 @@ bool DebugSession::listenForConnection()
     if(m_server->listen(QHostAddress::Any, 9000)) {
         connect(m_server, SIGNAL(newConnection()), this, SLOT(incomingConnection()));
     } else {
+        error = i18n("Opening port 9000 failed: %1.", m_server->errorString());
         kWarning() << "Error" << m_server->errorString();
         delete m_server;
         m_server = 0;

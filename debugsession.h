@@ -45,7 +45,7 @@ public:
     void setLaunchConfiguration(KDevelop::ILaunchConfiguration *cfg);
     void setAcceptMultipleConnections(bool v);
 
-    bool listenForConnection();
+    bool listenForConnection(QString& error);
     
     bool waitForState(DebuggerState state, int msecs = 30000);
     bool waitForFinished(int msecs = 30000);

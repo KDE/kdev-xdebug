@@ -188,7 +188,14 @@ void XDebugJob::start()
     kDebug() << "launching?" << m_proc;
     if( m_proc )
     {
-        m_session->listenForConnection();
+        QString err;
+        if (!m_session->listenForConnection(err)) {
+            kWarning() << "listening for connection failed";
+            setError( -1 );
+            setErrorText( err );
+            emitResult();
+            return;
+        }
 
         startOutput();
         kDebug() << "starting" << m_proc->program().join(" ");
@@ -302,11 +309,16 @@ void XDebugBrowserJob::start()
         emitResult();
         return;
     }
-    if (!m_session->listenForConnection()) {
+
+    QString err;
+    if (!m_session->listenForConnection(err)) {
         kWarning() << "listening for connection failed";
+        setError( -1 );
+        setErrorText( err );
         emitResult();
         return;
     }
+
     KUrl url = m_url;
     url.addQueryItem("XDEBUG_SESSION_START", "kdev");
     if (m_browser.isEmpty()) {
