@@ -82,5 +82,5 @@ target_link_libraries(connectiontest
 
 
 ########### install files ###############
-
-install(FILES kdevxdebug.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+configure_file(kdevxdebug.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kdevxdebug.desktop)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kdevxdebug.desktop DESTINATION ${SERVICES_INSTALL_DIR})
