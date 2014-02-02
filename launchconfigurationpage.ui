@@ -29,10 +29,16 @@
       <string>Advanced Settings</string>
      </property>
      <layout class="QFormLayout" name="formLayout">
+      <property name="fieldGrowthPolicy">
+       <enum>QFormLayout::ExpandingFieldsGrow</enum>
+      </property>
       <item row="0" column="0">
        <widget class="QLabel" name="label_2">
         <property name="text">
          <string>xdebug.remote_host</string>
+        </property>
+        <property name="buddy">
+         <cstring>remoteHost</cstring>
         </property>
        </widget>
       </item>
@@ -40,6 +46,26 @@
        <widget class="QLineEdit" name="remoteHost">
         <property name="placeholderText">
          <string>yourhost</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>xdebug.remote_port</string>
+        </property>
+        <property name="buddy">
+         <cstring>remotePort</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QSpinBox" name="remotePort">
+        <property name="maximum">
+         <number>65535</number>
+        </property>
+        <property name="value">
+         <number>9000</number>
         </property>
        </widget>
       </item>

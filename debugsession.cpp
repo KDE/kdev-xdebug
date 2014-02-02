@@ -69,10 +69,11 @@ bool DebugSession::listenForConnection(QString& error)
     Q_ASSERT(!m_server);
     m_server = new QTcpServer(this);
     kDebug();
-    if(m_server->listen(QHostAddress::Any, 9000)) {
+    int remotePortSetting = m_launchConfiguration->config().readEntry("RemotePort", 9000);
+    if(m_server->listen(QHostAddress::Any, remotePortSetting)) {
         connect(m_server, SIGNAL(newConnection()), this, SLOT(incomingConnection()));
     } else {
-        error = i18n("Opening port 9000 failed: %1.", m_server->errorString());
+        error = i18n("Opening port %1 failed: %2.", remotePortSetting, m_server->errorString());
         kWarning() << "Error" << m_server->errorString();
         delete m_server;
         m_server = 0;

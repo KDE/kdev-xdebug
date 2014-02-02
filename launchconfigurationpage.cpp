@@ -56,12 +56,14 @@ void ConfigPage::loadFromConfiguration( const KConfigGroup& cfg, KDevelop::IProj
 {
     m_ui->pathMappings->loadFromConfiguration(cfg);
     m_ui->remoteHost->setText(cfg.readEntry("RemoteHost", QString()));
+    m_ui->remotePort->setValue(cfg.readEntry("RemotePort", 9000));
 }
 
 void ConfigPage::saveToConfiguration( KConfigGroup cfg, KDevelop::IProject* ) const
 {
     m_ui->pathMappings->saveToConfiguration(cfg);
     cfg.writeEntry("RemoteHost", m_ui->remoteHost->text());
+    cfg.writeEntry("RemotePort", m_ui->remotePort->value());
 }
 
 QString ConfigPage::title() const
