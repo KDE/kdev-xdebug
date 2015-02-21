@@ -2,6 +2,7 @@
 Type=Service
 Exec=blubb
 Comment=This plugin provides a frontend for XDebug
+Comment[bs]=Ovaj dodatak pruža prikazni program za XDebug
 Comment[ca]=Aquest connector proveeix d'un frontal pel XDebug
 Comment[ca@valencia]=Este connector proveeix d'un frontal pel XDebug
 Comment[de]=Dieses Modul stellt eine Oberfläche für XDebug zur Verfügung
@@ -21,6 +22,7 @@ Comment[tr]=Bu eklenti XDebug'a önuç sağlar
 Comment[uk]=Цей додаток є оболонкою до XDebug
 Comment[x-test]=xxThis plugin provides a frontend for XDebugxx
 Name=XDebug Support
+Name[bs]=XDebug podrška
 Name[ca]=Implementació per a XDebug
 Name[ca@valencia]=Implementació per a XDebug
 Name[cs]=Podpora XDebug
