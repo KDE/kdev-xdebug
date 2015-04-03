@@ -2,6 +2,7 @@
 Type=Service
 Exec=blubb
 Comment=This plugin provides a frontend for XDebug
+Comment[ast]=Esti complementu apurre un frontal pa XDebug
 Comment[bs]=Ovaj dodatak pruža prikazni program za XDebug
 Comment[ca]=Aquest connector proveeix d'un frontal pel XDebug
 Comment[ca@valencia]=Este connector proveeix d'un frontal pel XDebug
