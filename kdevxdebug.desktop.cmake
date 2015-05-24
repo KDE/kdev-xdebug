@@ -54,6 +54,7 @@ GenericName[es]=Interfaz del depurador
 GenericName[et]=Siluri kasutajaliides
 GenericName[fr]=Interface de débogueur
 GenericName[ga]=Comhéadan Dífhabhtóra
+GenericName[gl]=Interface para o depurador
 GenericName[hu]=Hibakereső előtétprogram
 GenericName[it]=Interfaccia al debugger
 GenericName[nl]=Frontend voor debugger
