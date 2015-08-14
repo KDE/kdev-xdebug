@@ -11,6 +11,7 @@ Comment[es]=Este complemento proporciona una interfaz para XDebug
 Comment[et]=XDebugi kasutajaliidese plugin
 Comment[fr]=Ce module externe fournit une interface pour XDebug
 Comment[ga]=Soláthraíonn an breiseán seo comhéadan ar XDebug
+Comment[gl]=Este complemento fornece unha interface para XDebug.
 Comment[hu]=Ez a bővítmény egy előtétprogramot szolgáltat az XDebug-hoz
 Comment[it]=Questa estensione fornisce un interfaccia per XDebug
 Comment[nl]=Deze plugin levert een frontend voor XDebug
