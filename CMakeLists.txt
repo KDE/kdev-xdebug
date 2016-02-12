@@ -1,4 +1,6 @@
 project(xdebug)
+cmake_minimum_required(VERSION 2.8.9)
+
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${xdebug_SOURCE_DIR}/cmake/)
 
 find_package(KDE4 REQUIRED)
@@ -16,6 +18,10 @@ configure_file(
 
 remove_definitions( -DKDE_DEFAULT_DEBUG_AREA=24000 )
 add_definitions( -DKDE_DEFAULT_DEBUG_AREA=9046 )
+
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+endif()
 
 enable_testing()
 
