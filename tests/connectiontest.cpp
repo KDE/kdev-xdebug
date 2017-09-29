@@ -26,6 +26,7 @@
 #include <QtCore/QTemporaryFile>
 #include <QtCore/QDir>
 #include <QStandardPaths>
+#include <QPointer>
 
 #include <QDebug>
 #include <KProcess>
@@ -146,19 +147,19 @@ void ConnectionTest::testStdOutput()
     file.write(contents.join("\n").toUtf8());
     file.close();
 
-    DebugSession session;
-    KDevelop::ICore::self()->debugController()->addSession(&session);
+    auto session = new DebugSession;
+    KDevelop::ICore::self()->debugController()->addSession(session);
 
     TestLaunchConfiguration cfg(url);
-    XDebugJob job(&session, &cfg);
+    XDebugJob job(session, &cfg);
 
-    QSignalSpy outputLineSpy(&session, SIGNAL(outputLine(QString)));
-    QSignalSpy outputSpy(&session, SIGNAL(output(QString)));
+    QSignalSpy outputLineSpy(session, SIGNAL(outputLine(QString)));
+    QSignalSpy outputSpy(session, SIGNAL(output(QString)));
 
     job.start();
     
-    session.waitForConnected();
-    session.waitForFinished();
+    session->waitForConnected();
+    session->waitForFinished();
     {
         QCOMPARE(outputSpy.count(), 4);
         QList<QVariant> arguments = outputSpy.takeFirst();
@@ -188,27 +189,27 @@ void ConnectionTest::testShowStepInSource()
     file.write(contents.join("\n").toUtf8());
     file.close();
 
-    DebugSession session;
-    KDevelop::ICore::self()->debugController()->addSession(&session);
+    auto session = new DebugSession;
+    KDevelop::ICore::self()->debugController()->addSession(session);
 
     TestLaunchConfiguration cfg(url);
-    XDebugJob job(&session, &cfg);
+    XDebugJob job(session, &cfg);
 
     KDevelop::ICore::self()->debugController()->breakpointModel()->addCodeBreakpoint(url, 1);
 
-    QSignalSpy showStepInSourceSpy(&session, SIGNAL(showStepInSource(QUrl, int, QString)));
+    QSignalSpy showStepInSourceSpy(session, SIGNAL(showStepInSource(QUrl, int, QString)));
 
     qDebug() << "************************************************************************************";
     job.start();
-    session.waitForConnected();
+    session->waitForConnected();
 
-    session.waitForState(DebugSession::PausedState);
+    session->waitForState(DebugSession::PausedState);
     QTest::qWait(100);
-    session.stepInto();
-    session.waitForState(DebugSession::PausedState);
+    session->stepInto();
+    session->waitForState(DebugSession::PausedState);
     QTest::qWait(100);
-    session.run();
-    session.waitForFinished();
+    session->run();
+    session->waitForFinished();
 
     {
         QCOMPARE(showStepInSourceSpy.count(), 2);
@@ -237,15 +238,15 @@ void ConnectionTest::testMultipleSessions()
 
     for (int i=0; i<10; ++i) {
 
-        DebugSession session;
-        KDevelop::ICore::self()->debugController()->addSession(&session);
+        auto session = new DebugSession;
+        KDevelop::ICore::self()->debugController()->addSession(session);
 
         TestLaunchConfiguration cfg(url);
-        XDebugJob job(&session, &cfg);
+        XDebugJob job(session, &cfg);
 
         job.start();
-        session.waitForConnected();
-        session.waitForFinished();
+        session->waitForConnected();
+        session->waitForFinished();
     }
 }
 
@@ -264,26 +265,26 @@ void ConnectionTest::testStackModel()
     file.write(contents.join("\n").toUtf8());
     file.close();
 
-    DebugSession session;
-    KDevelop::ICore::self()->debugController()->addSession(&session);
+    auto session = new DebugSession;
+    KDevelop::ICore::self()->debugController()->addSession(session);
 
     TestLaunchConfiguration cfg(url);
-    XDebugJob job(&session, &cfg);
+    XDebugJob job(session, &cfg);
 
     KDevelop::ICore::self()->debugController()->breakpointModel()->addCodeBreakpoint(url, 1);
 
     job.start();
-    session.waitForConnected();
-    session.waitForState(DebugSession::PausedState);
+    session->waitForConnected();
+    session->waitForState(DebugSession::PausedState);
     
     //step into function
     for (int i=0; i<2; ++i) {
-        session.stepInto();
-        session.waitForState(DebugSession::PausedState);
+        session->stepInto();
+        session->waitForState(DebugSession::PausedState);
     }
     QTest::qWait(100);
 
-    KDevelop::IFrameStackModel* stackModel = session.frameStackModel();
+    KDevelop::IFrameStackModel* stackModel = session->frameStackModel();
 
     QCOMPARE(stackModel->rowCount(QModelIndex()), 1); //one fake thread
 
@@ -297,15 +298,15 @@ void ConnectionTest::testStackModel()
     COMPARE_DATA(tIdx.child(1, 1), "{main}");
     COMPARE_DATA(tIdx.child(1, 2), url.toLocalFile()+":5");
 
-    session.stepInto();
-    session.waitForState(DebugSession::PausedState);
-    session.stepInto();
-    session.waitForState(DebugSession::PausedState);
+    session->stepInto();
+    session->waitForState(DebugSession::PausedState);
+    session->stepInto();
+    session->waitForState(DebugSession::PausedState);
     QTest::qWait(100);
     QCOMPARE(stackModel->rowCount(tIdx), 1);
 
-    session.run();
-    session.waitForFinished();
+    session->run();
+    session->waitForFinished();
 }
 
 
@@ -324,25 +325,25 @@ void ConnectionTest::testBreakpoint()
     file.write(contents.join("\n").toUtf8());
     file.close();
 
-    DebugSession session;
-    KDevelop::ICore::self()->debugController()->addSession(&session);
+    auto session = new DebugSession;
+    KDevelop::ICore::self()->debugController()->addSession(session);
 
     TestLaunchConfiguration cfg(url);
-    XDebugJob job(&session, &cfg);
+    XDebugJob job(session, &cfg);
 
 
     KDevelop::ICore::self()->debugController()->breakpointModel()->addCodeBreakpoint(url, 3);
 
     job.start();
-    session.waitForConnected();
+    session->waitForConnected();
 
-    QSignalSpy showStepInSourceSpy(&session, SIGNAL(showStepInSource(QUrl, int, QString)));
+    QSignalSpy showStepInSourceSpy(session, SIGNAL(showStepInSource(QUrl, int, QString)));
 
-    session.waitForState(DebugSession::PausedState);
+    session->waitForState(DebugSession::PausedState);
 
     QTest::qWait(100);
-    session.run();
-    session.waitForFinished();
+    session->run();
+    session->waitForFinished();
     {
         QCOMPARE(showStepInSourceSpy.count(), 1);
         QList<QVariant> arguments = showStepInSourceSpy.takeFirst();
@@ -368,11 +369,11 @@ void ConnectionTest::testDisableBreakpoint()
     file.write(contents.join("\n").toUtf8());
     file.close();
 
-    DebugSession session;
-    KDevelop::ICore::self()->debugController()->addSession(&session);
+    auto session = new DebugSession;
+    KDevelop::ICore::self()->debugController()->addSession(session);
 
     TestLaunchConfiguration cfg(url);
-    XDebugJob job(&session, &cfg);
+    XDebugJob job(session, &cfg);
 
     KDevelop::BreakpointModel* breakpoints = KDevelop::ICore::self()->debugController()->breakpointModel();
     KDevelop::Breakpoint *b;
@@ -384,9 +385,9 @@ void ConnectionTest::testDisableBreakpoint()
     b = breakpoints->addCodeBreakpoint(url, 3);
 
     job.start();
-    session.waitForConnected();
+    session->waitForConnected();
 
-    session.waitForState(DebugSession::PausedState);
+    session->waitForState(DebugSession::PausedState);
     
     //disable existing breakpoint
     b->setData(KDevelop::Breakpoint::EnableColumn, false);
@@ -396,8 +397,8 @@ void ConnectionTest::testDisableBreakpoint()
     QTest::qWait(300);
     b->setData(KDevelop::Breakpoint::EnableColumn, false);
 
-    session.run();
-    session.waitForFinished();
+    session->run();
+    session->waitForFinished();
 }
 
 void ConnectionTest::testChangeLocationBreakpoint()
@@ -417,30 +418,30 @@ void ConnectionTest::testChangeLocationBreakpoint()
     file.write(contents.join("\n").toUtf8());
     file.close();
 
-    DebugSession session;
-    KDevelop::ICore::self()->debugController()->addSession(&session);
+    auto session = new DebugSession;
+    KDevelop::ICore::self()->debugController()->addSession(session);
 
     TestLaunchConfiguration cfg(url);
-    XDebugJob job(&session, &cfg);
+    XDebugJob job(session, &cfg);
 
     KDevelop::BreakpointModel* breakpoints = KDevelop::ICore::self()->debugController()->breakpointModel();
 
     KDevelop::Breakpoint *b = breakpoints->addCodeBreakpoint(url, 5);
 
     job.start();
-    session.waitForConnected();
+    session->waitForConnected();
 
-    session.waitForState(DebugSession::PausedState);
+    session->waitForState(DebugSession::PausedState);
 
     b->setLine(7);
     QTest::qWait(100);
-    session.run();
+    session->run();
 
     QTest::qWait(100);
-    session.waitForState(DebugSession::PausedState);
+    session->waitForState(DebugSession::PausedState);
 
-    session.run();
-    session.waitForFinished();
+    session->run();
+    session->waitForFinished();
 }
 
 void ConnectionTest::testDeleteBreakpoint()
@@ -460,11 +461,11 @@ void ConnectionTest::testDeleteBreakpoint()
     file.write(contents.join("\n").toUtf8());
     file.close();
 
-    DebugSession session;
-    KDevelop::ICore::self()->debugController()->addSession(&session);
+    auto session = new DebugSession;
+    KDevelop::ICore::self()->debugController()->addSession(session);
 
     TestLaunchConfiguration cfg(url);
-    XDebugJob job(&session, &cfg);
+    XDebugJob job(session, &cfg);
 
     KDevelop::BreakpointModel* breakpoints = KDevelop::ICore::self()->debugController()->breakpointModel();
 
@@ -479,15 +480,15 @@ void ConnectionTest::testDeleteBreakpoint()
     QCOMPARE(KDevelop::ICore::self()->debugController()->breakpointModel()->rowCount(), 1);
 
     job.start();
-    session.waitForConnected();
+    session->waitForConnected();
 
-    session.waitForState(DebugSession::PausedState);
+    session->waitForState(DebugSession::PausedState);
 
     breakpoints->removeRow(0);
 
     QTest::qWait(100);
-    session.run();
-    session.waitForFinished();
+    session->run();
+    session->waitForFinished();
 }
 
 
@@ -506,11 +507,11 @@ void ConnectionTest::testConditionalBreakpoint()
     file.write(contents.join("\n").toUtf8());
     file.close();
 
-    DebugSession session;
-    KDevelop::ICore::self()->debugController()->addSession(&session);
+    auto session = new DebugSession;
+    KDevelop::ICore::self()->debugController()->addSession(session);
 
     TestLaunchConfiguration cfg(url);
-    XDebugJob job(&session, &cfg);
+    XDebugJob job(session, &cfg);
 
 
     KDevelop::ICore::self()->debugController()->breakpointModel()->addCodeBreakpoint(url, 2)
@@ -519,15 +520,15 @@ void ConnectionTest::testConditionalBreakpoint()
         ->setCondition("1==1");
 
     job.start();
-    session.waitForConnected();
+    session->waitForConnected();
 
-    QSignalSpy showStepInSourceSpy(&session, SIGNAL(showStepInSource(QUrl, int, QString)));
+    QSignalSpy showStepInSourceSpy(session, SIGNAL(showStepInSource(QUrl, int, QString)));
 
-    session.waitForState(DebugSession::PausedState);
+    session->waitForState(DebugSession::PausedState);
 
     QTest::qWait(100);
-    session.run();
-    session.waitForFinished();
+    session->run();
+    session->waitForFinished();
     {
         QCOMPARE(showStepInSourceSpy.count(), 1);
         QList<QVariant> arguments = showStepInSourceSpy.takeFirst();
@@ -549,11 +550,11 @@ void ConnectionTest::testBreakpointError()
     file.write(contents.join("\n").toUtf8());
     file.close();
 
-    DebugSession session;
-    KDevelop::ICore::self()->debugController()->addSession(&session);
+    auto session = new DebugSession;
+    KDevelop::ICore::self()->debugController()->addSession(session);
 
     TestLaunchConfiguration cfg(url);
-    XDebugJob job(&session, &cfg);
+    XDebugJob job(session, &cfg);
 
     KDevelop::ICore::self()->debugController()->breakpointModel()->addCodeBreakpoint(url, 2);
 
@@ -563,13 +564,13 @@ void ConnectionTest::testBreakpointError()
 
 
     job.start();
-    session.waitForConnected();
-    session.waitForState(DebugSession::PausedState);
+    session->waitForConnected();
+    session->waitForState(DebugSession::PausedState);
     qDebug() << b->errorText();
     QVERIFY(!b->errorText().isEmpty());
 
-    session.run();
-    session.waitForFinished();
+    session->run();
+    session->waitForFinished();
 }
 
 
@@ -608,19 +609,19 @@ void ConnectionTest::testVariablesLocals()
     file.write(contents.join("\n").toUtf8());
     file.close();
 
-    DebugSession session;
-    KDevelop::ICore::self()->debugController()->addSession(&session);
+    auto session = new DebugSession;
+    KDevelop::ICore::self()->debugController()->addSession(session);
 
     TestLaunchConfiguration cfg(url);
-    XDebugJob job(&session, &cfg);
+    XDebugJob job(session, &cfg);
 
-    session.variableController()->setAutoUpdate(KDevelop::IVariableController::UpdateLocals);
+    session->variableController()->setAutoUpdate(KDevelop::IVariableController::UpdateLocals);
     KDevelop::ICore::self()->debugController()->breakpointModel()->addCodeBreakpoint(url, 4);
 
     job.start();
-    session.waitForConnected();
+    session->waitForConnected();
 
-    session.waitForState(DebugSession::PausedState);
+    session->waitForState(DebugSession::PausedState);
     QTest::qWait(1000);
 
     QVERIFY(variableCollection()->rowCount() >= 2);
@@ -639,8 +640,8 @@ void ConnectionTest::testVariablesLocals()
     COMPARE_DATA(variableCollection()->index(0, 1, i), "1");
     COMPARE_DATA(variableCollection()->index(2, 0, i), "2");
     COMPARE_DATA(variableCollection()->index(2, 1, i), "5");
-    session.run();
-    session.waitForFinished();
+    session->run();
+    session->waitForFinished();
 }
 
 
@@ -656,19 +657,19 @@ QStringList contents;
     file.write(contents.join("\n").toUtf8());
     file.close();
 
-    DebugSession session;
-    KDevelop::ICore::self()->debugController()->addSession(&session);
+    auto session = new DebugSession;
+    KDevelop::ICore::self()->debugController()->addSession(session);
 
     TestLaunchConfiguration cfg(url);
-    XDebugJob job(&session, &cfg);
+    XDebugJob job(session, &cfg);
 
-    session.variableController()->setAutoUpdate(KDevelop::IVariableController::UpdateLocals);
+    session->variableController()->setAutoUpdate(KDevelop::IVariableController::UpdateLocals);
     KDevelop::ICore::self()->debugController()->breakpointModel()->addCodeBreakpoint(url, 1);
 
     job.start();
-    session.waitForConnected();
+    session->waitForConnected();
 
-    session.waitForState(DebugSession::PausedState);
+    session->waitForState(DebugSession::PausedState);
     QTest::qWait(1000);
 
     QVERIFY(variableCollection()->rowCount() >= 3);
@@ -683,8 +684,8 @@ QStringList contents;
     COMPARE_DATA(variableCollection()->index(6, 1, i), "");
     i = variableCollection()->index(6, 0, i);
     QVERIFY(variableCollection()->rowCount(i) > 5);
-    session.run();
-    session.waitForFinished();
+    session->run();
+    session->waitForFinished();
 }
 void ConnectionTest::testVariableExpanding()
 {
@@ -699,19 +700,19 @@ void ConnectionTest::testVariableExpanding()
     file.write(contents.join("\n").toUtf8());
     file.close();
 
-    DebugSession session;
-    KDevelop::ICore::self()->debugController()->addSession(&session);
+    auto session = new DebugSession;
+    KDevelop::ICore::self()->debugController()->addSession(session);
 
     TestLaunchConfiguration cfg(url);
-    XDebugJob job(&session, &cfg);
+    XDebugJob job(session, &cfg);
 
-    session.variableController()->setAutoUpdate(KDevelop::IVariableController::UpdateLocals);
+    session->variableController()->setAutoUpdate(KDevelop::IVariableController::UpdateLocals);
     KDevelop::ICore::self()->debugController()->breakpointModel()->addCodeBreakpoint(url, 2);
 
     job.start();
-    session.waitForConnected();
+    session->waitForConnected();
 
-    session.waitForState(DebugSession::PausedState);
+    session->waitForState(DebugSession::PausedState);
     QTest::qWait(1000);
 
     QVERIFY(variableCollection()->rowCount() >= 2);
@@ -736,8 +737,8 @@ void ConnectionTest::testVariableExpanding()
     COMPARE_DATA(variableCollection()->index(0, 1, i), "1");
     COMPARE_DATA(variableCollection()->index(2, 0, i), "2");
     COMPARE_DATA(variableCollection()->index(2, 1, i), "5");
-    session.run();
-    session.waitForFinished();
+    session->run();
+    session->waitForFinished();
 }
 
 
@@ -768,25 +769,25 @@ void ConnectionTest::testTooltipVariable()
     file.write(contents.join("\n").toUtf8());
     file.close();
 
-    DebugSession session;
-    KDevelop::ICore::self()->debugController()->addSession(&session);
+    auto session = new DebugSession;
+    KDevelop::ICore::self()->debugController()->addSession(session);
 
     TestLaunchConfiguration cfg(url);
-    XDebugJob job(&session, &cfg);
+    XDebugJob job(session, &cfg);
 
     KDevelop::ICore::self()->debugController()->breakpointModel()->addCodeBreakpoint(url, 2);
 
     job.start();
-    session.waitForConnected();
+    session->waitForConnected();
 
-    session.waitForState(DebugSession::PausedState);
+    session->waitForState(DebugSession::PausedState);
     QTest::qWait(1000);
 
     KDevelop::TreeModel* model = new KDevelop::TreeModel(QVector<QString>() << "Name" << "Value", this);
     TestTooltipRoot* tr = new TestTooltipRoot(model);
     model->setRootItem(tr);
 
-    KDevelop::Variable* var = session.variableController()->createVariable(model, tr, "$foo");
+    KDevelop::Variable* var = session->variableController()->createVariable(model, tr, "$foo");
     tr->init(var);
     var->attachMaybe();
     QTest::qWait(1000);
@@ -794,8 +795,8 @@ void ConnectionTest::testTooltipVariable()
     QCOMPARE(model->rowCount(), 1);
     COMPARE_DATA(model->index(0, 0), "$foo");
     COMPARE_DATA(model->index(0, 1), "123");
-    session.run();
-    session.waitForFinished();
+    session->run();
+    session->waitForFinished();
 }
 
 void ConnectionTest::testInvalidTooltipVariable()
@@ -811,25 +812,25 @@ void ConnectionTest::testInvalidTooltipVariable()
     file.write(contents.join("\n").toUtf8());
     file.close();
 
-    DebugSession session;
-    KDevelop::ICore::self()->debugController()->addSession(&session);
+    auto session = new DebugSession;
+    KDevelop::ICore::self()->debugController()->addSession(session);
 
     TestLaunchConfiguration cfg(url);
-    XDebugJob job(&session, &cfg);
+    XDebugJob job(session, &cfg);
 
     KDevelop::ICore::self()->debugController()->breakpointModel()->addCodeBreakpoint(url, 2);
 
     job.start();
-    session.waitForConnected();
+    session->waitForConnected();
 
-    session.waitForState(DebugSession::PausedState);
+    session->waitForState(DebugSession::PausedState);
     QTest::qWait(1000);
 
     KDevelop::TreeModel* model = new KDevelop::TreeModel(QVector<QString>() << "Name" << "Value", this);
     TestTooltipRoot* tr = new TestTooltipRoot(model);
     model->setRootItem(tr);
 
-    KDevelop::Variable* var = session.variableController()->createVariable(model, tr, "blah");
+    KDevelop::Variable* var = session->variableController()->createVariable(model, tr, "blah");
     tr->init(var);
     var->attachMaybe();
     QTest::qWait(1000);
@@ -837,8 +838,8 @@ void ConnectionTest::testInvalidTooltipVariable()
     QCOMPARE(model->rowCount(), 1);
     COMPARE_DATA(model->index(0, 0), "blah");
     COMPARE_DATA(model->index(0, 1), "");
-    session.run();
-    session.waitForFinished();
+    session->run();
+    session->waitForFinished();
 }
 
 void ConnectionTest::testPhpCrash()
@@ -853,21 +854,22 @@ void ConnectionTest::testPhpCrash()
     file.write(contents.join("\n").toUtf8());
     file.close();
 
-    DebugSession session;
-    KDevelop::ICore::self()->debugController()->addSession(&session);
+    QPointer<DebugSession> session(new DebugSession);
+    KDevelop::ICore::self()->debugController()->addSession(session);
 
     TestLaunchConfiguration cfg(url);
-    XDebugJob *job = new XDebugJob(&session, &cfg);
+    XDebugJob *job = new XDebugJob(session, &cfg);
 
     KDevelop::ICore::self()->debugController()->breakpointModel()->addCodeBreakpoint(url, 1);
 
     job->start();
-    session.waitForConnected();
+    session->waitForConnected();
 
-    session.waitForState(DebugSession::PausedState);
+    session->waitForState(DebugSession::PausedState);
     job->process()->kill(); //simulate crash
     QTest::qWait(1000);
-    QCOMPARE(session.state(), DebugSession::NotStartedState); //well, it should be EndedState in reality, but this works too
+
+    QVERIFY(!session);
 
     //job seems to gets deleted automatically
 }
@@ -884,21 +886,21 @@ void ConnectionTest::testConnectionClosed()
     file.write(contents.join("\n").toUtf8());
     file.close();
 
-    DebugSession session;
-    KDevelop::ICore::self()->debugController()->addSession(&session);
+    auto session = new DebugSession;
+    KDevelop::ICore::self()->debugController()->addSession(session);
 
     TestLaunchConfiguration cfg(url);
-    XDebugJob *job = new XDebugJob(&session, &cfg);
+    XDebugJob *job = new XDebugJob(session, &cfg);
 
     KDevelop::ICore::self()->debugController()->breakpointModel()->addCodeBreakpoint(url, 1);
 
     job->start();
-    session.waitForConnected();
+    session->waitForConnected();
 
-    session.waitForState(DebugSession::PausedState);
-    session.connection()->close(); //simulate eg webserver restart
+    session->waitForState(DebugSession::PausedState);
+    session->connection()->close(); //simulate eg webserver restart
     QTest::qWait(1000);
-    QCOMPARE(session.state(), DebugSession::NotStartedState); //well, it should be EndedState in reality, but this works too
+    QCOMPARE(session->state(), DebugSession::NotStartedState); //well, it should be EndedState in reality, but this works too
 
     //job seems to gets deleted automatically
 }
@@ -917,20 +919,20 @@ void ConnectionTest::testMultipleConnectionsClosed()
     file.write(contents.join("\n").toUtf8());
     file.close();
 
-    DebugSession session;
-    KDevelop::ICore::self()->debugController()->addSession(&session);
-    session.setAcceptMultipleConnections(true);
+    auto session = new DebugSession;
+    KDevelop::ICore::self()->debugController()->addSession(session);
+    session->setAcceptMultipleConnections(true);
 
     TestLaunchConfiguration cfg(url);
-    XDebugJob *job = new XDebugJob(&session, &cfg);
+    XDebugJob *job = new XDebugJob(session, &cfg);
 
     KDevelop::ICore::self()->debugController()->breakpointModel()->addCodeBreakpoint(url, 1);
 
     job->start();
-    session.waitForConnected();
-    Connection* firstConnection = session.connection();
+    session->waitForConnected();
+    Connection* firstConnection = session->connection();
 
-    session.waitForState(DebugSession::PausedState);
+    session->waitForState(DebugSession::PausedState);
 
     //start a second process, as XDebugBrowserJob does
     KProcess secondProcess;
@@ -940,15 +942,15 @@ void ConnectionTest::testMultipleConnectionsClosed()
     secondProcess.start();
 
     QTest::qWait(1000);
-    QVERIFY(session.connection() != firstConnection); //must be a different connection
+    QVERIFY(session->connection() != firstConnection); //must be a different connection
 
-    session.connection()->close(); //close second connection
+    session->connection()->close(); //close second connection
     QTest::qWait(1000);
 
 //     firstConnection->close(); //close first connection _after_ second
 
     QTest::qWait(1000);
-    QCOMPARE(session.state(), DebugSession::NotStartedState); //well, it should be EndedState in reality, but this works too
+    QCOMPARE(session->state(), DebugSession::NotStartedState); //well, it should be EndedState in reality, but this works too
 
     //job seems to gets deleted automatically
 }
@@ -967,19 +969,19 @@ void ConnectionTest::testVariableUpdates()
     file.write(contents.join("\n").toUtf8());
     file.close();
 
-    DebugSession session;
-    KDevelop::ICore::self()->debugController()->addSession(&session);
+    auto session = new DebugSession;
+    KDevelop::ICore::self()->debugController()->addSession(session);
 
     TestLaunchConfiguration cfg(url);
-    XDebugJob job(&session, &cfg);
+    XDebugJob job(session, &cfg);
 
-    session.variableController()->setAutoUpdate(KDevelop::IVariableController::UpdateLocals);
+    session->variableController()->setAutoUpdate(KDevelop::IVariableController::UpdateLocals);
     KDevelop::ICore::self()->debugController()->breakpointModel()->addCodeBreakpoint(url, 2);
 
     job.start();
-    session.waitForConnected();
+    session->waitForConnected();
 
-    session.waitForState(DebugSession::PausedState);
+    session->waitForState(DebugSession::PausedState);
     QTest::qWait(1000);
 
     QVERIFY(variableCollection()->rowCount() >= 2);
@@ -989,7 +991,7 @@ void ConnectionTest::testVariableUpdates()
     COMPARE_DATA(variableCollection()->index(0, 0, i), "$foo");
     COMPARE_DATA(variableCollection()->index(0, 1, i), "1");
 
-    session.stepInto();
+    session->stepInto();
     QTest::qWait(1000);
     QVERIFY(variableCollection()->rowCount() >= 2);
     i = variableCollection()->index(1, 0);
@@ -998,8 +1000,8 @@ void ConnectionTest::testVariableUpdates()
     COMPARE_DATA(variableCollection()->index(0, 0, i), "$foo");
     COMPARE_DATA(variableCollection()->index(0, 1, i), "2");
 
-    session.run();
-    session.waitForFinished();
+    session->run();
+    session->waitForFinished();
 }
 
 //     controller.connection()->sendCommand("eval -i 124", QStringList(), "eval(\"function test124() { return rand(); } return test124();\")");
