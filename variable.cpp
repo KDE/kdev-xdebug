@@ -112,7 +112,6 @@ void Variable::attachMaybe(QObject *callback, const char *callbackMethod)
 
 void Variable::fetchMoreChildren()
 {
-    int c = childItems.size();
     // FIXME: should not even try this if app is not started.
     // Probably need to disable open, or something
     if (hasStartedSession()) {
