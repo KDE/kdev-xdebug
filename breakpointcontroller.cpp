@@ -41,11 +41,13 @@ void BreakpointController::sendMaybe(KDevelop::Breakpoint* breakpoint)
     if (!debugSession()->connection()) return;
 
     if (breakpoint->deleted()) {
-        if (m_ids.contains(breakpoint)) {
+        auto it = m_ids.find(breakpoint);
+        if (it != m_ids.end()) {
             QString cmd("breakpoint_remove");
             QStringList args;
             args << "-d "+m_ids[breakpoint];
             debugSession()->connection()->sendCommand(cmd, args);
+            m_ids.erase(it);
         }
     } else if (m_dirty[breakpoint].contains(KDevelop::Breakpoint::LocationColumn)) {
         if (breakpoint->enabled()) {
@@ -133,8 +135,10 @@ void BreakpointController::handleBreakpointList(const QDomDocument &xml)
 
     QDomElement el = xml.documentElement().firstChildElement("breakpoint");
     while (!el.isNull()) {
-        KDevelop::Breakpoint *b = m_ids.key(el.attribute("id"));
-        setHitCount(b, el.attribute("hit_count").toInt());
+        // the breakpoint may have been removed in the meantime, if so, ignore it
+        if (auto* b = m_ids.key(el.attribute("id"))) {
+            setHitCount(b, el.attribute("hit_count").toInt());
+        }
         el = el.nextSiblingElement("breakpoint");
     }
 
