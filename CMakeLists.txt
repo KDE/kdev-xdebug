@@ -5,16 +5,6 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${xdebug_SOURCE_DIR}/cmake/)
 
 find_package(KDevPlatform 5.1 CONFIG REQUIRED)
 
-set(VERSION_MAJOR 1)
-set(VERSION_MINOR 5)
-set(VERSION_PATCH 60)
-
-configure_file(
-  "${CMAKE_CURRENT_SOURCE_DIR}/version.h.cmake"
-  "${CMAKE_CURRENT_BINARY_DIR}/version.h"
-  @ONLY
-)
-
 find_package (ECM "5.14.0" REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH})
 
