@@ -322,7 +322,7 @@ void XDebugBrowserJob::start()
     }
 
     QUrl url = m_url;
-    url.addQueryItem("XDEBUG_SESSION_START", "kdev");
+    url.setQuery("XDEBUG_SESSION_START=kdev");
     if (m_browser.isEmpty()) {
         if (!QDesktopServices::openUrl(url)) {
             qWarning() << "openUrl failed, something went wrong when creating the job";
@@ -342,7 +342,7 @@ bool XDebugBrowserJob::doKill()
     qDebug();
     m_session->stopDebugger();
     QUrl url = m_url;
-    url.addQueryItem("XDEBUG_SESSION_STOP_NO_EXEC", "kdev");
+    url.setQuery("XDEBUG_SESSION_STOP_NO_EXEC=kdev");
     QDesktopServices::openUrl(url);
     return true;
 }
