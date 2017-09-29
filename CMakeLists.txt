@@ -50,7 +50,6 @@ target_link_libraries(kdevxdebug
     KF5::KDELibs4Support
 )
 
-install(TARGETS kdevxdebug DESTINATION ${PLUGIN_INSTALL_DIR})
 configure_file(kdevxdebug.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kdevxdebug.desktop)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kdevxdebug.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 
