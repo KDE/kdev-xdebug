@@ -141,7 +141,7 @@ void Variable::handleProperty(const QDomElement &xml)
         QString v  = xml.firstChild().toText().data();
         if (xml.attribute("encoding") == "base64") {
             //TODO: use Connection::m_codec->toUnicode
-            v = QString::fromUtf8(QByteArray::fromBase64(xml.text().toAscii()));
+            v = QString::fromUtf8(QByteArray::fromBase64(xml.text().toUtf8()));
         }
         //qDebug() << "value" << v;
         setValue(v);

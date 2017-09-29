@@ -161,7 +161,7 @@ void Connection::processResponse(const QDomDocument &xml)
         }
     }
     if (xml.documentElement().attribute("command") == "feature_get" && xml.documentElement().attribute("feature_name") == "encoding") {
-        QTextCodec* c = QTextCodec::codecForName(xml.documentElement().text().toAscii());
+        QTextCodec* c = QTextCodec::codecForName(xml.documentElement().text().toUtf8());
         if (c) {
             m_codec = c;
         }
@@ -220,7 +220,7 @@ void Connection::processStream(const QDomDocument &xml)
         }
         */
 
-        QString c = m_codec->toUnicode(QByteArray::fromBase64(xml.documentElement().text().toAscii()));
+        QString c = m_codec->toUnicode(QByteArray::fromBase64(xml.documentElement().text().toUtf8()));
         //qDebug() << c;
         emit output(c);
         m_outputLine += c;
