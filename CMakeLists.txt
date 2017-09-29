@@ -51,7 +51,7 @@ set(kdevxdebug_PART_SRCS
     launchconfig.cpp
     launchconfigurationpage.cpp
 )
-qt5_wrap_ui(kdevxdebug_PART_SRCS launchconfigurationpage.ui)
+ki18n_wrap_ui(kdevxdebug_PART_SRCS launchconfigurationpage.ui)
 kdevplatform_add_plugin(kdevxdebug SOURCES ${kdevxdebug_PART_SRCS} ${kdevxdebugcore_PART_SRCS})
 target_link_libraries(kdevxdebug
     KDev::Interfaces
@@ -82,3 +82,5 @@ ecm_add_test(${connectiontest_SRCS}
         KF5::KDELibs4Support
         Qt5::Test
 )
+
+feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
