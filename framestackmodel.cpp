@@ -21,7 +21,7 @@
 
 #include <QXmlStreamReader>
 
-#include <KDebug>
+#include <QDebug>
 
 #include "framestackmodel.h"
 #include "connection.h"

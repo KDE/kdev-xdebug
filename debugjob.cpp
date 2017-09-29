@@ -28,7 +28,7 @@
 #include <QFileInfo>
 #include <QDesktopServices>
 
-#include <KDebug>
+#include <QDebug>
 #include <KGlobal>
 #include <KProcess>
 #include <kconfiggroup.h>
@@ -105,7 +105,7 @@ XDebugJob::XDebugJob( DebugSession* session, KDevelop::ILaunchConfiguration* cfg
 
     if( envgrp.isEmpty() )
     {
-        kWarning() << "Launch Configuration:" << cfg->name() << i18n("No environment group specified, looks like a broken "
+        qWarning() << "Launch Configuration:" << cfg->name() << i18n("No environment group specified, looks like a broken "
                        "configuration, please check run configuration '%1'. "
                        "Using default environment group.", cfg->name() );
         envgrp = l.defaultProfileName();
@@ -120,7 +120,7 @@ XDebugJob::XDebugJob( DebugSession* session, KDevelop::ILaunchConfiguration* cfg
 
     if( error() != 0 )
     {
-        kWarning() << "Launch Configuration:" << cfg->name() << "oops, problem" << errorText();
+        qWarning() << "Launch Configuration:" << cfg->name() << "oops, problem" << errorText();
         return;
     }
 
@@ -163,7 +163,7 @@ XDebugJob::XDebugJob( DebugSession* session, KDevelop::ILaunchConfiguration* cfg
         }
         program << "XDEBUG_CONFIG=\"remote_enable=1 \"";
     }
-    kDebug() << program;
+    qDebug() << program;
     program << interpreter;
     program << "-d xdebug.remote_enable=1";
     QString remoteHostSetting = cfg->config().readEntry("RemoteHost", QString());
@@ -175,7 +175,7 @@ XDebugJob::XDebugJob( DebugSession* session, KDevelop::ILaunchConfiguration* cfg
     program << arguments;
 
     
-    kDebug() << "setting app:" << program;
+    qDebug() << "setting app:" << program;
 
     m_proc->setOutputChannelMode(KProcess::MergedChannels);
 
@@ -188,12 +188,12 @@ XDebugJob::XDebugJob( DebugSession* session, KDevelop::ILaunchConfiguration* cfg
 
 void XDebugJob::start()
 {
-    kDebug() << "launching?" << m_proc;
+    qDebug() << "launching?" << m_proc;
     if( m_proc )
     {
         QString err;
         if (!m_session->listenForConnection(err)) {
-            kWarning() << "listening for connection failed";
+            qWarning() << "listening for connection failed";
             setError( -1 );
             setErrorText( err );
             emitResult();
@@ -201,12 +201,12 @@ void XDebugJob::start()
         }
 
         startOutput();
-        kDebug() << "starting" << m_proc->program().join(" ");
+        qDebug() << "starting" << m_proc->program().join(" ");
         appendLine( i18n("Starting: %1", m_proc->program().join(" ") ) );
         m_proc->start();
     } else
     {
-        kWarning() << "No process, something went wrong when creating the job";
+        qWarning() << "No process, something went wrong when creating the job";
         // No process means we've returned early on from the constructor, some bad error happened
         emitResult();
     }
@@ -220,7 +220,7 @@ KProcess* XDebugJob::process() const
 
 bool XDebugJob::doKill()
 {
-    kDebug();
+    qDebug();
     if (m_session) m_session->stopDebugger();
     return true;
 }
@@ -238,7 +238,7 @@ void XDebugJob::processFinished( int exitCode , QProcess::ExitStatus status )
                 appendLine( i18n("*** Process aborted ***") );
             else
                 appendLine( i18n("*** Crashed with return code: %1 ***", QString::number(exitCode)) );
-    kDebug() << "Process done";
+    qDebug() << "Process done";
     emitResult();
 
     if (m_session && m_session->connection()) {
@@ -257,7 +257,7 @@ void XDebugJob::processError( QProcess::ProcessError error )
         setErrorText( errmsg );
         emitResult();
     }
-    kDebug() << "Process error";
+    qDebug() << "Process error";
 
     if (m_session && m_session->connection()) {
         m_session->connection()->setState(DebugSession::EndedState);
@@ -307,7 +307,7 @@ XDebugBrowserJob::XDebugBrowserJob(DebugSession* session, KDevelop::ILaunchConfi
 
 void XDebugBrowserJob::start()
 {
-    kDebug() << "launching?" << m_url;
+    qDebug() << "launching?" << m_url;
     if (!m_url.isValid()) {
         emitResult();
         return;
@@ -315,7 +315,7 @@ void XDebugBrowserJob::start()
 
     QString err;
     if (!m_session->listenForConnection(err)) {
-        kWarning() << "listening for connection failed";
+        qWarning() << "listening for connection failed";
         setError( -1 );
         setErrorText( err );
         emitResult();
@@ -326,7 +326,7 @@ void XDebugBrowserJob::start()
     url.addQueryItem("XDEBUG_SESSION_START", "kdev");
     if (m_browser.isEmpty()) {
         if (!QDesktopServices::openUrl(url)) {
-            kWarning() << "openUrl failed, something went wrong when creating the job";
+            qWarning() << "openUrl failed, something went wrong when creating the job";
             emitResult();
         }
     } else {
@@ -340,7 +340,7 @@ void XDebugBrowserJob::start()
 
 bool XDebugBrowserJob::doKill()
 {
-    kDebug();
+    qDebug();
     m_session->stopDebugger();
     QUrl url = m_url;
     url.addQueryItem("XDEBUG_SESSION_STOP_NO_EXEC", "kdev");

@@ -26,7 +26,7 @@
 #include <QTcpServer>
 #include <QFile>
 
-#include <KDebug>
+#include <QDebug>
 #include <KProcess>
 #include <KLocalizedString>
 
@@ -72,13 +72,13 @@ bool DebugSession::listenForConnection(QString& error)
 {
     Q_ASSERT(!m_server);
     m_server = new QTcpServer(this);
-    kDebug();
+    qDebug();
     int remotePortSetting = m_launchConfiguration->config().readEntry("RemotePort", 9000);
     if(m_server->listen(QHostAddress::Any, remotePortSetting)) {
         connect(m_server, SIGNAL(newConnection()), this, SLOT(incomingConnection()));
     } else {
         error = i18n("Opening port %1 failed: %2.", remotePortSetting, m_server->errorString());
-        kWarning() << "Error" << m_server->errorString();
+        qWarning() << "Error" << m_server->errorString();
         delete m_server;
         m_server = 0;
         return false;
@@ -97,7 +97,7 @@ void DebugSession::closeServer()
 
 void DebugSession::incomingConnection()
 {
-    kDebug();
+    qDebug();
     QTcpSocket* client = m_server->nextPendingConnection();
 
     if (m_connection) {
@@ -135,7 +135,7 @@ void DebugSession::connectionClosed()
 
 void DebugSession::_stateChanged(KDevelop::IDebugSession::DebuggerState state)
 {
-    kDebug() << state;
+    qDebug() << state;
     if (state == StartingState) {
         run();
     } else if (state == PausedState) {

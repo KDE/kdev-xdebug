@@ -27,7 +27,7 @@
 
 #include <QFileInfo>
 
-#include <KDebug>
+#include <QDebug>
 #include <KProcess>
 #include <kconfiggroup.h>
 #include <kicon.h>
@@ -90,7 +90,7 @@ KJob* XDebugLauncher::start(const QString& launchMode, KDevelop::ILaunchConfigur
     {
         return new XDebugJob( m_plugin->createSession(), cfg );
     }
-    kWarning() << "Unknown launch mode" << launchMode << "for config:" << cfg->name();
+    qWarning() << "Unknown launch mode" << launchMode << "for config:" << cfg->name();
     return 0;
 }
 
@@ -117,7 +117,7 @@ KJob* XDebugBrowserLauncher::start(const QString& launchMode, KDevelop::ILaunchC
     if( launchMode == "debug" ) {
         return new XDebugBrowserJob( m_plugin->createSession(), cfg );
     }
-    kWarning() << "Unknown launch mode" << launchMode << "for config:" << cfg->name();
+    qWarning() << "Unknown launch mode" << launchMode << "for config:" << cfg->name();
     return 0;
 }
 

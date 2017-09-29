@@ -23,7 +23,7 @@
 #include "variable.h"
 #include "debugsession.h"
 
-#include <KDebug>
+#include <QDebug>
 
 #include <QDomElement>
 #include <QXmlStreamReader>
@@ -66,7 +66,7 @@ public:
 
     void execute(const QDomDocument &xml) override
     {
-        kDebug() << xml.toString();
+        qDebug() << xml.toString();
         Q_ASSERT(xml.documentElement().attribute("command") == "property_get");
 
         if (!m_variable) return;
@@ -74,7 +74,7 @@ public:
         bool hasValue = false;
         QDomElement el = xml.documentElement().firstChildElement();
         if (el.nodeName() == "error") {
-            kDebug() << el.firstChildElement().text();
+            qDebug() << el.firstChildElement().text();
             //hasValue=false
         } else {
             el = xml.documentElement().firstChildElement("property");
@@ -118,7 +118,7 @@ void Variable::fetchMoreChildren()
         // FIXME: Eventually, should be a property of variable.
         KDevelop::IDebugSession* is = KDevelop::ICore::self()->debugController()->currentSession();
         DebugSession* s = static_cast<DebugSession*>(is);
-        kDebug() << expression() << m_fullName;
+        qDebug() << expression() << m_fullName;
         QStringList args;
         args << "-n " + m_fullName;
         args << QString("-d %0").arg(s->frameStackModel()->currentFrame());
@@ -136,14 +136,14 @@ void Variable::handleProperty(const QDomElement &xml)
     setInScope(true);
 
     m_fullName = xml.attribute("fullname");
-    //kDebug() << m_fullName;
+    //qDebug() << m_fullName;
     if (xml.firstChild().isText()) {
         QString v  = xml.firstChild().toText().data();
         if (xml.attribute("encoding") == "base64") {
             //TODO: use Connection::m_codec->toUnicode
             v = QString::fromUtf8(QByteArray::fromBase64(xml.text().toAscii()));
         }
-        //kDebug() << "value" << v;
+        //qDebug() << "value" << v;
         setValue(v);
     }
 
@@ -158,7 +158,7 @@ void Variable::handleProperty(const QDomElement &xml)
     QDomElement el = xml.firstChildElement("property");
     while (!el.isNull()) {
         QString name = el.attribute("name");
-        //kDebug() << name;
+        //qDebug() << name;
         current << name;
         Variable* v = 0;
         if( !existing.contains(name) ) {
@@ -183,7 +183,7 @@ void Variable::handleProperty(const QDomElement &xml)
         }
     }
     if (!childCount() && xml.attribute("children") == "1") {
-        kDebug() << "has more" << this;
+        qDebug() << "has more" << this;
         setHasMore(true);
         if (isExpanded()) {
             fetchMoreChildren();

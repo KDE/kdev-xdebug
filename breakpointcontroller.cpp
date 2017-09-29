@@ -19,7 +19,7 @@
 #include "breakpointcontroller.h"
 
 #include <QDomElement>
-#include <KDebug>
+#include <QDebug>
 #include <KLocalizedString>
 
 #include <debugger/breakpoint/breakpoint.h>
@@ -51,7 +51,7 @@ void BreakpointController::sendMaybe(KDevelop::Breakpoint* breakpoint)
         if (breakpoint->enabled()) {
             QString cmd = m_ids.contains(breakpoint) ? "breakpoint_update" : "breakpoint_set";
             QStringList args;
-            kDebug() << "breakpoint kind" << breakpoint->kind();
+            qDebug() << "breakpoint kind" << breakpoint->kind();
             if (breakpoint->kind() == KDevelop::Breakpoint::CodeBreakpoint) {
                 if (m_ids.contains(breakpoint)) {
                     args << "-d "+m_ids[breakpoint];
@@ -104,7 +104,7 @@ void BreakpointController::handleSetBreakpoint(KDevelop::Breakpoint* breakpoint,
         m_ids[breakpoint] = xml.documentElement().attribute("id");
     }
     if (!xml.documentElement().firstChildElement("error").isNull()) {
-        kWarning() << "breakpoint error" << xml.documentElement().firstChildElement("error").text();
+        qWarning() << "breakpoint error" << xml.documentElement().firstChildElement("error").text();
         error(breakpoint, xml.documentElement().firstChildElement("error").text(), KDevelop::Breakpoint::LocationColumn);
     }
 }
@@ -116,7 +116,7 @@ DebugSession* BreakpointController::debugSession()
 
 void BreakpointController::stateChanged(KDevelop::IDebugSession::DebuggerState state)
 {
-    kDebug() << state;
+    qDebug() << state;
     if (state == KDevelop::IDebugSession::StartingState) {
         m_ids.clear();
         sendMaybeAll();

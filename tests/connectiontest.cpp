@@ -27,7 +27,7 @@
 #include <QtCore/QDir>
 #include <QStandardPaths>
 
-#include <KDebug>
+#include <QDebug>
 #include <KProcess>
 #include <KConfig>
 #include <qtest_kde.h>
@@ -92,14 +92,7 @@ private:
 };
 
 #define COMPARE_DATA(index, expected) \
-    compareData((index), (expected), __FILE__, __LINE__)
-void compareData(QModelIndex index, QString expected, const char *file, int line)
-{
-    QString s = index.model()->data(index, Qt::DisplayRole).toString();
-    if (s != expected) {
-        kFatal() << QString("'%0' didn't match expected '%1' in %2:%3").arg(s).arg(expected).arg(file).arg(line);
-    }
-}
+    QCOMPARE(index.model()->data(index, Qt::DisplayRole).toString(), QString(expected))
 
 void ConnectionTest::initTestCase()
 {
@@ -203,7 +196,7 @@ void ConnectionTest::testShowStepInSource()
 
     QSignalSpy showStepInSourceSpy(&session, SIGNAL(showStepInSource(QUrl, int, QString)));
 
-    kDebug() << "************************************************************************************";
+    qDebug() << "************************************************************************************";
     job.start();
     session.waitForConnected();
 
@@ -562,7 +555,7 @@ void ConnectionTest::testBreakpointError()
     job.start();
     session.waitForConnected();
     session.waitForState(DebugSession::PausedState);
-    kDebug() << b->errorText();
+    qDebug() << b->errorText();
     QVERIFY(!b->errorText().isEmpty());
 
     session.run();

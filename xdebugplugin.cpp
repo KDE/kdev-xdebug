@@ -78,7 +78,7 @@ XDebugPlugin::XDebugPlugin( QObject *parent, const QVariantList & ) :
 {
     core()->debugController()->initializeUi();
 
-    kDebug();
+    qDebug();
 //     connect(m_server, SIGNAL(sessionStarted(DebugSession*)), SLOT(sessionStarted(DebugSession*)));
 //     connect(m_server, SIGNAL(outputLine(DebugSession*,QString,KDevelop::IRunProvider::OutputTypes)), SLOT(outputLine(DebugSession*,QString,KDevelop::IRunProvider::OutputTypes)));
 //     connect(m_server, SIGNAL(stateChanged(DebugSession*,KDevelop::IDebugSession::DebuggerState)), SLOT(debuggerStateChanged(DebugSession*,KDevelop::IDebugSession::DebuggerState)));
@@ -113,7 +113,7 @@ DebugSession* XDebugPlugin::createSession() const
 
 void XDebugPlugin::sessionStarted(DebugSession* session)
 {
-    kDebug() << session;
+    qDebug() << session;
     KDevelop::ICore::self()->debugController()->addSession(session);
 }
 
@@ -134,7 +134,7 @@ bool XDebugPlugin::execute(const KDevelop::IRun & run, KJob* job)
     }
     path += " " + run.arguments().join(" ");
     path = path.trimmed();
-    kDebug() << path;
+    qDebug() << path;
 
     KProcess* process = m_server->startDebugger(path);
     m_jobs[process] = job;

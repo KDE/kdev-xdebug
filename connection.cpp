@@ -28,7 +28,7 @@
 #include <QtCore/QTextCodec>
 #include <QDomElement>
 
-#include <KDebug>
+#include <QDebug>
 #include <KLocale>
 #include <QUrl>
 
@@ -68,8 +68,8 @@ void Connection::close() {
 
 void Connection::error(QAbstractSocket::SocketError error)
 {
-    //kWarning() << m_socket->errorString();
-    kWarning() << error;
+    //qWarning() << m_socket->errorString();
+    qWarning() << error;
 }
 
 void Connection::readyRead()
@@ -92,7 +92,7 @@ void Connection::readyRead()
             }
             data += m_socket->read(length - data.length() + 1);
         }
-        //kDebug() << data;
+        //qDebug() << data;
 
         QDomDocument doc;
         doc.setContent(data);
@@ -103,7 +103,7 @@ void Connection::readyRead()
         } else if (doc.documentElement().tagName() == "stream") {
             processStream(doc);
         } else {
-            //kWarning() << "unknown element" << xml->name();
+            //qWarning() << "unknown element" << xml->name();
         }
     }
 }
@@ -124,14 +124,14 @@ void Connection::sendCommand(const QString& cmd, QStringList arguments, const QB
     if (!data.isEmpty()) {
         out += " -- " + data.toBase64();
     }
-    kDebug() << out;
+    qDebug() << out;
     m_socket->write(out);
     m_socket->write("\0", 1);
 }
 
 void Connection::processInit(const QDomDocument &xml)
 {
-    kDebug() << "idekey" << xml.documentElement().attribute("idekey");
+    qDebug() << "idekey" << xml.documentElement().attribute("idekey");
 //     emit initDone(xml->attributes().value("idekey").toString());
 
     sendCommand("feature_get -n encoding");
@@ -180,8 +180,8 @@ void Connection::processResponse(const QDomDocument &xml)
         //if callback doesn't handle errors himself
         QDomElement el = xml.documentElement().firstChildElement();
         if (el.nodeName() == "error") {
-            kWarning() << "error" << el.attribute("code") << "for transaction" << xml.documentElement().attribute("transaction_id");
-            kDebug() << el.firstChildElement().text();
+            qWarning() << "error" << el.attribute("code") << "for transaction" << xml.documentElement().attribute("transaction_id");
+            qDebug() << el.firstChildElement().text();
             Q_ASSERT(false);
         }
     }
@@ -193,7 +193,7 @@ void Connection::processResponse(const QDomDocument &xml)
 
 void Connection::setState(DebugSession::DebuggerState state)
 {
-    kDebug() << state;
+    qDebug() << state;
     if (m_currentState != state) {
         m_currentState = state;
     }
@@ -216,13 +216,13 @@ void Connection::processStream(const QDomDocument &xml)
         } else if (xml->attributes().value("type") == "stderr") {
             outputType = KDevelop::IRunProvider::StandardError;
         } else {
-            kWarning() << "unknown output type" << xml->attributes().value("type");
+            qWarning() << "unknown output type" << xml->attributes().value("type");
             return;
         }
         */
 
         QString c = m_codec->toUnicode(QByteArray::fromBase64(xml.documentElement().text().toAscii()));
-        //kDebug() << c;
+        //qDebug() << c;
         emit output(c);
         m_outputLine += c;
         int pos = m_outputLine.indexOf('\n');
@@ -231,7 +231,7 @@ void Connection::processStream(const QDomDocument &xml)
             m_outputLine = m_outputLine.mid(pos+1);
         }
     } else {
-        kWarning() << "unknown encoding" << xml.documentElement().attribute("encoding");
+        qWarning() << "unknown encoding" << xml.documentElement().attribute("encoding");
     }
 }
 
