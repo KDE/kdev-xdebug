@@ -253,4 +253,3 @@ QTcpSocket* Connection::socket() {
 
 }
 
-#include "connection.moc"

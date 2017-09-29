@@ -985,4 +985,3 @@ void ConnectionTest::testVariableUpdates()
 
 QTEST_KDEMAIN(ConnectionTest, GUI)
 
-#include "connectiontest.moc"

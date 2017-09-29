@@ -357,4 +357,3 @@ void XDebugBrowserJob::sessionFinished()
 
 }
 
-#include "debugjob.moc"

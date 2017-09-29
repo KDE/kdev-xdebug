@@ -142,4 +142,3 @@ void BreakpointController::handleBreakpointList(const QDomDocument &xml)
 
 }
 
-#include "breakpointcontroller.moc"

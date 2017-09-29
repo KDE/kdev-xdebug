@@ -301,4 +301,3 @@ void DebugSession::currentPositionChanged(const QUrl& url, int line)
 
 }
 
-#include "debugsession.moc"

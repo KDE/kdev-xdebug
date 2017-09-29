@@ -73,4 +73,3 @@ QString ConfigPage::title() const
 
 }
 
-#include "launchconfigurationpage.moc"

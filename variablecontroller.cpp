@@ -174,4 +174,3 @@ void VariableController::handleEvent(KDevelop::IDebugSession::event_t event)
 
 }
 
-#include "variablecontroller.moc"
