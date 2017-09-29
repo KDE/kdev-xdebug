@@ -34,23 +34,8 @@
 #include <QDBusInterface>
 #include <QSignalMapper>
 
-#include <kdebug.h>
-#include <kfiledialog.h>
-#include <kiconloader.h>
-#include <kmainwindow.h>
-#include <kstatusbar.h>
-#include <kparts/part.h>
-#include <kmessagebox.h>
-#include <kapplication.h>
 #include <kpluginfactory.h>
 #include <kaboutdata.h>
-#include <KToolBar>
-#include <KDialog>
-#include <kwindowsystem.h>
-#include <KXmlGuiWindow>
-#include <KXMLGUIFactory>
-
-#include <sublime/view.h>
 
 #include <interfaces/icore.h>
 #include <interfaces/iuicontroller.h>
