@@ -30,7 +30,7 @@
 
 #include <KDebug>
 #include <KLocale>
-#include <KUrl>
+#include <QUrl>
 
 #include <interfaces/icore.h>
 #include <interfaces/idebugcontroller.h>
@@ -156,7 +156,7 @@ void Connection::processResponse(const QDomDocument &xml)
         setState(DebugSession::PausedState);
         QDomElement el = xml.documentElement().firstChildElement();
         if (el.nodeName() == "xdebug:message") {
-            KUrl file = KUrl(el.attribute("filename"));
+            QUrl file = QUrl(el.attribute("filename"));
             int lineNum = el.attribute("lineno").toInt()-1;
             emit currentPositionChanged(file, lineNum);
         }

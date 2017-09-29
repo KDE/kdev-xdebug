@@ -86,7 +86,7 @@ XDebugJob::XDebugJob( DebugSession* session, KDevelop::ILaunchConfiguration* cfg
         return;
     }
 
-    KUrl script = iface->script( cfg, err );
+    QUrl script = iface->script( cfg, err );
 
     if( !err.isEmpty() )
     {
@@ -145,10 +145,10 @@ XDebugJob::XDebugJob( DebugSession* session, KDevelop::ILaunchConfiguration* cfg
     env << "XDEBUG_CONFIG=\"remote_enable=1 \"";
     m_proc->setEnvironment( env );
 
-    KUrl wc = iface->workingDirectory( cfg );
+    QUrl wc = iface->workingDirectory( cfg );
     if( !wc.isValid() || wc.isEmpty() )
     {
-        wc = KUrl( QFileInfo( script.toLocalFile() ).absolutePath() );
+        wc = QUrl( QFileInfo( script.toLocalFile() ).absolutePath() );
     }
     m_proc->setWorkingDirectory( wc.toLocalFile() );
     m_proc->setProperty( "executable", interpreter );
@@ -322,7 +322,7 @@ void XDebugBrowserJob::start()
         return;
     }
 
-    KUrl url = m_url;
+    QUrl url = m_url;
     url.addQueryItem("XDEBUG_SESSION_START", "kdev");
     if (m_browser.isEmpty()) {
         if (!QDesktopServices::openUrl(url)) {
@@ -342,7 +342,7 @@ bool XDebugBrowserJob::doKill()
 {
     kDebug();
     m_session->stopDebugger();
-    KUrl url = m_url;
+    QUrl url = m_url;
     url.addQueryItem("XDEBUG_SESSION_STOP_NO_EXEC", "kdev");
     QDesktopServices::openUrl(url);
     return true;

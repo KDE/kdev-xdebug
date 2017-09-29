@@ -29,6 +29,7 @@
 
 #include "debugsession.h"
 
+class QUrl;
 class QDomDocument;
 class QTcpSocket;
 
@@ -108,7 +109,7 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     void stateChanged(KDevelop::IDebugSession::DebuggerState status);
-    void currentPositionChanged(const KUrl &fileName, int lineNum);
+    void currentPositionChanged(const QUrl &fileName, int lineNum);
     void output(QString content);
     void outputLine(QString content);
 //     void initDone(const QString& ideKey);

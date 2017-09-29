@@ -22,7 +22,6 @@
 #ifndef XDEBUG_DEBUGSESSION_H
 #define XDEBUG_DEBUGSESSION_H
 
-#include <KUrl>
 #include <QtCore/QString>
 #include <debugger/interfaces/idebugsession.h>
 

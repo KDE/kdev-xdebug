@@ -26,7 +26,7 @@
 
 #include <QPointer>
 #include <QProcess>
-#include <KUrl>
+#include <QUrl>
 
 #include <outputview/outputjob.h>
 
@@ -80,7 +80,7 @@ private slots:
     void sessionFinished();
 
 private:
-    KUrl m_url;
+    QUrl m_url;
     QString m_browser;
     DebugSession* m_session;
 };

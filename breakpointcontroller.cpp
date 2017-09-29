@@ -61,7 +61,7 @@ void BreakpointController::sendMaybe(KDevelop::Breakpoint* breakpoint)
                     args << "-t call";
                 }
                 if (breakpoint->line() != -1) {
-                    QPair<KUrl, int> u = qMakePair(breakpoint->url(), breakpoint->line());
+                    QPair<QUrl, int> u = qMakePair(breakpoint->url(), breakpoint->line());
                     u = debugSession()->convertToRemoteUrl(u);
                     args << "-f "+u.first.url();
                     args << "-n "+QString::number(u.second+1);

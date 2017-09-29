@@ -113,7 +113,6 @@ void ConnectionTest::initTestCase()
 void ConnectionTest::init()
 {
     qRegisterMetaType<DebugSession*>("DebugSession*");
-    qRegisterMetaType<KUrl>("KUrl");
 
     KDevelop::AutoTestShell::init();
     m_core = new KDevelop::TestCore();
@@ -150,7 +149,7 @@ void ConnectionTest::testStdOutput()
             << "echo \"\\n\";";
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(file.fileName());
+    const auto url = QUrl::fromLocalFile(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -191,7 +190,7 @@ void ConnectionTest::testShowStepInSource()
             << "$i++;";
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(file.fileName());
+    const auto url = QUrl::fromLocalFile(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -202,7 +201,7 @@ void ConnectionTest::testShowStepInSource()
 
     KDevelop::ICore::self()->debugController()->breakpointModel()->addCodeBreakpoint(url, 1);
 
-    QSignalSpy showStepInSourceSpy(&session, SIGNAL(showStepInSource(KUrl, int, QString)));
+    QSignalSpy showStepInSourceSpy(&session, SIGNAL(showStepInSource(QUrl, int, QString)));
 
     kDebug() << "************************************************************************************";
     job.start();
@@ -219,11 +218,11 @@ void ConnectionTest::testShowStepInSource()
     {
         QCOMPARE(showStepInSourceSpy.count(), 2);
         QList<QVariant> arguments = showStepInSourceSpy.takeFirst();
-        QCOMPARE(arguments.first().value<KUrl>(), url);
+        QCOMPARE(arguments.first().value<QUrl>(), url);
         QCOMPARE(arguments.at(1).toInt(), 1);
 
         arguments = showStepInSourceSpy.takeFirst();
-        QCOMPARE(arguments.first().value<KUrl>(), url);
+        QCOMPARE(arguments.first().value<QUrl>(), url);
         QCOMPARE(arguments.at(1).toInt(), 2);
     }
 }
@@ -237,7 +236,7 @@ void ConnectionTest::testMultipleSessions()
             << "$i++;";
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(file.fileName());
+    const auto url = QUrl::fromLocalFile(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -265,7 +264,7 @@ void ConnectionTest::testStackModel()
             << "echo 'y';";     // 6
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(file.fileName());
+    const auto url = QUrl::fromLocalFile(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -324,7 +323,7 @@ void ConnectionTest::testBreakpoint()
             << "echo 'y';";     // 6
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(file.fileName());
+    const auto url = QUrl::fromLocalFile(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -339,7 +338,7 @@ void ConnectionTest::testBreakpoint()
     job.start();
     session.waitForConnected();
 
-    QSignalSpy showStepInSourceSpy(&session, SIGNAL(showStepInSource(KUrl, int, QString)));
+    QSignalSpy showStepInSourceSpy(&session, SIGNAL(showStepInSource(QUrl, int, QString)));
 
     session.waitForState(DebugSession::PausedState);
 
@@ -349,7 +348,7 @@ void ConnectionTest::testBreakpoint()
     {
         QCOMPARE(showStepInSourceSpy.count(), 1);
         QList<QVariant> arguments = showStepInSourceSpy.takeFirst();
-        QCOMPARE(arguments.first().value<KUrl>(), url);
+        QCOMPARE(arguments.first().value<QUrl>(), url);
         QCOMPARE(arguments.at(1).toInt(), 3);
     }
 }
@@ -367,7 +366,7 @@ void ConnectionTest::testDisableBreakpoint()
             << "echo 'y';";     // 8
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(file.fileName());
+    const auto url = QUrl::fromLocalFile(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -415,7 +414,7 @@ void ConnectionTest::testChangeLocationBreakpoint()
             << "echo 'y';";     // 8
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(file.fileName());
+    const auto url = QUrl::fromLocalFile(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -457,7 +456,7 @@ void ConnectionTest::testDeleteBreakpoint()
             << "echo 'y';";     // 8
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(file.fileName());
+    const auto url = QUrl::fromLocalFile(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -501,7 +500,7 @@ void ConnectionTest::testConditionalBreakpoint()
             << "echo 'y';";    // 6
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(file.fileName());
+    const auto url = QUrl::fromLocalFile(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -519,7 +518,7 @@ void ConnectionTest::testConditionalBreakpoint()
     job.start();
     session.waitForConnected();
 
-    QSignalSpy showStepInSourceSpy(&session, SIGNAL(showStepInSource(KUrl, int, QString)));
+    QSignalSpy showStepInSourceSpy(&session, SIGNAL(showStepInSource(QUrl, int, QString)));
 
     session.waitForState(DebugSession::PausedState);
 
@@ -529,7 +528,7 @@ void ConnectionTest::testConditionalBreakpoint()
     {
         QCOMPARE(showStepInSourceSpy.count(), 1);
         QList<QVariant> arguments = showStepInSourceSpy.takeFirst();
-        QCOMPARE(arguments.first().value<KUrl>(), url);
+        QCOMPARE(arguments.first().value<QUrl>(), url);
         QCOMPARE(arguments.at(1).toInt(), 5);
     }
 }
@@ -543,7 +542,7 @@ void ConnectionTest::testBreakpointError()
             << "$i++;";         // 3
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(file.fileName());
+    const auto url = QUrl::fromLocalFile(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -556,7 +555,7 @@ void ConnectionTest::testBreakpointError()
     KDevelop::ICore::self()->debugController()->breakpointModel()->addCodeBreakpoint(url, 2);
 
     KDevelop::Breakpoint* b = KDevelop::ICore::self()->debugController()->breakpointModel()
-        ->addCodeBreakpoint(KUrl(""), 2);
+        ->addCodeBreakpoint(QUrl(""), 2);
     QVERIFY(b->errorText().isEmpty());
 
 
@@ -602,7 +601,7 @@ void ConnectionTest::testVariablesLocals()
 */
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(file.fileName());
+    const auto url = QUrl::fromLocalFile(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -650,7 +649,7 @@ QStringList contents;
 
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(file.fileName());
+    const auto url = QUrl::fromLocalFile(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -693,7 +692,7 @@ void ConnectionTest::testVariableExpanding()
 
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(file.fileName());
+    const auto url = QUrl::fromLocalFile(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -762,7 +761,7 @@ void ConnectionTest::testTooltipVariable()
 
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(file.fileName());
+    const auto url = QUrl::fromLocalFile(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -805,7 +804,7 @@ void ConnectionTest::testInvalidTooltipVariable()
 
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(file.fileName());
+    const auto url = QUrl::fromLocalFile(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -847,7 +846,7 @@ void ConnectionTest::testPhpCrash()
             << "$i++;";
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(file.fileName());
+    const auto url = QUrl::fromLocalFile(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -877,7 +876,7 @@ void ConnectionTest::testConnectionClosed()
             << "$i++;";
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(file.fileName());
+    const auto url = QUrl::fromLocalFile(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -909,7 +908,7 @@ void ConnectionTest::testMultipleConnectionsClosed()
             << "$i++;";
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(file.fileName());
+    const auto url = QUrl::fromLocalFile(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
@@ -958,7 +957,7 @@ void ConnectionTest::testVariableUpdates()
 
     QTemporaryFile file("xdebugtest");
     file.open();
-    KUrl url(file.fileName());
+    const auto url = QUrl::fromLocalFile(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
