@@ -36,7 +36,6 @@
 #include <interfaces/iplugin.h>
 #include <debugger/interfaces/idebugsession.h>
 
-class KAction;
 class KProcess;
 
 namespace XDebug

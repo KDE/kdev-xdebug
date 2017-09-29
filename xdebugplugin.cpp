@@ -34,8 +34,6 @@
 #include <QDBusInterface>
 #include <QSignalMapper>
 
-#include <kaction.h>
-#include <kactioncollection.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <kiconloader.h>
