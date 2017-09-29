@@ -42,7 +42,7 @@ class ConfigPage : public KDevelop::LaunchConfigurationPage
 Q_OBJECT
 public:
     ConfigPage( QWidget* parent = 0 );
-    virtual KIcon icon() const;
+    virtual QIcon icon() const;
     virtual void loadFromConfiguration(const KConfigGroup& cfg, KDevelop::IProject* = 0);
     virtual void saveToConfiguration(KConfigGroup, KDevelop::IProject* = 0 ) const;
     virtual QString title() const;

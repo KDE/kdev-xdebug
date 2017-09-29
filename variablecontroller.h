@@ -30,6 +30,7 @@ class QDomDocument;
 namespace KDevelop {
 class Locals;
 }
+
 namespace XDebug {
 
 class Variable;
@@ -42,13 +43,14 @@ class VariableController : public KDevelop::IVariableController
 public:
     VariableController(DebugSession* parent);
 
-    virtual KDevelop::Variable* createVariable(KDevelop::TreeModel* model, KDevelop::TreeItem* parent,
+    KDevelop::Variable* createVariable(KDevelop::TreeModel* model, KDevelop::TreeItem* parent,
                                      const QString& expression,
-                                     const QString& display = "");
-    virtual QString expressionUnderCursor(KTextEditor::Document* doc, const KTextEditor::Cursor& cursor);
-    virtual void addWatch(KDevelop::Variable* variable);
-    virtual void addWatchpoint(KDevelop::Variable* variable);
-    virtual void update();
+                                     const QString& display = "") override;
+    KTextEditor::Range expressionRangeUnderCursor(KTextEditor::Document* doc, const KTextEditor::Cursor& cursor) override;
+
+    void addWatch(KDevelop::Variable* variable) override;
+    void addWatchpoint(KDevelop::Variable* variable) override;
+    void update() override;
 /*
 private slots:
     void programStopped(const GDBMI::ResultRecord &r);

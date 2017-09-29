@@ -81,7 +81,7 @@ namespace XDebug
 {
 
 XDebugPlugin::XDebugPlugin( QObject *parent, const QVariantList & ) :
-    KDevelop::IPlugin( KDevXDebugDebuggerFactory::componentData(), parent )
+    KDevelop::IPlugin(QStringLiteral("kdevxdebug"), parent)
 {
     core()->debugController()->initializeUi();
 

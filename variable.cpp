@@ -23,6 +23,9 @@
 #include "variable.h"
 #include "debugsession.h"
 
+#include <KDebug>
+
+#include <QDomElement>
 #include <QXmlStreamReader>
 
 #include <interfaces/icore.h>

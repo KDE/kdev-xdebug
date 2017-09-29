@@ -22,17 +22,21 @@
 #ifndef XDEBUG_DEBUGSESSION_H
 #define XDEBUG_DEBUGSESSION_H
 
+#include <KUrl>
 #include <QtCore/QString>
 #include <debugger/interfaces/idebugsession.h>
 
 namespace KDevelop {
-    class ILaunchConfiguration;
+class ILaunchConfiguration;
 }
 class KJob;
 class QTcpServer;
 class KProcess;
 
 namespace XDebug {
+class BreakpointController;
+class FrameStackModel;
+class VariableController;
 class Connection;
 
 class DebugSession : public KDevelop::IDebugSession
@@ -57,11 +61,12 @@ public:
     
     virtual bool restartAvaliable() const;
 
-    virtual QPair<KUrl, int> convertToLocalUrl(const QPair<KUrl, int>& url) const;
-    virtual QPair<KUrl, int> convertToRemoteUrl(const QPair<KUrl, int>& url) const;
+    QPair<QUrl, int> convertToLocalUrl(const QPair<QUrl, int>& url) const override;
+    QPair<QUrl, int> convertToRemoteUrl(const QPair<QUrl, int>& url) const override;
 
-private:
-    virtual KDevelop::IFrameStackModel* createFrameStackModel();
+    KDevelop::IBreakpointController* breakpointController() const override;
+    KDevelop::IVariableController* variableController() const override;
+    KDevelop::IFrameStackModel* frameStackModel() const override;
 
 Q_SIGNALS:
     void output(QString line);
@@ -87,11 +92,15 @@ private Q_SLOTS:
     void incomingConnection();
     void _stateChanged(KDevelop::IDebugSession::DebuggerState);
     void connectionClosed();
-    void currentPositionChanged(const KUrl &url, int line);
+    void currentPositionChanged(const QUrl &url, int line);
 private:
     void closeServer();
 
 private:
+    BreakpointController* m_breakpointController;
+    VariableController* m_variableController;
+    FrameStackModel* m_frameStackModel;
+
     QTcpServer* m_server;
     Connection *m_connection;
     KDevelop::ILaunchConfiguration *m_launchConfiguration;

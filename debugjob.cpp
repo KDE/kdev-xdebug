@@ -28,6 +28,8 @@
 #include <QFileInfo>
 #include <QDesktopServices>
 
+#include <KDebug>
+#include <KGlobal>
 #include <KProcess>
 #include <kconfiggroup.h>
 #include <kicon.h>
@@ -38,7 +40,7 @@
 
 #include <outputview/outputmodel.h>
 #include <interfaces/ilaunchconfiguration.h>
-#include <util/environmentgrouplist.h>
+#include <util/environmentprofilelist.h>
 #include <execute/iexecuteplugin.h>
 #include <interfaces/iproject.h>
 #include <project/interfaces/iprojectbuilder.h>
@@ -71,8 +73,8 @@ XDebugJob::XDebugJob( DebugSession* session, KDevelop::ILaunchConfiguration* cfg
     IExecuteScriptPlugin* iface = KDevelop::ICore::self()->pluginController()->pluginForExtension("org.kdevelop.IExecuteScriptPlugin")->extension<IExecuteScriptPlugin>();
     Q_ASSERT(iface);
 
-    KDevelop::EnvironmentGroupList l(KGlobal::config());
-    QString envgrp = iface->environmentGroup(cfg);
+    KDevelop::EnvironmentProfileList l(KGlobal::config());
+    QString envgrp = iface->environmentProfileName(cfg);
 
     QString err;
     QString interpreter = iface->interpreter( cfg, err );
@@ -106,7 +108,7 @@ XDebugJob::XDebugJob( DebugSession* session, KDevelop::ILaunchConfiguration* cfg
         kWarning() << "Launch Configuration:" << cfg->name() << i18n("No environment group specified, looks like a broken "
                        "configuration, please check run configuration '%1'. "
                        "Using default environment group.", cfg->name() );
-        envgrp = l.defaultGroup();
+        envgrp = l.defaultProfileName();
     }
 
     QStringList arguments = iface->arguments( cfg, err );

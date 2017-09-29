@@ -23,6 +23,9 @@
 
 #include "variablecontroller.h"
 
+#include <KTextEditor/Document>
+
+#include <QDomElement>
 #include <QXmlStreamReader>
 
 #include <debugger/variable/variablecollection.h>
@@ -120,13 +123,13 @@ void VariableController::updateLocals()
     debugSession()->connection()->sendCommand("context_names", args, QByteArray(), cb);
 }
 
-QString VariableController::expressionUnderCursor(KTextEditor::Document* doc, const KTextEditor::Cursor& cursor)
+KTextEditor::Range VariableController::expressionRangeUnderCursor(KTextEditor::Document* doc, const KTextEditor::Cursor& cursor)
 {
     QString line = doc->line(cursor.line());
     int index = cursor.column();
     QChar c = line[index];
     if (!c.isLetterOrNumber() && c != '_' && c != '$')
-        return QString();
+        return {};
 
     int start = Utils::expressionAt(line, index);
     int end = index;
@@ -136,11 +139,10 @@ QString VariableController::expressionUnderCursor(KTextEditor::Document* doc, co
             break;
     }
     if (!(start < end))
-        return QString();
+        return {};
 
-    QString expression(line.mid(start, end-start));
-    expression = expression.trimmed();
-    return expression;
+    // TODO: Check whether this was ported correctly
+    return {KTextEditor::Cursor{cursor.line(), start}, KTextEditor::Cursor{cursor.line(), end}};
 }
 
 

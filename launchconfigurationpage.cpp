@@ -23,7 +23,7 @@
 
 #include <QVBoxLayout>
 
-#include <KIcon>
+#include <QIcon>
 #include <KLocalizedString>
 
 #include "ui_launchconfigurationpage.h"
@@ -47,9 +47,9 @@ ConfigPage::ConfigPage( QWidget* parent )
     connect(m_ui->pathMappings, SIGNAL(changed()), SIGNAL(changed()));
 }
 
-KIcon ConfigPage::icon() const
+QIcon ConfigPage::icon() const
 {
-    return KIcon();
+    return QIcon();
 }
 
 void ConfigPage::loadFromConfiguration( const KConfigGroup& cfg, KDevelop::IProject*  )

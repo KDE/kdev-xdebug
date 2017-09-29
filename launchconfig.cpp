@@ -27,6 +27,7 @@
 
 #include <QFileInfo>
 
+#include <KDebug>
 #include <KProcess>
 #include <kconfiggroup.h>
 #include <kicon.h>
@@ -37,7 +38,7 @@
 
 #include <outputview/outputmodel.h>
 #include <interfaces/ilaunchconfiguration.h>
-#include <util/environmentgrouplist.h>
+#include <util/environmentprofilelist.h>
 #include <execute/iexecuteplugin.h>
 #include <interfaces/iproject.h>
 #include <project/interfaces/iprojectbuilder.h>

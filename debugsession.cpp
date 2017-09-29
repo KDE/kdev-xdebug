@@ -42,11 +42,15 @@
 namespace XDebug {
 
 DebugSession::DebugSession()
-    : KDevelop::IDebugSession(), m_server(0), m_connection(0),
-      m_launchConfiguration(0), m_acceptMultipleConnections(false)
+    : KDevelop::IDebugSession()
+    , m_breakpointController(new BreakpointController(this))
+    , m_variableController(new VariableController(this))
+    , m_frameStackModel(new FrameStackModel(this))
+    , m_server(0)
+    , m_connection(0)
+    , m_launchConfiguration(0)
+    , m_acceptMultipleConnections(false)
 {
-    m_breakpointController = new BreakpointController(this);
-    m_variableController = new VariableController(this);
 }
 
 DebugSession::~DebugSession()
@@ -257,29 +261,39 @@ bool DebugSession::restartAvaliable() const
     return false;
 }
 
-KDevelop::IFrameStackModel* DebugSession::createFrameStackModel()
+KDevelop::IBreakpointController* DebugSession::breakpointController() const
 {
-    return new FrameStackModel(this);
+    return m_breakpointController;
 }
 
-QPair<KUrl, int> DebugSession::convertToLocalUrl(const QPair<KUrl, int>& remoteUrl) const
+KDevelop::IVariableController* DebugSession::variableController() const
+{
+    return m_variableController;
+}
+
+KDevelop::IFrameStackModel* DebugSession::frameStackModel() const
+{
+    return m_frameStackModel;
+}
+
+QPair<QUrl, int> DebugSession::convertToLocalUrl(const QPair<QUrl, int>& remoteUrl) const
 {
     Q_ASSERT(m_launchConfiguration);
-    QPair<KUrl, int> ret = remoteUrl;
+    QPair<QUrl, int> ret = remoteUrl;
     ret.first = KDevelop::PathMappings::convertToLocalUrl(m_launchConfiguration->config(), remoteUrl.first);
     return ret;
 }
 
 
-QPair<KUrl, int> DebugSession::convertToRemoteUrl(const QPair<KUrl, int>& localUrl) const
+QPair<QUrl, int> DebugSession::convertToRemoteUrl(const QPair<QUrl, int>& localUrl) const
 {
     Q_ASSERT(m_launchConfiguration);
-    QPair<KUrl, int> ret = localUrl;
+    QPair<QUrl, int> ret = localUrl;
     ret.first = KDevelop::PathMappings::convertToRemoteUrl(m_launchConfiguration->config(), localUrl.first);
     return ret;
 }
 
-void DebugSession::currentPositionChanged(const KUrl& url, int line)
+void DebugSession::currentPositionChanged(const QUrl& url, int line)
 {
     setCurrentPosition(url, line, QString());
 }

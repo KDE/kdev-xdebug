@@ -24,6 +24,7 @@
 #ifndef XDEBUGDEBUGJOB
 #define XDEBUGDEBUGJOB
 
+#include <QPointer>
 #include <QProcess>
 #include <KUrl>
 

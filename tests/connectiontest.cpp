@@ -61,7 +61,7 @@ namespace KDevelop {
 class TestLaunchConfiguration : public KDevelop::ILaunchConfiguration
 {
 public:
-    TestLaunchConfiguration(KUrl script) {
+    TestLaunchConfiguration(const QUrl& script) {
         c = new KConfig();
         cfg = c->group("launch");
         cfg.writeEntry("isExecutable", true);
@@ -545,7 +545,6 @@ void ConnectionTest::testBreakpointError()
     job.start();
     session.waitForConnected();
     session.waitForState(DebugSession::PausedState);
-    kDebug() << b->errors();
     kDebug() << b->errorText();
     QVERIFY(!b->errorText().isEmpty());
 
