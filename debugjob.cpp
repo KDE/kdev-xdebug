@@ -73,7 +73,7 @@ XDebugJob::XDebugJob( DebugSession* session, KDevelop::ILaunchConfiguration* cfg
     IExecuteScriptPlugin* iface = KDevelop::ICore::self()->pluginController()->pluginForExtension("org.kdevelop.IExecuteScriptPlugin")->extension<IExecuteScriptPlugin>();
     Q_ASSERT(iface);
 
-    KDevelop::EnvironmentProfileList l(KGlobal::config());
+    KDevelop::EnvironmentProfileList l(KSharedConfig::openConfig());
     QString envgrp = iface->environmentProfileName(cfg);
 
     QString err;
