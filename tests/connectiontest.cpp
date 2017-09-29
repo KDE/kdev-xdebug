@@ -460,14 +460,15 @@ void ConnectionTest::testDeleteBreakpoint()
 
     KDevelop::BreakpointModel* breakpoints = KDevelop::ICore::self()->debugController()->breakpointModel();
 
-    QCOMPARE(KDevelop::ICore::self()->debugController()->breakpointModel()->rowCount(), 1); //one for the "insert here" entry
+    QCOMPARE(KDevelop::ICore::self()->debugController()->breakpointModel()->rowCount(), 0);
     //add breakpoint before startProgram
     breakpoints->addCodeBreakpoint(url, 5);
-    QCOMPARE(KDevelop::ICore::self()->debugController()->breakpointModel()->rowCount(), 2);
-    breakpoints->removeRow(0);
     QCOMPARE(KDevelop::ICore::self()->debugController()->breakpointModel()->rowCount(), 1);
+    breakpoints->removeRow(0);
+    QCOMPARE(KDevelop::ICore::self()->debugController()->breakpointModel()->rowCount(), 0);
 
     breakpoints->addCodeBreakpoint(url, 2);
+    QCOMPARE(KDevelop::ICore::self()->debugController()->breakpointModel()->rowCount(), 1);
 
     job.start();
     session.waitForConnected();
