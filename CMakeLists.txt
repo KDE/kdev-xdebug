@@ -23,6 +23,8 @@ find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS TextEditor I18n ItemMode
 find_path(EXECUTEBROWSER_INCLUDE_DIR iexecutebrowserplugin.h PATH_SUFFIXES kdevexecutebrowser)
 include_directories(${EXECUTEBROWSER_INCLUDE_DIR})
 
+set(CMAKE_AUTOUIC ON)
+
 set(kdevxdebugcore_PART_SRCS
     connection.cpp
     debugsession.cpp
@@ -38,8 +40,8 @@ set(kdevxdebug_PART_SRCS
     xdebugplugin.cpp
     launchconfig.cpp
     launchconfigurationpage.cpp
+    launchconfigurationpage.ui
 )
-ki18n_wrap_ui(kdevxdebug_PART_SRCS launchconfigurationpage.ui)
 kdevplatform_add_plugin(kdevxdebug SOURCES ${kdevxdebug_PART_SRCS} ${kdevxdebugcore_PART_SRCS})
 target_link_libraries(kdevxdebug
     KDev::Interfaces
