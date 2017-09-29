@@ -29,13 +29,13 @@
 #include <QDesktopServices>
 
 #include <QDebug>
-#include <KGlobal>
 #include <KProcess>
 #include <kconfiggroup.h>
 #include <kicon.h>
 #include <kshell.h>
 #include <KMessageBox>
 #include <KParts/MainWindow>
+#include <KLocalizedString>
 
 #include <outputview/outputmodel.h>
 #include <interfaces/ilaunchconfiguration.h>
