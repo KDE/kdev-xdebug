@@ -66,7 +66,6 @@ ecm_add_test(${connectiontest_SRCS}
         KDev::OutputView
         KDev::Shell
         KDev::Util
-        KF5::KDELibs4Support
         Qt5::Test
 )
 
