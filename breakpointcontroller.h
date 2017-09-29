@@ -14,7 +14,7 @@
    along with this library; see the file COPYING.LIB.  If not, write to
    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA 02110-1301, USA.
-*/
+ */
 
 #ifndef XDEBUG_BREAKPOINTCONTROLLER_H
 #define XDEBUG_BREAKPOINTCONTROLLER_H
@@ -26,9 +26,11 @@ class QDomDocument;
 namespace XDebug {
 class DebugSession;
 
-class BreakpointController : public KDevelop::IBreakpointController
+class BreakpointController
+    : public KDevelop::IBreakpointController
 {
-Q_OBJECT
+    Q_OBJECT
+
 public:
     BreakpointController(DebugSession* parent);
 
@@ -39,13 +41,12 @@ private slots:
     void stateChanged(KDevelop::IDebugSession::DebuggerState state);
 
 private:
-    DebugSession *debugSession();
-    void handleSetBreakpoint(KDevelop::Breakpoint* breakpoint, const QDomDocument &xml);
-    void handleBreakpointList(const QDomDocument &xml);
+    DebugSession* debugSession();
+    void handleSetBreakpoint(KDevelop::Breakpoint* breakpoint, const QDomDocument& xml);
+    void handleBreakpointList(const QDomDocument& xml);
 
     QMap<KDevelop::Breakpoint*, QString> m_ids;
 };
-
 }
 
 #endif // XDEBUG_BREAKPOINTCONTROLLER_H

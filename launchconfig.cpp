@@ -1,27 +1,26 @@
 /*
-* XDebug Debugger Support
-*
-* Copyright 2006 Vladimir Prus <ghost@cs.msu.su>
-* Copyright 2007 Hamish Rodda <rodda@kde.org>
-* Copyright 2009 Andreas Pakulat <apaku@gmx.de>
-* Copyright 2009 Niko Sams <niko.sams@gmail.com>
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as
-* published by the Free Software Foundation; either version 2 of the
-* License, or (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public
-* License along with this program; if not, write to the
-* Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-*/
-
+ * XDebug Debugger Support
+ *
+ * Copyright 2006 Vladimir Prus <ghost@cs.msu.su>
+ * Copyright 2007 Hamish Rodda <rodda@kde.org>
+ * Copyright 2009 Andreas Pakulat <apaku@gmx.de>
+ * Copyright 2009 Niko Sams <niko.sams@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this program; if not, write to the
+ * Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ */
 
 #include "launchconfig.h"
 
@@ -55,15 +54,13 @@
 #include "debugjob.h"
 #include "launchconfigurationpage.h"
 
-
 namespace XDebug {
-
-XDebugLauncher::XDebugLauncher( XDebugPlugin* p ) : m_plugin( p )
+XDebugLauncher::XDebugLauncher(XDebugPlugin* p) : m_plugin(p)
 {
     m_factoryList << new ConfigPageFactory();
 }
 
-QList< KDevelop::LaunchConfigurationPageFactory* > XDebugLauncher::configPages() const
+QList<KDevelop::LaunchConfigurationPageFactory*> XDebugLauncher::configPages() const
 {
     return m_factoryList;;
 }
@@ -81,13 +78,11 @@ QString XDebugLauncher::name() const
 KJob* XDebugLauncher::start(const QString& launchMode, KDevelop::ILaunchConfiguration* cfg)
 {
     Q_ASSERT(cfg);
-    if( !cfg )
-    {
+    if (!cfg) {
         return nullptr;
     }
-    if( launchMode == "debug" )
-    {
-        return new XDebugJob( m_plugin->createSession(), cfg );
+    if (launchMode == "debug") {
+        return new XDebugJob(m_plugin->createSession(), cfg);
     }
     qWarning() << "Unknown launch mode" << launchMode << "for config:" << cfg->name();
     return nullptr;
@@ -111,13 +106,14 @@ XDebugBrowserLauncher::XDebugBrowserLauncher(XDebugPlugin* plugin)
 KJob* XDebugBrowserLauncher::start(const QString& launchMode, KDevelop::ILaunchConfiguration* cfg)
 {
     Q_ASSERT(cfg);
-    if( !cfg ) return nullptr;
+    if (!cfg) {
+        return nullptr;
+    }
 
-    if( launchMode == "debug" ) {
-        return new XDebugBrowserJob( m_plugin->createSession(), cfg );
+    if (launchMode == "debug") {
+        return new XDebugBrowserJob(m_plugin->createSession(), cfg);
     }
     qWarning() << "Unknown launch mode" << launchMode << "for config:" << cfg->name();
     return nullptr;
 }
-
 }

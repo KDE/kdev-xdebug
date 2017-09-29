@@ -28,8 +28,8 @@
 
 class QDomDocument;
 namespace XDebug {
-
-class FrameStackModel : public KDevelop::FrameStackModel
+class FrameStackModel
+    : public KDevelop::FrameStackModel
 {
 public:
     FrameStackModel(DebugSession* session) : KDevelop::FrameStackModel(session) {}
@@ -42,9 +42,8 @@ protected: // KDevelop::FrameStackModel overrides
     void fetchFrames(int threadNumber, int from, int to) override;
 
 private:
-    void handleStack(const QDomDocument &xml);
+    void handleStack(const QDomDocument& xml);
 };
-
 }
 
 #endif

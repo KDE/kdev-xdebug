@@ -32,11 +32,11 @@ class Locals;
 }
 
 namespace XDebug {
-
 class Variable;
 class DebugSession;
 
-class VariableController : public KDevelop::IVariableController
+class VariableController
+    : public KDevelop::IVariableController
 {
     Q_OBJECT
 
@@ -44,32 +44,32 @@ public:
     VariableController(DebugSession* parent);
 
     KDevelop::Variable* createVariable(KDevelop::TreeModel* model, KDevelop::TreeItem* parent,
-                                     const QString& expression,
-                                     const QString& display = "") override;
+                                       const QString& expression,
+                                       const QString& display = "") override;
     KTextEditor::Range expressionRangeUnderCursor(KTextEditor::Document* doc, const KTextEditor::Cursor& cursor) override;
 
     void addWatch(KDevelop::Variable* variable) override;
     void addWatchpoint(KDevelop::Variable* variable) override;
     void update() override;
 /*
-private slots:
+   private slots:
     void programStopped(const GDBMI::ResultRecord &r);
-*/
+ */
+
 private:
     DebugSession* debugSession() const;
 
     void updateLocals();
-    void handleLocals(KDevelop::Locals *locals, const QDomDocument &xml);
-    void handleContextNames(const QDomDocument &xml);
+    void handleLocals(KDevelop::Locals* locals, const QDomDocument& xml);
+    void handleContextNames(const QDomDocument& xml);
 
 /*
     void handleVarUpdate(const GDBMI::ResultRecord& r);
     void addWatch(const GDBMI::ResultRecord& r);
     void addWatchpoint(const GDBMI::ResultRecord& r);
-*/
+ */
     void handleEvent(KDevelop::IDebugSession::event_t event) override;
 };
-
 }
 
 #endif // GDBDEBUGGER_VARIABLECONTROLLER_H

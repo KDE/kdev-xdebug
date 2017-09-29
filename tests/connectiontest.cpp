@@ -51,35 +51,36 @@
 
 using namespace XDebug;
 namespace KParts {
-    class MainWindow;
+class MainWindow;
 }
 namespace Sublime {
-    class Controller;
+class Controller;
 }
 namespace KDevelop {
-    class IToolViewFactory;
+class IToolViewFactory;
 }
 
 namespace {
-
 inline QString phpExecutable()
 {
     return QStandardPaths::findExecutable("php");
 }
-
 }
 
-class TestLaunchConfiguration : public KDevelop::ILaunchConfiguration
+class TestLaunchConfiguration
+    : public KDevelop::ILaunchConfiguration
 {
 public:
-    TestLaunchConfiguration(const QUrl& script) {
+    TestLaunchConfiguration(const QUrl& script)
+    {
         c = new KConfig();
         cfg = c->group("launch");
         cfg.writeEntry("isExecutable", true);
         cfg.writeEntry("Executable", script);
         cfg.writeEntry("Interpreter", phpExecutable());
     }
-    ~TestLaunchConfiguration() override {
+    ~TestLaunchConfiguration() override
+    {
         delete c;
     }
     const KConfigGroup config() const override { return cfg; }
@@ -87,9 +88,10 @@ public:
     QString name() const override { return QString("Test-Launch"); }
     KDevelop::IProject* project() const override { return nullptr; }
     KDevelop::LaunchConfigurationType* type() const override { return nullptr; }
+
 private:
     KConfigGroup cfg;
-    KConfig *c;
+    KConfig* c;
 };
 
 #define COMPARE_DATA(index, expected) \
@@ -121,12 +123,12 @@ void ConnectionTest::init()
     m->removeRows(0, m->rowCount());
 
     /*
-    KDevelop::VariableCollection *vc = KDevelop::ICore::self()->debugController()->variableCollection();
-    for (int i=0; i < vc->watches()->childCount(); ++i) {
+       KDevelop::VariableCollection *vc = KDevelop::ICore::self()->debugController()->variableCollection();
+       for (int i=0; i < vc->watches()->childCount(); ++i) {
         delete vc->watches()->child(i);
-    }
-    vc->watches()->clear();
-    */
+       }
+       vc->watches()->clear();
+     */
 }
 
 void ConnectionTest::cleanup()
@@ -139,12 +141,12 @@ void ConnectionTest::testStdOutput()
 {
     QStringList contents;
     contents << "<?php"
-            << "$i = 0;"
-            << "echo \"foo\\n\";"
-            << "$i++;"
-            << "echo \"foo\";"
-            << "echo \"bar\";"
-            << "echo \"\\n\";";
+             << "$i = 0;"
+             << "echo \"foo\\n\";"
+             << "$i++;"
+             << "echo \"foo\";"
+             << "echo \"bar\";"
+             << "echo \"\\n\";";
     QTemporaryFile file("xdebugtest");
     file.open();
     const auto url = QUrl::fromLocalFile(file.fileName());
@@ -161,7 +163,7 @@ void ConnectionTest::testStdOutput()
     QSignalSpy outputSpy(session, SIGNAL(output(QString)));
 
     job.start();
-    
+
     session->waitForConnected();
     session->waitForFinished();
     {
@@ -185,8 +187,8 @@ void ConnectionTest::testShowStepInSource()
 {
     QStringList contents;
     contents << "<?php"
-            << "$i = 0;"
-            << "$i++;";
+             << "$i = 0;"
+             << "$i++;";
     QTemporaryFile file("xdebugtest");
     file.open();
     const auto url = QUrl::fromLocalFile(file.fileName());
@@ -201,7 +203,7 @@ void ConnectionTest::testShowStepInSource()
 
     KDevelop::ICore::self()->debugController()->breakpointModel()->addCodeBreakpoint(url, 1);
 
-    QSignalSpy showStepInSourceSpy(session, SIGNAL(showStepInSource(QUrl, int, QString)));
+    QSignalSpy showStepInSourceSpy(session, SIGNAL(showStepInSource(QUrl,int,QString)));
 
     qDebug() << "************************************************************************************";
     job.start();
@@ -227,21 +229,19 @@ void ConnectionTest::testShowStepInSource()
     }
 }
 
-
 void ConnectionTest::testMultipleSessions()
 {
     QStringList contents;
     contents << "<?php"
-            << "$i = 0;"
-            << "$i++;";
+             << "$i = 0;"
+             << "$i++;";
     QTemporaryFile file("xdebugtest");
     file.open();
     const auto url = QUrl::fromLocalFile(file.fileName());
     file.write(contents.join("\n").toUtf8());
     file.close();
 
-    for (int i=0; i<10; ++i) {
-
+    for (int i = 0; i < 10; ++i) {
         auto session = new DebugSession;
         KDevelop::ICore::self()->debugController()->addSession(session);
 
@@ -258,11 +258,11 @@ void ConnectionTest::testStackModel()
 {
     QStringList contents;
     contents << "<?php"         // 1
-            << "function x() {" // 2
-            << "  echo 'x';"    // 3
-            << "}"              // 4
-            << "x();"           // 5
-            << "echo 'y';";     // 6
+             << "function x() {" // 2
+             << "  echo 'x';"   // 3
+             << "}"             // 4
+             << "x();"          // 5
+             << "echo 'y';";    // 6
     QTemporaryFile file("xdebugtest");
     file.open();
     const auto url = QUrl::fromLocalFile(file.fileName());
@@ -280,27 +280,28 @@ void ConnectionTest::testStackModel()
     job.start();
     session->waitForConnected();
     session->waitForState(DebugSession::PausedState);
-    
+
     //step into function
-    for (int i=0; i<2; ++i) {
+    for (int i = 0; i < 2; ++i) {
         session->stepInto();
         session->waitForState(DebugSession::PausedState);
     }
+
     QTest::qWait(100);
 
     KDevelop::IFrameStackModel* stackModel = session->frameStackModel();
 
     QCOMPARE(stackModel->rowCount(QModelIndex()), 1); //one fake thread
 
-    QModelIndex tIdx = stackModel->index(0,0);
+    QModelIndex tIdx = stackModel->index(0, 0);
     QCOMPARE(stackModel->rowCount(tIdx), 2);
     QCOMPARE(stackModel->columnCount(tIdx), 3);
     COMPARE_DATA(tIdx.child(0, 0), "0");
     COMPARE_DATA(tIdx.child(0, 1), "x");
-    COMPARE_DATA(tIdx.child(0, 2), url.toLocalFile()+":3");
+    COMPARE_DATA(tIdx.child(0, 2), url.toLocalFile() + ":3");
     COMPARE_DATA(tIdx.child(1, 0), "1");
     COMPARE_DATA(tIdx.child(1, 1), "{main}");
-    COMPARE_DATA(tIdx.child(1, 2), url.toLocalFile()+":5");
+    COMPARE_DATA(tIdx.child(1, 2), url.toLocalFile() + ":5");
 
     session->stepInto();
     session->waitForState(DebugSession::PausedState);
@@ -313,16 +314,15 @@ void ConnectionTest::testStackModel()
     session->waitForFinished();
 }
 
-
 void ConnectionTest::testBreakpoint()
 {
     QStringList contents;
     contents << "<?php"         // 1
-            << "function x() {" // 2
-            << "  echo 'x';"    // 3
-            << "}"              // 4
-            << "x();"           // 5
-            << "echo 'y';";     // 6
+             << "function x() {" // 2
+             << "  echo 'x';"   // 3
+             << "}"             // 4
+             << "x();"          // 5
+             << "echo 'y';";    // 6
     QTemporaryFile file("xdebugtest");
     file.open();
     const auto url = QUrl::fromLocalFile(file.fileName());
@@ -335,13 +335,12 @@ void ConnectionTest::testBreakpoint()
     TestLaunchConfiguration cfg(url);
     XDebugJob job(session, &cfg);
 
-
     KDevelop::ICore::self()->debugController()->breakpointModel()->addCodeBreakpoint(url, 3);
 
     job.start();
     session->waitForConnected();
 
-    QSignalSpy showStepInSourceSpy(session, SIGNAL(showStepInSource(QUrl, int, QString)));
+    QSignalSpy showStepInSourceSpy(session, SIGNAL(showStepInSource(QUrl,int,QString)));
 
     session->waitForState(DebugSession::PausedState);
 
@@ -360,13 +359,13 @@ void ConnectionTest::testDisableBreakpoint()
 {
     QStringList contents;
     contents << "<?php"         // 1
-            << "function x() {" // 2
-            << "  echo 'x';"    // 3
-            << "  echo 'z';"    // 4
-            << "}"              // 5
-            << "x();"           // 6
-            << "x();"           // 7
-            << "echo 'y';";     // 8
+             << "function x() {" // 2
+             << "  echo 'x';"   // 3
+             << "  echo 'z';"   // 4
+             << "}"             // 5
+             << "x();"          // 6
+             << "x();"          // 7
+             << "echo 'y';";    // 8
     QTemporaryFile file("xdebugtest");
     file.open();
     const auto url = QUrl::fromLocalFile(file.fileName());
@@ -380,7 +379,7 @@ void ConnectionTest::testDisableBreakpoint()
     XDebugJob job(session, &cfg);
 
     KDevelop::BreakpointModel* breakpoints = KDevelop::ICore::self()->debugController()->breakpointModel();
-    KDevelop::Breakpoint *b;
+    KDevelop::Breakpoint* b;
 
     //add disabled breakpoint before startProgram
     b = breakpoints->addCodeBreakpoint(url, 2);
@@ -392,7 +391,7 @@ void ConnectionTest::testDisableBreakpoint()
     session->waitForConnected();
 
     session->waitForState(DebugSession::PausedState);
-    
+
     //disable existing breakpoint
     b->setData(KDevelop::Breakpoint::EnableColumn, false);
 
@@ -409,13 +408,13 @@ void ConnectionTest::testChangeLocationBreakpoint()
 {
     QStringList contents;
     contents << "<?php"         // 1
-            << "function x() {" // 2
-            << "  echo 'x';"    // 3
-            << "  echo 'z';"    // 4
-            << "}"              // 5
-            << "x();"           // 6
-            << "x();"           // 7
-            << "echo 'y';";     // 8
+             << "function x() {" // 2
+             << "  echo 'x';"   // 3
+             << "  echo 'z';"   // 4
+             << "}"             // 5
+             << "x();"          // 6
+             << "x();"          // 7
+             << "echo 'y';";    // 8
     QTemporaryFile file("xdebugtest");
     file.open();
     const auto url = QUrl::fromLocalFile(file.fileName());
@@ -430,7 +429,7 @@ void ConnectionTest::testChangeLocationBreakpoint()
 
     KDevelop::BreakpointModel* breakpoints = KDevelop::ICore::self()->debugController()->breakpointModel();
 
-    KDevelop::Breakpoint *b = breakpoints->addCodeBreakpoint(url, 5);
+    KDevelop::Breakpoint* b = breakpoints->addCodeBreakpoint(url, 5);
 
     job.start();
     session->waitForConnected();
@@ -452,13 +451,13 @@ void ConnectionTest::testDeleteBreakpoint()
 {
     QStringList contents;
     contents << "<?php"         // 1
-            << "function x() {" // 2
-            << "  echo 'x';"    // 3
-            << "  echo 'z';"    // 4
-            << "}"              // 5
-            << "x();"           // 6
-            << "x();"           // 7
-            << "echo 'y';";     // 8
+             << "function x() {" // 2
+             << "  echo 'x';"   // 3
+             << "  echo 'z';"   // 4
+             << "}"             // 5
+             << "x();"          // 6
+             << "x();"          // 7
+             << "echo 'y';";    // 8
     QTemporaryFile file("xdebugtest");
     file.open();
     const auto url = QUrl::fromLocalFile(file.fileName());
@@ -495,16 +494,15 @@ void ConnectionTest::testDeleteBreakpoint()
     session->waitForFinished();
 }
 
-
 void ConnectionTest::testConditionalBreakpoint()
 {
     QStringList contents;
     contents << "<?php"        // 1
-            << "$i = 0;"       // 2
-            << "$i++;"         // 3
-            << "$i++;"         // 4
-            << "$i++;"         // 5
-            << "echo 'y';";    // 6
+             << "$i = 0;"      // 2
+             << "$i++;"        // 3
+             << "$i++;"        // 4
+             << "$i++;"        // 5
+             << "echo 'y';";   // 6
     QTemporaryFile file("xdebugtest");
     file.open();
     const auto url = QUrl::fromLocalFile(file.fileName());
@@ -517,16 +515,15 @@ void ConnectionTest::testConditionalBreakpoint()
     TestLaunchConfiguration cfg(url);
     XDebugJob job(session, &cfg);
 
-
     KDevelop::ICore::self()->debugController()->breakpointModel()->addCodeBreakpoint(url, 2)
-        ->setCondition("1==2");
+    ->setCondition("1==2");
     KDevelop::ICore::self()->debugController()->breakpointModel()->addCodeBreakpoint(url, 5)
-        ->setCondition("1==1");
+    ->setCondition("1==1");
 
     job.start();
     session->waitForConnected();
 
-    QSignalSpy showStepInSourceSpy(session, SIGNAL(showStepInSource(QUrl, int, QString)));
+    QSignalSpy showStepInSourceSpy(session, SIGNAL(showStepInSource(QUrl,int,QString)));
 
     session->waitForState(DebugSession::PausedState);
 
@@ -541,13 +538,12 @@ void ConnectionTest::testConditionalBreakpoint()
     }
 }
 
-
 void ConnectionTest::testBreakpointError()
 {
     QStringList contents;
     contents << "<?php"        // 1
-            << "$i = 0;"       // 2
-            << "$i++;";         // 3
+             << "$i = 0;"      // 2
+             << "$i++;";        // 3
     QTemporaryFile file("xdebugtest");
     file.open();
     const auto url = QUrl::fromLocalFile(file.fileName());
@@ -563,9 +559,8 @@ void ConnectionTest::testBreakpointError()
     KDevelop::ICore::self()->debugController()->breakpointModel()->addCodeBreakpoint(url, 2);
 
     KDevelop::Breakpoint* b = KDevelop::ICore::self()->debugController()->breakpointModel()
-        ->addCodeBreakpoint(QUrl(""), 2);
+                              ->addCodeBreakpoint(QUrl(""), 2);
     QVERIFY(b->errorText().isEmpty());
-
 
     job.start();
     session->waitForConnected();
@@ -577,9 +572,7 @@ void ConnectionTest::testBreakpointError()
     session->waitForFinished();
 }
 
-
-
-KDevelop::VariableCollection *variableCollection()
+KDevelop::VariableCollection* variableCollection()
 {
     return KDevelop::ICore::self()->debugController()->variableCollection();
 }
@@ -588,12 +581,12 @@ void ConnectionTest::testVariablesLocals()
 {
     QStringList contents;
     contents << "<?php"                 // 1
-            << "$foo = 'foo';"          // 2
-            << "$bar = 123;"            // 3
-            << "$baz = array(1, 2, 5);" // 4
-            << "echo '';";              // 5
+             << "$foo = 'foo';"         // 2
+             << "$bar = 123;"           // 3
+             << "$baz = array(1, 2, 5);" // 4
+             << "echo '';";             // 5
 /*
-<response xmlns="urn:debugger_protocol_v1" xmlns:xdebug="http://xdebug.org/dbgp/xdebug" command="context_get" transaction_id="9" context="0">
+   <response xmlns="urn:debugger_protocol_v1" xmlns:xdebug="http://xdebug.org/dbgp/xdebug" command="context_get" transaction_id="9" context="0">
     <property name="foo" fullname="$foo" address="13397880" type="string" size="3" encoding="base64">
         <![CDATA[Zm9v]]>
     </property>
@@ -605,8 +598,8 @@ void ConnectionTest::testVariablesLocals()
         <property name="1" fullname="$baz[1]" address="13402872" type="int"><![CDATA[2]]></property>
         <property name="2" fullname="$baz[2]" address="13403000" type="int"><![CDATA[3]]></property>
     </property>
-</response>
-*/
+   </response>
+ */
     QTemporaryFile file("xdebugtest");
     file.open();
     const auto url = QUrl::fromLocalFile(file.fileName());
@@ -648,12 +641,11 @@ void ConnectionTest::testVariablesLocals()
     session->waitForFinished();
 }
 
-
 void ConnectionTest::testVariablesSuperglobals()
 {
-QStringList contents;
+    QStringList contents;
     contents << "<?php"                 // 1
-            << "$foo = 'foo';";         // 2
+             << "$foo = 'foo';";        // 2
 
     QTemporaryFile file("xdebugtest");
     file.open();
@@ -695,8 +687,8 @@ void ConnectionTest::testVariableExpanding()
 {
     QStringList contents;
     contents << "<?php"                 // 1
-            << "$foo = array(array(array(1, 2, 5)));" // 2
-            << "echo '';";              // 3
+             << "$foo = array(array(array(1, 2, 5)));" // 2
+             << "echo '';";             // 3
 
     QTemporaryFile file("xdebugtest");
     file.open();
@@ -745,15 +737,15 @@ void ConnectionTest::testVariableExpanding()
     session->waitForFinished();
 }
 
-
-class TestTooltipRoot : public KDevelop::TreeItem
+class TestTooltipRoot
+    : public KDevelop::TreeItem
 {
 public:
     TestTooltipRoot(KDevelop::TreeModel* model)
-    : KDevelop::TreeItem(model)
+        : KDevelop::TreeItem(model)
     {}
 
-    void init(KDevelop::Variable *var)
+    void init(KDevelop::Variable* var)
     {
         appendChild(var);
     }
@@ -764,8 +756,8 @@ void ConnectionTest::testTooltipVariable()
 {
     QStringList contents;
     contents << "<?php"      // 1
-            << "$foo = 123;" // 2
-            << "echo '';";   // 3
+             << "$foo = 123;" // 2
+             << "echo '';";  // 3
 
     QTemporaryFile file("xdebugtest");
     file.open();
@@ -807,8 +799,8 @@ void ConnectionTest::testInvalidTooltipVariable()
 {
     QStringList contents;
     contents << "<?php"      // 1
-            << "$foo = 123;" // 2
-            << "echo '';";   // 3
+             << "$foo = 123;" // 2
+             << "echo '';";  // 3
 
     QTemporaryFile file("xdebugtest");
     file.open();
@@ -850,8 +842,8 @@ void ConnectionTest::testPhpCrash()
 {
     QStringList contents;
     contents << "<?php"
-            << "$i = 0;"
-            << "$i++;";
+             << "$i = 0;"
+             << "$i++;";
     QTemporaryFile file("xdebugtest");
     file.open();
     const auto url = QUrl::fromLocalFile(file.fileName());
@@ -862,7 +854,7 @@ void ConnectionTest::testPhpCrash()
     KDevelop::ICore::self()->debugController()->addSession(session);
 
     TestLaunchConfiguration cfg(url);
-    XDebugJob *job = new XDebugJob(session, &cfg);
+    XDebugJob* job = new XDebugJob(session, &cfg);
 
     KDevelop::ICore::self()->debugController()->breakpointModel()->addCodeBreakpoint(url, 1);
 
@@ -882,8 +874,8 @@ void ConnectionTest::testConnectionClosed()
 {
     QStringList contents;
     contents << "<?php"
-            << "$i = 0;"
-            << "$i++;";
+             << "$i = 0;"
+             << "$i++;";
     QTemporaryFile file("xdebugtest");
     file.open();
     const auto url = QUrl::fromLocalFile(file.fileName());
@@ -894,7 +886,7 @@ void ConnectionTest::testConnectionClosed()
     KDevelop::ICore::self()->debugController()->addSession(session);
 
     TestLaunchConfiguration cfg(url);
-    XDebugJob *job = new XDebugJob(session, &cfg);
+    XDebugJob* job = new XDebugJob(session, &cfg);
 
     KDevelop::ICore::self()->debugController()->breakpointModel()->addCodeBreakpoint(url, 1);
 
@@ -909,14 +901,13 @@ void ConnectionTest::testConnectionClosed()
     //job seems to gets deleted automatically
 }
 
-
 //see bug 235061
 void ConnectionTest::testMultipleConnectionsClosed()
 {
     QStringList contents;
     contents << "<?php echo 123;"
-            << "$i = 0;"
-            << "$i++;";
+             << "$i = 0;"
+             << "$i++;";
     QTemporaryFile file("xdebugtest");
     file.open();
     const auto url = QUrl::fromLocalFile(file.fileName());
@@ -928,7 +919,7 @@ void ConnectionTest::testMultipleConnectionsClosed()
     session->setAcceptMultipleConnections(true);
 
     TestLaunchConfiguration cfg(url);
-    XDebugJob *job = new XDebugJob(session, &cfg);
+    XDebugJob* job = new XDebugJob(session, &cfg);
 
     KDevelop::ICore::self()->debugController()->breakpointModel()->addCodeBreakpoint(url, 1);
 
@@ -968,9 +959,9 @@ void ConnectionTest::testVariableUpdates()
 {
     QStringList contents;
     contents << "<?php"                 // 1
-            << "$foo = 1;"          // 2
-            << "$foo++;"            // 3
-            << "$foo++;";            // 4
+             << "$foo = 1;"         // 2
+             << "$foo++;"           // 3
+             << "$foo++;";           // 4
 
     QTemporaryFile file("xdebugtest");
     file.open();
@@ -1016,6 +1007,4 @@ void ConnectionTest::testVariableUpdates()
 //     controller.connection()->sendCommand("eval -i 124", QStringList(), "eval(\"function test124() { return rand(); } return test124();\")");
 //     controller.connection()->sendCommand("eval -i 126", QStringList(), "test124();");
 
-
 QTEST_MAIN(ConnectionTest)
-

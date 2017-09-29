@@ -38,18 +38,20 @@ class FrameStackModel;
 class VariableController;
 class Connection;
 
-class DebugSession : public KDevelop::IDebugSession
+class DebugSession
+    : public KDevelop::IDebugSession
 {
     Q_OBJECT
+
 public:
     DebugSession();
     ~DebugSession() override;
 
-    void setLaunchConfiguration(KDevelop::ILaunchConfiguration *cfg);
+    void setLaunchConfiguration(KDevelop::ILaunchConfiguration* cfg);
     void setAcceptMultipleConnections(bool v);
 
     bool listenForConnection(QString& error);
-    
+
     bool waitForState(DebuggerState state, int msecs = 30000);
     bool waitForFinished(int msecs = 30000);
     bool waitForConnected(int msecs = 30000);
@@ -57,7 +59,7 @@ public:
     Connection* connection();
 
     DebuggerState state() const override;
-    
+
     bool restartAvaliable() const override;
 
     QPair<QUrl, int> convertToLocalUrl(const QPair<QUrl, int>& url) const override;
@@ -90,7 +92,8 @@ private Q_SLOTS:
     void incomingConnection();
     void _stateChanged(KDevelop::IDebugSession::DebuggerState);
     void connectionClosed();
-    void currentPositionChanged(const QUrl &url, int line);
+    void currentPositionChanged(const QUrl& url, int line);
+
 private:
     void closeServer();
 
@@ -100,11 +103,10 @@ private:
     FrameStackModel* m_frameStackModel;
 
     QTcpServer* m_server;
-    Connection *m_connection;
-    KDevelop::ILaunchConfiguration *m_launchConfiguration;
+    Connection* m_connection;
+    KDevelop::ILaunchConfiguration* m_launchConfiguration;
     bool m_acceptMultipleConnections;
 };
-
 }
 
 #endif // XDEBUG_DEBUGSESSION_H

@@ -14,7 +14,7 @@
    along with this library; see the file COPYING.LIB.  If not, write to
    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA 02110-1301, USA.
-*/
+ */
 
 #include "breakpointcontroller.h"
 
@@ -28,24 +28,25 @@
 #include "connection.h"
 
 namespace XDebug {
-
 BreakpointController::BreakpointController(DebugSession* parent)
     : IBreakpointController(parent)
 {
     connect(debugSession(), SIGNAL(stateChanged(KDevelop::IDebugSession::DebuggerState)),
-                SLOT(stateChanged(KDevelop::IDebugSession::DebuggerState)));
+            SLOT(stateChanged(KDevelop::IDebugSession::DebuggerState)));
 }
 
 void BreakpointController::sendMaybe(KDevelop::Breakpoint* breakpoint)
 {
-    if (!debugSession()->connection()) return;
+    if (!debugSession()->connection()) {
+        return;
+    }
 
     if (breakpoint->deleted()) {
         auto it = m_ids.find(breakpoint);
         if (it != m_ids.end()) {
             QString cmd("breakpoint_remove");
             QStringList args;
-            args << "-d "+m_ids[breakpoint];
+            args << "-d " + m_ids[breakpoint];
             debugSession()->connection()->sendCommand(cmd, args);
             m_ids.erase(it);
         }
@@ -56,7 +57,7 @@ void BreakpointController::sendMaybe(KDevelop::Breakpoint* breakpoint)
             qDebug() << "breakpoint kind" << breakpoint->kind();
             if (breakpoint->kind() == KDevelop::Breakpoint::CodeBreakpoint) {
                 if (m_ids.contains(breakpoint)) {
-                    args << "-d "+m_ids[breakpoint];
+                    args << "-d " + m_ids[breakpoint];
                 } else if (breakpoint->line() != -1) {
                     args << "-t line";
                 } else {
@@ -65,20 +66,20 @@ void BreakpointController::sendMaybe(KDevelop::Breakpoint* breakpoint)
                 if (breakpoint->line() != -1) {
                     QPair<QUrl, int> u = qMakePair(breakpoint->url(), breakpoint->line());
                     u = debugSession()->convertToRemoteUrl(u);
-                    args << "-f "+u.first.url();
-                    args << "-n "+QString::number(u.second+1);
+                    args << "-f " + u.first.url();
+                    args << "-n " + QString::number(u.second + 1);
                 } else {
-                    args << "-m "+breakpoint->expression();
+                    args << "-m " + breakpoint->expression();
                 }
             } else if (breakpoint->kind() == KDevelop::Breakpoint::WriteBreakpoint) {
                 args << "-t watch";
-                args << "-m "+breakpoint->expression();
+                args << "-m " + breakpoint->expression();
             } else {
                 error(breakpoint, i18n("breakpoint type is not supported"), KDevelop::Breakpoint::LocationColumn);
                 return;
             }
             if (breakpoint->ignoreHits()) {
-                args << "-h "+QString::number(breakpoint->ignoreHits()+1);
+                args << "-h " + QString::number(breakpoint->ignoreHits() + 1);
                 args << "-o >=";
             }
             CallbackWithCookie<BreakpointController, KDevelop::Breakpoint>* cb =
@@ -90,17 +91,17 @@ void BreakpointController::sendMaybe(KDevelop::Breakpoint* breakpoint)
         Q_ASSERT(m_ids.contains(breakpoint));
         QString cmd = "breakpoint_update";
         QStringList args;
-        args << "-d "+m_ids[breakpoint];
+        args << "-d " + m_ids[breakpoint];
         args << QString("-s %0").arg(breakpoint->enabled() ? "enabled" : "disabled");
         debugSession()->connection()->sendCommand(cmd, args);
     }
     m_dirty[breakpoint].clear();
 }
 
-void BreakpointController::handleSetBreakpoint(KDevelop::Breakpoint* breakpoint, const QDomDocument &xml)
+void BreakpointController::handleSetBreakpoint(KDevelop::Breakpoint* breakpoint, const QDomDocument& xml)
 {
     Q_ASSERT(xml.documentElement().attribute("command") == "breakpoint_set"
-        || xml.documentElement().attribute("command") == "breakpoint_update");
+             || xml.documentElement().attribute("command") == "breakpoint_update");
     Q_ASSERT(breakpoint);
     if (xml.documentElement().attribute("command") == "breakpoint_set") {
         m_ids[breakpoint] = xml.documentElement().attribute("id");
@@ -129,7 +130,7 @@ void BreakpointController::stateChanged(KDevelop::IDebugSession::DebuggerState s
     }
 }
 
-void BreakpointController::handleBreakpointList(const QDomDocument &xml)
+void BreakpointController::handleBreakpointList(const QDomDocument& xml)
 {
     Q_ASSERT(xml.firstChildElement().attribute("command") == "breakpoint_list");
 
@@ -141,8 +142,5 @@ void BreakpointController::handleBreakpointList(const QDomDocument &xml)
         }
         el = el.nextSiblingElement("breakpoint");
     }
-
 }
-
 }
-

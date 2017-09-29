@@ -40,14 +40,13 @@
 #include "stringhelpers.h"
 
 namespace XDebug {
-
 VariableController::VariableController(DebugSession* parent)
     : KDevelop::IVariableController(parent)
 {
     Q_ASSERT(parent);
 }
 
-DebugSession *VariableController::debugSession() const
+DebugSession* VariableController::debugSession() const
 {
     return static_cast<DebugSession*>(const_cast<QObject*>(QObject::parent()));
 }
@@ -55,14 +54,14 @@ DebugSession *VariableController::debugSession() const
 void VariableController::update()
 {
     //if (autoUpdate() & UpdateWatches) {
-        variableCollection()->watches()->reinstall();
+    variableCollection()->watches()->reinstall();
     //}
 //    if (autoUpdate() & UpdateLocals) {
-        updateLocals();
+    updateLocals();
 //    }
 }
 
-void VariableController::handleLocals(KDevelop::Locals *locals, const QDomDocument &xml)
+void VariableController::handleLocals(KDevelop::Locals* locals, const QDomDocument& xml)
 {
     Q_ASSERT(xml.documentElement().attribute("command") == "context_get");
 
@@ -81,18 +80,19 @@ void VariableController::handleLocals(KDevelop::Locals *locals, const QDomDocume
         QDomElement el = xml.documentElement().firstChildElement("property");
         while (!el.isNull()) {
             QString name = el.attribute("fullname");
-            foreach (KDevelop::Variable *v, vars) {
+            foreach (KDevelop::Variable* v, vars) {
                 Q_ASSERT(dynamic_cast<Variable*>(v));
                 if (v->expression() == name) {
                     static_cast<Variable*>(v)->handleProperty(el);
                     break;
                 }
             }
+
             el = el.nextSiblingElement("property");
         }
     }
 }
-void VariableController::handleContextNames(const QDomDocument &xml)
+void VariableController::handleContextNames(const QDomDocument& xml)
 {
     Q_ASSERT(xml.documentElement().attribute("command") == "context_names");
 
@@ -107,7 +107,7 @@ void VariableController::handleContextNames(const QDomDocument &xml)
         KDevelop::Locals* locals = KDevelop::ICore::self()->debugController()->variableCollection()->locals(name);
         CallbackWithCookie<VariableController, KDevelop::Locals>* cb =
             new CallbackWithCookie<VariableController, KDevelop::Locals>
-                    (this, &VariableController::handleLocals, locals);
+                (this, &VariableController::handleLocals, locals);
         debugSession()->connection()->sendCommand("context_get", args, QByteArray(), cb);
         el = el.nextSiblingElement("context");
     }
@@ -115,7 +115,9 @@ void VariableController::handleContextNames(const QDomDocument &xml)
 
 void VariableController::updateLocals()
 {
-    if (debugSession()->frameStackModel()->currentFrame() == -1) return;
+    if (debugSession()->frameStackModel()->currentFrame() == -1) {
+        return;
+    }
 
     Callback<VariableController>* cb = new Callback<VariableController>(this, &VariableController::handleContextNames);
     QStringList args;
@@ -128,34 +130,43 @@ KTextEditor::Range VariableController::expressionRangeUnderCursor(KTextEditor::D
     QString line = doc->line(cursor.line());
     int index = cursor.column();
     QChar c = line[index];
-    if (!c.isLetterOrNumber() && c != '_' && c != '$')
+    if (!c.isLetterOrNumber() && c != '_' && c != '$') {
         return {};
+    }
 
     int start = Utils::expressionAt(line, index);
     int end = index;
     for (; end < line.size(); ++end) {
         QChar c = line[end];
-        if (!(c.isLetterOrNumber() || c == '_' || c == '$'))
+        if (!(c.isLetterOrNumber() || c == '_' || c == '$')) {
             break;
+        }
     }
-    if (!(start < end))
+
+    if (!(start < end)) {
         return {};
+    }
 
     // TODO: Check whether this was ported correctly
-    return {KTextEditor::Cursor{cursor.line(), start}, KTextEditor::Cursor{cursor.line(), end}};
+    return {
+               KTextEditor::Cursor {
+                   cursor.line(), start
+               }, KTextEditor::Cursor {
+                   cursor.line(), end
+               }
+    };
 }
-
 
 void VariableController::addWatch(KDevelop::Variable* variable)
 {
-    if (Variable *v = dynamic_cast<Variable*>(variable)) {
+    if (Variable* v = dynamic_cast<Variable*>(variable)) {
         variableCollection()->watches()->add(v->fullName());
     }
 }
 
 void VariableController::addWatchpoint(KDevelop::Variable* variable)
 {
-    if (Variable *v = dynamic_cast<Variable*>(variable)) {
+    if (Variable* v = dynamic_cast<Variable*>(variable)) {
         KDevelop::ICore::self()->debugController()->breakpointModel()->addWatchpoint(v->fullName());
     }
 }
@@ -171,6 +182,4 @@ void VariableController::handleEvent(KDevelop::IDebugSession::event_t event)
 {
     IVariableController::handleEvent(event);
 }
-
 }
-

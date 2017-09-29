@@ -20,7 +20,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-
 #include "connection.h"
 
 #include <QtNetwork/QTcpSocket>
@@ -37,12 +36,11 @@
 #include "debugsession.h"
 
 namespace XDebug {
-
-Connection::Connection(QTcpSocket* socket, QObject * parent)
-    : QObject(parent),
-    m_socket(socket),
-    m_currentState(DebugSession::NotStartedState),
-    m_lastTransactionId(0)
+Connection::Connection(QTcpSocket* socket, QObject* parent)
+    : QObject(parent)
+    , m_socket(socket)
+    , m_currentState(DebugSession::NotStartedState)
+    , m_lastTransactionId(0)
 {
     Q_ASSERT(m_socket);
     m_socket->setParent(this);
@@ -50,7 +48,7 @@ Connection::Connection(QTcpSocket* socket, QObject * parent)
     m_codec = QTextCodec::codecForLocale();
 
     connect(m_socket, SIGNAL(disconnected()), this, SIGNAL(closed()));
-    connect(m_socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error( QAbstractSocket::SocketError)));
+    connect(m_socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)));
 
     connect(m_socket, SIGNAL(readyRead()), this, SLOT(readyRead()));
 }
@@ -59,11 +57,11 @@ Connection::~Connection()
 {
 }
 
-void Connection::close() {
+void Connection::close()
+{
     delete m_socket;
     m_socket = nullptr;
 }
-
 
 void Connection::error(QAbstractSocket::SocketError error)
 {
@@ -78,8 +76,10 @@ void Connection::readyRead()
         {
             QByteArray data;
             char c;
-            while(m_socket->getChar(&c)) {
-                if(c==0) break;
+            while (m_socket->getChar(&c)) {
+                if (c == 0) {
+                    break;
+                }
                 data.append(c);
             }
             length = data.toLong();
@@ -128,7 +128,7 @@ void Connection::sendCommand(const QString& cmd, QStringList arguments, const QB
     m_socket->write("\0", 1);
 }
 
-void Connection::processInit(const QDomDocument &xml)
+void Connection::processInit(const QDomDocument& xml)
 {
     qDebug() << "idekey" << xml.documentElement().attribute("idekey");
 
@@ -136,12 +136,10 @@ void Connection::processInit(const QDomDocument &xml)
     sendCommand("stderr -c 1"); //copy stderr to IDE
     sendCommand("stdout -c 1"); //copy stdout to IDE
 
-
-
     setState(DebugSession::StartingState);
 }
 
-void Connection::processResponse(const QDomDocument &xml)
+void Connection::processResponse(const QDomDocument& xml)
 {
     QString status = xml.documentElement().attribute("status");
     if (status == "running") {
@@ -155,7 +153,7 @@ void Connection::processResponse(const QDomDocument &xml)
         QDomElement el = xml.documentElement().firstChildElement();
         if (el.nodeName() == "xdebug:message") {
             QUrl file = QUrl(el.attribute("filename"));
-            int lineNum = el.attribute("lineno").toInt()-1;
+            int lineNum = el.attribute("lineno").toInt() - 1;
             emit currentPositionChanged(file, lineNum);
         }
     }
@@ -203,21 +201,20 @@ DebugSession::DebuggerState Connection::currentState()
     return m_currentState;
 }
 
-
-void Connection::processStream(const QDomDocument &xml)
+void Connection::processStream(const QDomDocument& xml)
 {
     if (xml.documentElement().attribute("encoding") == "base64") {
         /* We ignore the output type for now
-        KDevelop::IRunProvider::OutputTypes outputType;
-        if (xml->attributes().value("type") == "stdout") {
+           KDevelop::IRunProvider::OutputTypes outputType;
+           if (xml->attributes().value("type") == "stdout") {
             outputType = KDevelop::IRunProvider::StandardOutput;
-        } else if (xml->attributes().value("type") == "stderr") {
+           } else if (xml->attributes().value("type") == "stderr") {
             outputType = KDevelop::IRunProvider::StandardError;
-        } else {
+           } else {
             qWarning() << "unknown output type" << xml->attributes().value("type");
             return;
-        }
-        */
+           }
+         */
 
         QString c = m_codec->toUnicode(QByteArray::fromBase64(xml.documentElement().text().toUtf8()));
         //qDebug() << c;
@@ -226,7 +223,7 @@ void Connection::processStream(const QDomDocument &xml)
         int pos = m_outputLine.indexOf('\n');
         if (pos != -1) {
             emit outputLine(m_outputLine.left(pos));
-            m_outputLine = m_outputLine.mid(pos+1);
+            m_outputLine = m_outputLine.mid(pos + 1);
         }
     } else {
         qWarning() << "unknown encoding" << xml.documentElement().attribute("encoding");
@@ -237,17 +234,16 @@ void Connection::processFinished(int exitCode)
 {
     Q_UNUSED(exitCode);
     /*
-    QMapIterator<KDevelop::IRunProvider::OutputTypes, QString> i(m_outputLine);
-    while (i.hasNext()) {
+       QMapIterator<KDevelop::IRunProvider::OutputTypes, QString> i(m_outputLine);
+       while (i.hasNext()) {
         i.next();
         emit outputLine(i.value(), i.key());
-    }
-    */
+       }
+     */
 }
 
-QTcpSocket* Connection::socket() {
+QTcpSocket* Connection::socket()
+{
     return m_socket;
 }
-
 }
-

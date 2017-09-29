@@ -38,25 +38,23 @@
 
 class KProcess;
 
-namespace XDebug
-{
+namespace XDebug {
 class DebugSession;
 class Server;
 
-
-class XDebugPlugin : public KDevelop::IPlugin
+class XDebugPlugin
+    : public KDevelop::IPlugin
 {
     Q_OBJECT
 
 public:
-    XDebugPlugin( QObject *parent, const QVariantList & = QVariantList() );
+    XDebugPlugin(QObject* parent, const QVariantList& = QVariantList());
     ~XDebugPlugin() override;
     DebugSession* createSession() const;
 
 private:
     Server* m_server;
 };
-
 }
 
 #endif

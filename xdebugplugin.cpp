@@ -54,10 +54,8 @@
 
 K_PLUGIN_FACTORY(KDevXDebugDebuggerFactory, registerPlugin<XDebug::XDebugPlugin>(); )
 
-namespace XDebug
-{
-
-XDebugPlugin::XDebugPlugin( QObject *parent, const QVariantList & ) :
+namespace XDebug {
+XDebugPlugin::XDebugPlugin(QObject* parent, const QVariantList&) :
     KDevelop::IPlugin(QStringLiteral("kdevxdebug"), parent)
 {
     core()->debugController()->initializeUi();
@@ -69,16 +67,16 @@ XDebugPlugin::XDebugPlugin( QObject *parent, const QVariantList & ) :
     {
         IExecuteScriptPlugin* iface = KDevelop::ICore::self()->pluginController()->pluginForExtension("org.kdevelop.IExecuteScriptPlugin")->extension<IExecuteScriptPlugin>();
         Q_ASSERT(iface);
-        KDevelop::LaunchConfigurationType* type = core()->runController()->launchConfigurationTypeForId( iface->scriptAppConfigTypeId() );
+        KDevelop::LaunchConfigurationType* type = core()->runController()->launchConfigurationTypeForId(iface->scriptAppConfigTypeId());
         Q_ASSERT(type);
-        type->addLauncher( new XDebugLauncher( this ) );
+        type->addLauncher(new XDebugLauncher(this));
     }
     {
         IExecuteBrowserPlugin* iface = KDevelop::ICore::self()->pluginController()->pluginForExtension("org.kdevelop.IExecuteBrowserPlugin")->extension<IExecuteBrowserPlugin>();
         Q_ASSERT(iface);
-        KDevelop::LaunchConfigurationType* type = core()->runController()->launchConfigurationTypeForId( iface->browserAppConfigTypeId() );
+        KDevelop::LaunchConfigurationType* type = core()->runController()->launchConfigurationTypeForId(iface->browserAppConfigTypeId());
         Q_ASSERT(type);
-        type->addLauncher( new XDebugBrowserLauncher( this ) );
+        type->addLauncher(new XDebugBrowserLauncher(this));
     }
 }
 
@@ -88,28 +86,28 @@ XDebugPlugin::~XDebugPlugin()
 
 DebugSession* XDebugPlugin::createSession() const
 {
-    DebugSession *session = new DebugSession();
+    DebugSession* session = new DebugSession();
     KDevelop::ICore::self()->debugController()->addSession(session);
     return session;
 }
 
 /*
 
-void XDebugPlugin::sessionStarted(DebugSession* session)
-{
+   void XDebugPlugin::sessionStarted(DebugSession* session)
+   {
     qDebug() << session;
     KDevelop::ICore::self()->debugController()->addSession(session);
-}
+   }
 
-void XDebugPlugin::outputLine(XDebug::DebugSession* session, QString line, KDevelop::IRunProvider::OutputTypes type)
-{
+   void XDebugPlugin::outputLine(XDebug::DebugSession* session, QString line, KDevelop::IRunProvider::OutputTypes type)
+   {
     if (session->process() && m_jobs.contains(session->process())) {
         emit output(m_jobs[session->process()], line, type);
     }
-}
+   }
 
-bool XDebugPlugin::execute(const KDevelop::IRun & run, KJob* job)
-{
+   bool XDebugPlugin::execute(const KDevelop::IRun & run, KJob* job)
+   {
     Q_ASSERT(instrumentorsProvided().contains(run.instrumentor()));
 
     QString path = run.executable().toLocalFile();
@@ -124,15 +122,15 @@ bool XDebugPlugin::execute(const KDevelop::IRun & run, KJob* job)
     m_jobs[process] = job;
 
     return !!job;
-}
+   }
 
-void XDebugPlugin::abort(KJob* job) {
+   void XDebugPlugin::abort(KJob* job) {
 
-}
+   }
 
 
-void XDebugPlugin::debuggerStateChanged(DebugSession* session, KDevelop::IDebugSession::DebuggerState state)
-{
+   void XDebugPlugin::debuggerStateChanged(DebugSession* session, KDevelop::IDebugSession::DebuggerState state)
+   {
     switch (state) {
         case KDevelop::IDebugSession::StartingState:
         case KDevelop::IDebugSession::ActiveState:
@@ -147,8 +145,8 @@ void XDebugPlugin::debuggerStateChanged(DebugSession* session, KDevelop::IDebugS
             }
             break;
     }
-}
-*/
+   }
+ */
 }
 
 #include "xdebugplugin.moc"

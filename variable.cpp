@@ -35,21 +35,21 @@
 #include "connection.h"
 
 namespace XDebug {
-
 static bool hasStartedSession()
 {
-    KDevelop::IDebugSession *session = KDevelop::ICore::self()->debugController()->currentSession();
-    if (!session)
+    KDevelop::IDebugSession* session = KDevelop::ICore::self()->debugController()->currentSession();
+    if (!session) {
         return false;
+    }
 
     KDevelop::IDebugSession::DebuggerState s = session->state();
     return s != KDevelop::IDebugSession::NotStartedState
-        && s != KDevelop::IDebugSession::EndedState;
+           && s != KDevelop::IDebugSession::EndedState;
 }
 
 Variable::Variable(KDevelop::TreeModel* model, KDevelop::TreeItem* parent,
-            const QString& expression, const QString& display)
-: KDevelop::Variable(model, parent, expression, display)
+                   const QString& expression, const QString& display)
+    : KDevelop::Variable(model, parent, expression, display)
 {
 }
 
@@ -57,19 +57,22 @@ Variable::~Variable()
 {
 }
 
-class PropertyGetCallback : public CallbackBase
+class PropertyGetCallback
+    : public CallbackBase
 {
 public:
-    PropertyGetCallback(Variable *variable, QObject *callback, const char *callbackMethod)
-    : m_variable(variable), m_callback(callback), m_callbackMethod(callbackMethod)
+    PropertyGetCallback(Variable* variable, QObject* callback, const char* callbackMethod)
+        : m_variable(variable)
+        , m_callback(callback)
+        , m_callbackMethod(callbackMethod)
     {}
 
-    void execute(const QDomDocument &xml) override
+    void execute(const QDomDocument& xml) override
     {
         qDebug() << xml.toString();
         Q_ASSERT(xml.documentElement().attribute("command") == "property_get");
 
-        if (!m_variable) return;
+        if (!m_variable) {return;}
 
         bool hasValue = false;
         QDomElement el = xml.documentElement().firstChildElement();
@@ -90,13 +93,14 @@ public:
     }
 
     bool allowError() const override { return true; }
+
 private:
     QPointer<Variable> m_variable;
-    QObject *m_callback;
-    const char *m_callbackMethod;
+    QObject* m_callback;
+    const char* m_callbackMethod;
 };
 
-void Variable::attachMaybe(QObject *callback, const char *callbackMethod)
+void Variable::attachMaybe(QObject* callback, const char* callbackMethod)
 {
     if (hasStartedSession()) {
         // FIXME: Eventually, should be a property of variable.
@@ -127,8 +131,7 @@ void Variable::fetchMoreChildren()
     }
 }
 
-
-void Variable::handleProperty(const QDomElement &xml)
+void Variable::handleProperty(const QDomElement& xml)
 {
     Q_ASSERT(!xml.isNull());
     Q_ASSERT(xml.nodeName() == "property");
@@ -148,7 +151,7 @@ void Variable::handleProperty(const QDomElement &xml)
     }
 
     QMap<QString, Variable*> existing;
-    for (int i = 0; i < childCount() - (hasMore() ? 1 : 0) ; i++) {
+    for (int i = 0; i < childCount() - (hasMore() ? 1 : 0); i++) {
         Q_ASSERT(dynamic_cast<Variable*>(child(i)));
         Variable* v = static_cast<Variable*>(child(i));
         existing[v->expression()] = v;
@@ -161,9 +164,9 @@ void Variable::handleProperty(const QDomElement &xml)
         //qDebug() << name;
         current << name;
         Variable* v = nullptr;
-        if( !existing.contains(name) ) {
+        if (!existing.contains(name)) {
             v = new Variable(model(), this, name);
-            appendChild( v, false );
+            appendChild(v, false);
         } else {
             v = existing[name];
         }
@@ -182,6 +185,7 @@ void Variable::handleProperty(const QDomElement &xml)
             delete v;
         }
     }
+
     if (!childCount() && xml.attribute("children") == "1") {
         qDebug() << "has more" << this;
         setHasMore(true);
@@ -191,11 +195,8 @@ void Variable::handleProperty(const QDomElement &xml)
     }
 }
 
-
 QString Variable::fullName() const
 {
     return m_fullName;
 }
-
-
 }

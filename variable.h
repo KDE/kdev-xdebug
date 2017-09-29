@@ -29,21 +29,20 @@
 
 class QDomElement;
 
-namespace XDebug
-{
+namespace XDebug {
 class PropertyGetCallback;
-class Variable : public KDevelop::Variable
+class Variable
+    : public KDevelop::Variable
 {
 public:
     Variable(KDevelop::TreeModel* model, KDevelop::TreeItem* parent,
-                const QString& expression,
-                const QString& display = "");
+             const QString& expression,
+             const QString& display = "");
 
     ~Variable() override;
 
-
 public: // Variable overrides
-    void attachMaybe(QObject *callback = nullptr, const char *callbackMethod = nullptr) override;
+    void attachMaybe(QObject* callback = nullptr, const char* callbackMethod = nullptr) override;
     void fetchMoreChildren() override;
 
 protected:
@@ -53,10 +52,9 @@ private: // Internal
     friend class PropertyGetCallback;
     friend class VariableController;
 
-    void handleProperty(const QDomElement &xml);
+    void handleProperty(const QDomElement& xml);
 
     QString m_fullName;
-
 };
 }
 

@@ -36,9 +36,10 @@ class QTcpSocket;
 namespace XDebug {
 class StackModel;
 
-class CallbackBase {
+class CallbackBase
+{
 public:
-    virtual void execute(const QDomDocument &) = 0;
+    virtual void execute(const QDomDocument&) = 0;
     virtual ~CallbackBase() {};
 
     /**
@@ -47,14 +48,19 @@ public:
     virtual bool allowError() const = 0;
 };
 
-template<class Handler, class Cookie>
-class CallbackWithCookie : public CallbackBase {
+template <class Handler, class Cookie>
+class CallbackWithCookie
+    : public CallbackBase
+{
 public:
-    CallbackWithCookie(Handler* scope, void (Handler::*method)(Cookie*, const QDomDocument &), Cookie* cookie = 0, bool allowError = false)
-        : m_cookie(cookie), m_scope(scope), m_method(method), m_allowError(allowError)
+    CallbackWithCookie(Handler* scope, void(Handler::* method)(Cookie*, const QDomDocument&), Cookie* cookie = 0, bool allowError = false)
+        : m_cookie(cookie)
+        , m_scope(scope)
+        , m_method(method)
+        , m_allowError(allowError)
     {}
 
-    void execute(const QDomDocument & xml) override
+    void execute(const QDomDocument& xml) override
     {
         return (m_scope->*m_method)(m_cookie, xml);
     }
@@ -64,18 +70,22 @@ public:
 private:
     Cookie* m_cookie;
     Handler* m_scope;
-    void (Handler::*m_method)(Cookie*, const QDomDocument &);
+    void (Handler::* m_method)(Cookie*, const QDomDocument&);
     bool m_allowError;
 };
 
-template<class Handler>
-class Callback : public CallbackBase {
+template <class Handler>
+class Callback
+    : public CallbackBase
+{
 public:
-    Callback(Handler* scope, void (Handler::*method)(const QDomDocument &), bool allowError = false)
-        : m_scope(scope), m_method(method), m_allowError(allowError)
+    Callback(Handler* scope, void(Handler::* method)(const QDomDocument&), bool allowError = false)
+        : m_scope(scope)
+        , m_method(method)
+        , m_allowError(allowError)
     {}
 
-    void execute(const QDomDocument & xml) override
+    void execute(const QDomDocument& xml) override
     {
         return (m_scope->*m_method)(xml);
     }
@@ -84,21 +94,23 @@ public:
 
 private:
     Handler* m_scope;
-    void (Handler::*m_method)(const QDomDocument &);
+    void (Handler::* m_method)(const QDomDocument&);
     bool m_allowError;
 };
 
-class Connection : public QObject
+class Connection
+    : public QObject
 {
     Q_OBJECT
+
 public:
-    Connection(QTcpSocket* socket, QObject * parent = nullptr);
+    Connection(QTcpSocket* socket, QObject* parent = nullptr);
     ~Connection() override;
 
     void close();
 
     void sendCommand(const QString& cmd, QStringList arguments = QStringList(),
-                const QByteArray& data = QByteArray(), CallbackBase* callback = nullptr);
+                     const QByteArray& data = QByteArray(), CallbackBase* callback = nullptr);
     void setState(DebugSession::DebuggerState state);
     DebugSession::DebuggerState currentState();
 
@@ -109,7 +121,7 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     void stateChanged(KDevelop::IDebugSession::DebuggerState status);
-    void currentPositionChanged(const QUrl &fileName, int lineNum);
+    void currentPositionChanged(const QUrl& fileName, int lineNum);
     void output(QString content);
     void outputLine(QString content);
     void closed();
@@ -119,9 +131,9 @@ private Q_SLOTS:
     void error(QAbstractSocket::SocketError error);
 
 private:
-    void processInit(const QDomDocument & xml);
-    void processResponse(const QDomDocument &xml);
-    void processStream(const QDomDocument &xml);
+    void processInit(const QDomDocument& xml);
+    void processResponse(const QDomDocument& xml);
+    void processStream(const QDomDocument& xml);
 
     QTcpSocket* m_socket;
 
@@ -133,6 +145,5 @@ private:
     int m_lastTransactionId;
     QMap<int, CallbackBase*> m_callbacks;
 };
-
 }
 #endif

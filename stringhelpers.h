@@ -14,7 +14,7 @@
    along with this library; see the file COPYING.LIB.  If not, write to
    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA 02110-1301, USA.
-*/
+ */
 
 #ifndef __STRINGHELPERS_H__
 #define __STRINGHELPERS_H__
@@ -24,12 +24,10 @@ class QChar;
 class QStringList;
 
 namespace Utils {
-
 /**
  * Copied from kdevelop-3.4, should be redone
  * @param index should be the index BEHIND the expression
  * */
-int expressionAt( const QString& contents, int index );
-
+int expressionAt(const QString& contents, int index);
 }
 #endif

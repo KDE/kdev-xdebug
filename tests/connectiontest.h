@@ -24,11 +24,13 @@
 
 #include <QtCore/QObject>
 namespace KDevelop {
-    class TestCore;
+class TestCore;
 }
-class ConnectionTest : public QObject
+class ConnectionTest
+    : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
+
 private slots:
     void initTestCase();
 

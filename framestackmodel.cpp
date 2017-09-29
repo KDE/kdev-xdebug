@@ -28,7 +28,6 @@
 #include <QDomElement>
 
 namespace XDebug {
-
 void FrameStackModel::fetchThreads()
 {
     //no multithreading in php, create just one
@@ -41,7 +40,7 @@ void FrameStackModel::fetchThreads()
     setCurrentThread(0);
 }
 
-void FrameStackModel::handleStack(const QDomDocument &xml)
+void FrameStackModel::handleStack(const QDomDocument& xml)
 {
     Q_ASSERT(xml.documentElement().attribute("command") == "stack_get");
 
@@ -70,5 +69,4 @@ void FrameStackModel::fetchFrames(int threadNumber, int from, int to)
         session()->connection()->sendCommand("stack_get", QStringList(), QByteArray(), cb);
     }
 }
-
 }

@@ -40,7 +40,6 @@
 #include "launchconfig.h"
 
 namespace XDebug {
-
 DebugSession::DebugSession()
     : KDevelop::IDebugSession()
     , m_breakpointController(new BreakpointController(this))
@@ -74,7 +73,7 @@ bool DebugSession::listenForConnection(QString& error)
     m_server = new QTcpServer(this);
     qDebug();
     int remotePortSetting = m_launchConfiguration->config().readEntry("RemotePort", 9000);
-    if(m_server->listen(QHostAddress::Any, remotePortSetting)) {
+    if (m_server->listen(QHostAddress::Any, remotePortSetting)) {
         connect(m_server, SIGNAL(newConnection()), this, SLOT(incomingConnection()));
     } else {
         error = i18n("Opening port %1 failed: %2.", remotePortSetting, m_server->errorString());
@@ -111,7 +110,7 @@ void DebugSession::incomingConnection()
     connect(m_connection, SIGNAL(outputLine(QString)), SIGNAL(outputLine(QString)));
     connect(m_connection, SIGNAL(stateChanged(KDevelop::IDebugSession::DebuggerState)), SIGNAL(stateChanged(KDevelop::IDebugSession::DebuggerState)));
     connect(m_connection, SIGNAL(stateChanged(KDevelop::IDebugSession::DebuggerState)), SLOT(_stateChanged(KDevelop::IDebugSession::DebuggerState)));
-    connect(m_connection, SIGNAL(currentPositionChanged(QUrl, int)), SLOT(currentPositionChanged(QUrl,int)));
+    connect(m_connection, SIGNAL(currentPositionChanged(QUrl,int)), SLOT(currentPositionChanged(QUrl,int)));
     connect(m_connection, SIGNAL(closed()), SLOT(connectionClosed()));
 
     if (!m_acceptMultipleConnections) {
@@ -149,52 +148,58 @@ void DebugSession::_stateChanged(KDevelop::IDebugSession::DebuggerState state)
 
 DebugSession::DebuggerState DebugSession::state() const
 {
-    if (!m_connection) return NotStartedState;
+    if (!m_connection) {
+        return NotStartedState;
+    }
     return m_connection->currentState();
 }
 
-void DebugSession::run() {
+void DebugSession::run()
+{
     Q_ASSERT(m_connection);
     m_connection->sendCommand("run");
     m_connection->setState(ActiveState);
 }
 
-void DebugSession::stepOut() {
+void DebugSession::stepOut()
+{
     Q_ASSERT(m_connection);
     m_connection->sendCommand("step_out");
     m_connection->setState(ActiveState);
 }
 
-void DebugSession::stepOverInstruction() {
-
+void DebugSession::stepOverInstruction()
+{
 }
 
-void DebugSession::stepInto() {
+void DebugSession::stepInto()
+{
     Q_ASSERT(m_connection);
     m_connection->sendCommand("step_into");
     m_connection->setState(ActiveState);
 }
 
-void DebugSession::stepIntoInstruction() {
-
+void DebugSession::stepIntoInstruction()
+{
 }
 
-void DebugSession::stepOver() {
+void DebugSession::stepOver()
+{
     Q_ASSERT(m_connection);
     m_connection->sendCommand("step_over");
     m_connection->setState(ActiveState);
 }
 
-void DebugSession::jumpToCursor() {
-
+void DebugSession::jumpToCursor()
+{
 }
 
-void DebugSession::runToCursor() {
-
+void DebugSession::runToCursor()
+{
 }
 
-void DebugSession::interruptDebugger() {
-
+void DebugSession::interruptDebugger()
+{
 }
 
 void DebugSession::stopDebugger()
@@ -207,10 +212,11 @@ void DebugSession::stopDebugger()
     }
 }
 
-void DebugSession::restartDebugger() {
-
+void DebugSession::restartDebugger()
+{
 }
-void DebugSession::eval(QByteArray source) {
+void DebugSession::eval(QByteArray source)
+{
     Q_ASSERT(m_connection);
     m_connection->sendCommand("eval", QStringList(), source);
 }
@@ -219,22 +225,38 @@ bool DebugSession::waitForFinished(int msecs)
 {
     QTime stopWatch;
     stopWatch.start();
-    if (!waitForState(DebugSession::StoppingState, msecs)) return false;
-    if (msecs != -1) msecs = msecs - stopWatch.elapsed();
+    if (!waitForState(DebugSession::StoppingState, msecs)) {
+        return false;
+    }
+    if (msecs != -1) {
+        msecs = msecs - stopWatch.elapsed();
+    }
     return true;
 }
 
 bool DebugSession::waitForState(KDevelop::IDebugSession::DebuggerState state, int msecs)
 {
-    if (!m_connection) return false;
-    if (m_connection->currentState() == state) return true;
+    if (!m_connection) {
+        return false;
+    }
+    if (m_connection->currentState() == state) {
+        return true;
+    }
     QTime stopWatch;
     stopWatch.start();
-    if (!waitForConnected(msecs)) return false;
+    if (!waitForConnected(msecs)) {
+        return false;
+    }
     while (m_connection->currentState() != state) {
-        if (!m_connection) return false;
-        if (!m_connection->socket()) return false;
-        if (!m_connection->socket()->isOpen()) return false;
+        if (!m_connection) {
+            return false;
+        }
+        if (!m_connection->socket()) {
+            return false;
+        }
+        if (!m_connection->socket()->isOpen()) {
+            return false;
+        }
         m_connection->socket()->waitForReadyRead(100);
         if (msecs != -1 && stopWatch.elapsed() > msecs) {
             return false;
@@ -247,15 +269,17 @@ bool DebugSession::waitForConnected(int msecs)
 {
     if (!m_connection) {
         Q_ASSERT(m_server);
-        if (!m_server->waitForNewConnection(msecs)) return false;
+        if (!m_server->waitForNewConnection(msecs)) {
+            return false;
+        }
     }
     Q_ASSERT(m_connection);
     Q_ASSERT(m_connection->socket());
     return m_connection->socket()->waitForConnected(msecs);
 }
 
-
-Connection* DebugSession::connection() {
+Connection* DebugSession::connection()
+{
     return m_connection;
 }
 
@@ -288,7 +312,6 @@ QPair<QUrl, int> DebugSession::convertToLocalUrl(const QPair<QUrl, int>& remoteU
     return ret;
 }
 
-
 QPair<QUrl, int> DebugSession::convertToRemoteUrl(const QPair<QUrl, int>& localUrl) const
 {
     Q_ASSERT(m_launchConfiguration);
@@ -301,7 +324,4 @@ void DebugSession::currentPositionChanged(const QUrl& url, int line)
 {
     setCurrentPosition(url, line, QString());
 }
-
-
 }
-
