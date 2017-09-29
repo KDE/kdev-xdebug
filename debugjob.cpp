@@ -60,7 +60,7 @@
 namespace XDebug {
 
 XDebugJob::XDebugJob( DebugSession* session, KDevelop::ILaunchConfiguration* cfg, QObject* parent)
-    : KDevelop::OutputJob(parent), m_proc(0), m_session(session)
+    : KDevelop::OutputJob(parent), m_proc(nullptr), m_session(session)
 {
     setCapabilities(Killable);
 

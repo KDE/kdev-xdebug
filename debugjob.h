@@ -47,7 +47,7 @@ class XDebugJob : public KDevelop::OutputJob
 {
 Q_OBJECT
 public:
-    XDebugJob( DebugSession* session, KDevelop::ILaunchConfiguration*, QObject* parent = 0 );
+    XDebugJob( DebugSession* session, KDevelop::ILaunchConfiguration*, QObject* parent = nullptr );
     void start() override;
 
     KProcess *process() const;
@@ -71,7 +71,7 @@ class XDebugBrowserJob : public KJob
 {
     Q_OBJECT
 public:
-    XDebugBrowserJob( DebugSession* session, KDevelop::ILaunchConfiguration*, QObject* parent = 0 );
+    XDebugBrowserJob( DebugSession* session, KDevelop::ILaunchConfiguration*, QObject* parent = nullptr );
     void start() override;
 protected:
     bool doKill() override;

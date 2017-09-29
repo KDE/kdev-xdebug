@@ -61,7 +61,7 @@ Connection::~Connection()
 
 void Connection::close() {
     delete m_socket;
-    m_socket = 0;
+    m_socket = nullptr;
 }
 
 
@@ -167,7 +167,7 @@ void Connection::processResponse(const QDomDocument &xml)
         }
     }
 
-    CallbackBase* callback = 0;
+    CallbackBase* callback = nullptr;
     if (xml.documentElement().hasAttribute("transaction_id")) {
         int transactionId = xml.documentElement().attribute("transaction_id").toInt();
         if (m_callbacks.contains(transactionId)) {

@@ -41,10 +41,10 @@ class ConfigPage : public KDevelop::LaunchConfigurationPage
 {
 Q_OBJECT
 public:
-    ConfigPage( QWidget* parent = 0 );
+    ConfigPage( QWidget* parent = nullptr );
     QIcon icon() const override;
-    void loadFromConfiguration(const KConfigGroup& cfg, KDevelop::IProject* = 0) override;
-    void saveToConfiguration(KConfigGroup, KDevelop::IProject* = 0 ) const override;
+    void loadFromConfiguration(const KConfigGroup& cfg, KDevelop::IProject* = nullptr) override;
+    void saveToConfiguration(KConfigGroup, KDevelop::IProject* = nullptr ) const override;
     QString title() const override;
 private:
     Ui::LaunchConfigurationWidget *m_ui;

@@ -46,9 +46,9 @@ DebugSession::DebugSession()
     , m_breakpointController(new BreakpointController(this))
     , m_variableController(new VariableController(this))
     , m_frameStackModel(new FrameStackModel(this))
-    , m_server(0)
-    , m_connection(0)
-    , m_launchConfiguration(0)
+    , m_server(nullptr)
+    , m_connection(nullptr)
+    , m_launchConfiguration(nullptr)
     , m_acceptMultipleConnections(false)
 {
 }
@@ -80,7 +80,7 @@ bool DebugSession::listenForConnection(QString& error)
         error = i18n("Opening port %1 failed: %2.", remotePortSetting, m_server->errorString());
         qWarning() << "Error" << m_server->errorString();
         delete m_server;
-        m_server = 0;
+        m_server = nullptr;
         return false;
     }
     return m_server->isListening();
@@ -91,7 +91,7 @@ void DebugSession::closeServer()
     if (m_server) {
         m_server->close();
         m_server->deleteLater();
-        m_server = 0;
+        m_server = nullptr;
     }
 }
 
@@ -103,7 +103,7 @@ void DebugSession::incomingConnection()
     if (m_connection) {
         m_connection->disconnect();
         m_connection->deleteLater();
-        m_connection = 0;
+        m_connection = nullptr;
     }
 
     m_connection = new Connection(client, this);
@@ -130,7 +130,7 @@ void DebugSession::connectionClosed()
         m_connection->setState(DebugSession::EndedState);
     }
     m_connection->deleteLater();
-    m_connection = 0;
+    m_connection = nullptr;
 }
 
 void DebugSession::_stateChanged(KDevelop::IDebugSession::DebuggerState state)

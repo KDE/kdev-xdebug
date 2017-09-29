@@ -83,14 +83,14 @@ KJob* XDebugLauncher::start(const QString& launchMode, KDevelop::ILaunchConfigur
     Q_ASSERT(cfg);
     if( !cfg )
     {
-        return 0;
+        return nullptr;
     }
     if( launchMode == "debug" )
     {
         return new XDebugJob( m_plugin->createSession(), cfg );
     }
     qWarning() << "Unknown launch mode" << launchMode << "for config:" << cfg->name();
-    return 0;
+    return nullptr;
 }
 
 QStringList XDebugLauncher::supportedModes() const
@@ -111,13 +111,13 @@ XDebugBrowserLauncher::XDebugBrowserLauncher(XDebugPlugin* plugin)
 KJob* XDebugBrowserLauncher::start(const QString& launchMode, KDevelop::ILaunchConfiguration* cfg)
 {
     Q_ASSERT(cfg);
-    if( !cfg ) return 0;
+    if( !cfg ) return nullptr;
 
     if( launchMode == "debug" ) {
         return new XDebugBrowserJob( m_plugin->createSession(), cfg );
     }
     qWarning() << "Unknown launch mode" << launchMode << "for config:" << cfg->name();
-    return 0;
+    return nullptr;
 }
 
 }

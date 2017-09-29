@@ -123,7 +123,7 @@ void Variable::fetchMoreChildren()
         args << "-n " + m_fullName;
         args << QString("-d %0").arg(s->frameStackModel()->currentFrame());
         s->connection()->sendCommand("property_get", args, QByteArray(),
-                                     new PropertyGetCallback(this, 0, 0));
+                                     new PropertyGetCallback(this, nullptr, nullptr));
     }
 }
 
@@ -160,7 +160,7 @@ void Variable::handleProperty(const QDomElement &xml)
         QString name = el.attribute("name");
         //qDebug() << name;
         current << name;
-        Variable* v = 0;
+        Variable* v = nullptr;
         if( !existing.contains(name) ) {
             v = new Variable(model(), this, name);
             appendChild( v, false );

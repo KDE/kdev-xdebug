@@ -43,7 +43,7 @@ public:
 
 
 public: // Variable overrides
-    void attachMaybe(QObject *callback = 0, const char *callbackMethod = 0) override;
+    void attachMaybe(QObject *callback = nullptr, const char *callbackMethod = nullptr) override;
     void fetchMoreChildren() override;
 
 protected:

@@ -92,13 +92,13 @@ class Connection : public QObject
 {
     Q_OBJECT
 public:
-    Connection(QTcpSocket* socket, QObject * parent = 0);
+    Connection(QTcpSocket* socket, QObject * parent = nullptr);
     ~Connection() override;
 
     void close();
 
     void sendCommand(const QString& cmd, QStringList arguments = QStringList(),
-                const QByteArray& data = QByteArray(), CallbackBase* callback = 0);
+                const QByteArray& data = QByteArray(), CallbackBase* callback = nullptr);
     void setState(DebugSession::DebuggerState state);
     DebugSession::DebuggerState currentState();
 
