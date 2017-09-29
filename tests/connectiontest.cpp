@@ -30,7 +30,7 @@
 #include <QDebug>
 #include <KProcess>
 #include <KConfig>
-#include <qtest_kde.h>
+#include <QTest>
 
 #include <shell/shellextension.h>
 #include <interfaces/idebugcontroller.h>
@@ -993,5 +993,5 @@ void ConnectionTest::testVariableUpdates()
 //     controller.connection()->sendCommand("eval -i 126", QStringList(), "test124();");
 
 
-QTEST_KDEMAIN(ConnectionTest, GUI)
+QTEST_MAIN(ConnectionTest)
 
