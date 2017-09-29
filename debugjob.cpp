@@ -31,7 +31,6 @@
 #include <QDebug>
 #include <KProcess>
 #include <kconfiggroup.h>
-#include <kicon.h>
 #include <kshell.h>
 #include <KMessageBox>
 #include <KParts/MainWindow>
