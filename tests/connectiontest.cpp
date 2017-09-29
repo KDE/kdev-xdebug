@@ -108,7 +108,11 @@ void ConnectionTest::init()
 {
     qRegisterMetaType<DebugSession*>("DebugSession*");
 
-    KDevelop::AutoTestShell::init();
+    KDevelop::AutoTestShell::init({
+        QStringLiteral("kdevxdebug"),
+        QStringLiteral("kdevexecutebrowser"),
+        QStringLiteral("kdevexecutescript")
+    });
     m_core = new KDevelop::TestCore();
     m_core->initialize(KDevelop::Core::NoUi);
 
