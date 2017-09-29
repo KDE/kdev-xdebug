@@ -29,7 +29,6 @@
 #include <QDomElement>
 
 #include <QDebug>
-#include <KLocale>
 #include <QUrl>
 
 #include <interfaces/icore.h>

@@ -31,10 +31,10 @@
 #include <KProcess>
 #include <kconfiggroup.h>
 #include <kicon.h>
-#include <klocale.h>
 #include <kshell.h>
 #include <kmessagebox.h>
 #include <kparts/mainwindow.h>
+#include <KLocalizedString>
 
 #include <outputview/outputmodel.h>
 #include <interfaces/ilaunchconfiguration.h>
