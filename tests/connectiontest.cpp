@@ -147,6 +147,7 @@ void ConnectionTest::testStdOutput()
     file.close();
 
     DebugSession session;
+    KDevelop::ICore::self()->debugController()->addSession(&session);
 
     TestLaunchConfiguration cfg(url);
     XDebugJob job(&session, &cfg);
@@ -188,6 +189,7 @@ void ConnectionTest::testShowStepInSource()
     file.close();
 
     DebugSession session;
+    KDevelop::ICore::self()->debugController()->addSession(&session);
 
     TestLaunchConfiguration cfg(url);
     XDebugJob job(&session, &cfg);
@@ -236,6 +238,7 @@ void ConnectionTest::testMultipleSessions()
     for (int i=0; i<10; ++i) {
 
         DebugSession session;
+        KDevelop::ICore::self()->debugController()->addSession(&session);
 
         TestLaunchConfiguration cfg(url);
         XDebugJob job(&session, &cfg);
@@ -262,6 +265,7 @@ void ConnectionTest::testStackModel()
     file.close();
 
     DebugSession session;
+    KDevelop::ICore::self()->debugController()->addSession(&session);
 
     TestLaunchConfiguration cfg(url);
     XDebugJob job(&session, &cfg);
@@ -321,6 +325,7 @@ void ConnectionTest::testBreakpoint()
     file.close();
 
     DebugSession session;
+    KDevelop::ICore::self()->debugController()->addSession(&session);
 
     TestLaunchConfiguration cfg(url);
     XDebugJob job(&session, &cfg);
@@ -364,6 +369,7 @@ void ConnectionTest::testDisableBreakpoint()
     file.close();
 
     DebugSession session;
+    KDevelop::ICore::self()->debugController()->addSession(&session);
 
     TestLaunchConfiguration cfg(url);
     XDebugJob job(&session, &cfg);
@@ -412,6 +418,7 @@ void ConnectionTest::testChangeLocationBreakpoint()
     file.close();
 
     DebugSession session;
+    KDevelop::ICore::self()->debugController()->addSession(&session);
 
     TestLaunchConfiguration cfg(url);
     XDebugJob job(&session, &cfg);
@@ -454,6 +461,7 @@ void ConnectionTest::testDeleteBreakpoint()
     file.close();
 
     DebugSession session;
+    KDevelop::ICore::self()->debugController()->addSession(&session);
 
     TestLaunchConfiguration cfg(url);
     XDebugJob job(&session, &cfg);
@@ -499,6 +507,7 @@ void ConnectionTest::testConditionalBreakpoint()
     file.close();
 
     DebugSession session;
+    KDevelop::ICore::self()->debugController()->addSession(&session);
 
     TestLaunchConfiguration cfg(url);
     XDebugJob job(&session, &cfg);
@@ -845,6 +854,7 @@ void ConnectionTest::testPhpCrash()
     file.close();
 
     DebugSession session;
+    KDevelop::ICore::self()->debugController()->addSession(&session);
 
     TestLaunchConfiguration cfg(url);
     XDebugJob *job = new XDebugJob(&session, &cfg);
@@ -875,6 +885,7 @@ void ConnectionTest::testConnectionClosed()
     file.close();
 
     DebugSession session;
+    KDevelop::ICore::self()->debugController()->addSession(&session);
 
     TestLaunchConfiguration cfg(url);
     XDebugJob *job = new XDebugJob(&session, &cfg);
@@ -907,6 +918,7 @@ void ConnectionTest::testMultipleConnectionsClosed()
     file.close();
 
     DebugSession session;
+    KDevelop::ICore::self()->debugController()->addSession(&session);
     session.setAcceptMultipleConnections(true);
 
     TestLaunchConfiguration cfg(url);
