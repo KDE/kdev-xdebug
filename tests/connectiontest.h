@@ -30,6 +30,8 @@ class ConnectionTest : public QObject
 {
 Q_OBJECT
 private slots:
+    void initTestCase();
+
     void init();
     void cleanup();
 

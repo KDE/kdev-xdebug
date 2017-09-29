@@ -25,6 +25,7 @@
 #include <QtTest/QSignalSpy>
 #include <QtCore/QTemporaryFile>
 #include <QtCore/QDir>
+#include <QStandardPaths>
 
 #include <KDebug>
 #include <KProcess>
@@ -58,6 +59,15 @@ namespace KDevelop {
     class IToolViewFactory;
 }
 
+namespace {
+
+inline QString phpExecutable()
+{
+    return QStandardPaths::findExecutable("php");
+}
+
+}
+
 class TestLaunchConfiguration : public KDevelop::ILaunchConfiguration
 {
 public:
@@ -66,7 +76,7 @@ public:
         cfg = c->group("launch");
         cfg.writeEntry("isExecutable", true);
         cfg.writeEntry("Executable", script);
-        cfg.writeEntry("Interpreter", "php");
+        cfg.writeEntry("Interpreter", phpExecutable());
     }
     ~TestLaunchConfiguration() override {
         delete c;
@@ -91,6 +101,14 @@ void compareData(QModelIndex index, QString expected, const char *file, int line
     }
 }
 
+void ConnectionTest::initTestCase()
+{
+    // check whether the php-xdebug module is installed at all
+    const int rc = QProcess::execute(phpExecutable(), {"-r", "exit(extension_loaded('xdebug') ? 0 : 1);"});
+    if (rc != 0) {
+        QSKIP("This test requires the php-xdebug module to be installed!");
+    }
+}
 
 void ConnectionTest::init()
 {
