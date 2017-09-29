@@ -131,7 +131,6 @@ void Connection::sendCommand(const QString& cmd, QStringList arguments, const QB
 void Connection::processInit(const QDomDocument &xml)
 {
     qDebug() << "idekey" << xml.documentElement().attribute("idekey");
-//     emit initDone(xml->attributes().value("idekey").toString());
 
     sendCommand("feature_get -n encoding");
     sendCommand("stderr -c 1"); //copy stderr to IDE

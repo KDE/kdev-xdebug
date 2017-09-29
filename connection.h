@@ -112,7 +112,6 @@ Q_SIGNALS:
     void currentPositionChanged(const QUrl &fileName, int lineNum);
     void output(QString content);
     void outputLine(QString content);
-//     void initDone(const QString& ideKey);
     void closed();
 
 private Q_SLOTS:

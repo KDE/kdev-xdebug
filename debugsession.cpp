@@ -109,7 +109,6 @@ void DebugSession::incomingConnection()
     m_connection = new Connection(client, this);
     connect(m_connection, SIGNAL(output(QString)), SIGNAL(output(QString)));
     connect(m_connection, SIGNAL(outputLine(QString)), SIGNAL(outputLine(QString)));
-    connect(m_connection, SIGNAL(initDone(QString)), SIGNAL(initDone(QString)));
     connect(m_connection, SIGNAL(stateChanged(KDevelop::IDebugSession::DebuggerState)), SIGNAL(stateChanged(KDevelop::IDebugSession::DebuggerState)));
     connect(m_connection, SIGNAL(stateChanged(KDevelop::IDebugSession::DebuggerState)), SLOT(_stateChanged(KDevelop::IDebugSession::DebuggerState)));
     connect(m_connection, SIGNAL(currentPositionChanged(QUrl, int)), SLOT(currentPositionChanged(QUrl,int)));

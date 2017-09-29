@@ -70,7 +70,6 @@ public:
 Q_SIGNALS:
     void output(QString line);
     void outputLine(QString line);
-//     void initDone(const QString& ideKey);
 
 public Q_SLOTS:
     void run() override;
