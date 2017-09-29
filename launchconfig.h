@@ -43,12 +43,12 @@ class XDebugLauncher : public KDevelop::ILauncher
 {
 public:
     XDebugLauncher( XDebugPlugin* plugin );
-    virtual QList< KDevelop::LaunchConfigurationPageFactory* > configPages() const;
-    virtual QString description() const;
-    virtual QString id();
-    virtual QString name() const;
-    virtual KJob* start(const QString& launchMode, KDevelop::ILaunchConfiguration* cfg);
-    virtual QStringList supportedModes() const;
+    QList< KDevelop::LaunchConfigurationPageFactory* > configPages() const override;
+    QString description() const override;
+    QString id() override;
+    QString name() const override;
+    KJob* start(const QString& launchMode, KDevelop::ILaunchConfiguration* cfg) override;
+    QStringList supportedModes() const override;
 
 protected:
     XDebugPlugin* m_plugin;
@@ -60,7 +60,7 @@ class XDebugBrowserLauncher : public XDebugLauncher
 {
 public :
     XDebugBrowserLauncher( XDebugPlugin* plugin );
-    virtual KJob* start(const QString& launchMode, KDevelop::ILaunchConfiguration* cfg);
+    KJob* start(const QString& launchMode, KDevelop::ILaunchConfiguration* cfg) override;
 };
 
 }

@@ -39,12 +39,12 @@ public:
                 const QString& expression,
                 const QString& display = "");
 
-    ~Variable();
+    ~Variable() override;
 
 
 public: // Variable overrides
-    virtual void attachMaybe(QObject *callback = 0, const char *callbackMethod = 0);
-    virtual void fetchMoreChildren();
+    void attachMaybe(QObject *callback = 0, const char *callbackMethod = 0) override;
+    void fetchMoreChildren() override;
 
 protected:
     QString fullName() const;

@@ -53,12 +53,12 @@ public:
         : m_cookie(cookie), m_scope(scope), m_method(method), m_allowError(allowError)
     {}
 
-    virtual void execute(const QDomDocument & xml)
+    void execute(const QDomDocument & xml) override
     {
         return (m_scope->*m_method)(m_cookie, xml);
     }
 
-    virtual bool allowError() const { return m_allowError; }
+    bool allowError() const override { return m_allowError; }
 
 private:
     Cookie* m_cookie;
@@ -74,12 +74,12 @@ public:
         : m_scope(scope), m_method(method), m_allowError(allowError)
     {}
 
-    virtual void execute(const QDomDocument & xml)
+    void execute(const QDomDocument & xml) override
     {
         return (m_scope->*m_method)(xml);
     }
 
-    virtual bool allowError() const { return m_allowError; }
+    bool allowError() const override { return m_allowError; }
 
 private:
     Handler* m_scope;
@@ -92,7 +92,7 @@ class Connection : public QObject
     Q_OBJECT
 public:
     Connection(QTcpSocket* socket, QObject * parent = 0);
-    ~Connection();
+    ~Connection() override;
 
     void close();
 

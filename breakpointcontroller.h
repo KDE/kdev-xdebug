@@ -33,7 +33,7 @@ public:
     BreakpointController(DebugSession* parent);
 
 protected:
-    virtual void sendMaybe(KDevelop::Breakpoint* breakpoint);
+    void sendMaybe(KDevelop::Breakpoint* breakpoint) override;
 
 private slots:
     void stateChanged(KDevelop::IDebugSession::DebuggerState state);

@@ -34,7 +34,7 @@ namespace XDebug
 class ConfigPageFactory : public KDevelop::LaunchConfigurationPageFactory
 {
 public:
-    virtual KDevelop::LaunchConfigurationPage* createWidget(QWidget* parent);
+    KDevelop::LaunchConfigurationPage* createWidget(QWidget* parent) override;
 };
 
 class ConfigPage : public KDevelop::LaunchConfigurationPage
@@ -42,10 +42,10 @@ class ConfigPage : public KDevelop::LaunchConfigurationPage
 Q_OBJECT
 public:
     ConfigPage( QWidget* parent = 0 );
-    virtual QIcon icon() const;
-    virtual void loadFromConfiguration(const KConfigGroup& cfg, KDevelop::IProject* = 0);
-    virtual void saveToConfiguration(KConfigGroup, KDevelop::IProject* = 0 ) const;
-    virtual QString title() const;
+    QIcon icon() const override;
+    void loadFromConfiguration(const KConfigGroup& cfg, KDevelop::IProject* = 0) override;
+    void saveToConfiguration(KConfigGroup, KDevelop::IProject* = 0 ) const override;
+    QString title() const override;
 private:
     Ui::LaunchConfigurationWidget *m_ui;
 };

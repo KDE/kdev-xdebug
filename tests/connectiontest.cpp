@@ -68,14 +68,14 @@ public:
         cfg.writeEntry("Executable", script);
         cfg.writeEntry("Interpreter", "php");
     }
-    ~TestLaunchConfiguration() {
+    ~TestLaunchConfiguration() override {
         delete c;
     }
-    virtual const KConfigGroup config() const { return cfg; }
-    virtual KConfigGroup config() { return cfg; }
-    virtual QString name() const { return QString("Test-Launch"); }
-    virtual KDevelop::IProject* project() const { return 0; }
-    virtual KDevelop::LaunchConfigurationType* type() const { return 0; }
+    const KConfigGroup config() const override { return cfg; }
+    KConfigGroup config() override { return cfg; }
+    QString name() const override { return QString("Test-Launch"); }
+    KDevelop::IProject* project() const override { return 0; }
+    KDevelop::LaunchConfigurationType* type() const override { return 0; }
 private:
     KConfigGroup cfg;
     KConfig *c;
@@ -733,7 +733,7 @@ public:
         appendChild(var);
     }
 
-    void fetchMoreChildren() {}
+    void fetchMoreChildren() override {}
 };
 void ConnectionTest::testTooltipVariable()
 {

@@ -38,8 +38,8 @@ public:
     DebugSession* session() { return static_cast<DebugSession*>(KDevelop::FrameStackModel::session()); }
 
 protected: // KDevelop::FrameStackModel overrides
-    virtual void fetchThreads();
-    virtual void fetchFrames(int threadNumber, int from, int to);
+    void fetchThreads() override;
+    void fetchFrames(int threadNumber, int from, int to) override;
 
 private:
     void handleStack(const QDomDocument &xml);

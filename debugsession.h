@@ -44,7 +44,7 @@ class DebugSession : public KDevelop::IDebugSession
     Q_OBJECT
 public:
     DebugSession();
-    ~DebugSession();
+    ~DebugSession() override;
 
     void setLaunchConfiguration(KDevelop::ILaunchConfiguration *cfg);
     void setAcceptMultipleConnections(bool v);
@@ -57,9 +57,9 @@ public:
 
     Connection* connection();
 
-    virtual DebuggerState state() const;
+    DebuggerState state() const override;
     
-    virtual bool restartAvaliable() const;
+    bool restartAvaliable() const override;
 
     QPair<QUrl, int> convertToLocalUrl(const QPair<QUrl, int>& url) const override;
     QPair<QUrl, int> convertToRemoteUrl(const QPair<QUrl, int>& url) const override;
@@ -74,17 +74,17 @@ Q_SIGNALS:
 //     void initDone(const QString& ideKey);
 
 public Q_SLOTS:
-    virtual void run();
-    virtual void stepOut();
-    virtual void stepOverInstruction();
-    virtual void stepInto();
-    virtual void stepIntoInstruction();
-    virtual void stepOver();
-    virtual void jumpToCursor();
-    virtual void runToCursor();
-    virtual void interruptDebugger();
-    virtual void stopDebugger();
-    virtual void restartDebugger();
+    void run() override;
+    void stepOut() override;
+    void stepOverInstruction() override;
+    void stepInto() override;
+    void stepIntoInstruction() override;
+    void stepOver() override;
+    void jumpToCursor() override;
+    void runToCursor() override;
+    void interruptDebugger() override;
+    void stopDebugger() override;
+    void restartDebugger() override;
 
     void eval(QByteArray source);
 

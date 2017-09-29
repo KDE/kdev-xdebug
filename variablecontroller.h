@@ -67,7 +67,7 @@ private:
     void addWatch(const GDBMI::ResultRecord& r);
     void addWatchpoint(const GDBMI::ResultRecord& r);
 */
-    void handleEvent(KDevelop::IDebugSession::event_t event);
+    void handleEvent(KDevelop::IDebugSession::event_t event) override;
 };
 
 }

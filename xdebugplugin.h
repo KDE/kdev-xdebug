@@ -51,7 +51,7 @@ class XDebugPlugin : public KDevelop::IPlugin
 
 public:
     XDebugPlugin( QObject *parent, const QVariantList & = QVariantList() );
-    ~XDebugPlugin();
+    ~XDebugPlugin() override;
     DebugSession* createSession() const;
 
 private:

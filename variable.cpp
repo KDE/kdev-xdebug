@@ -64,7 +64,7 @@ public:
     : m_variable(variable), m_callback(callback), m_callbackMethod(callbackMethod)
     {}
 
-    virtual void execute(const QDomDocument &xml)
+    void execute(const QDomDocument &xml) override
     {
         kDebug() << xml.toString();
         Q_ASSERT(xml.documentElement().attribute("command") == "property_get");
@@ -89,7 +89,7 @@ public:
         }
     }
 
-    virtual bool allowError() const { return true; }
+    bool allowError() const override { return true; }
 private:
     QPointer<Variable> m_variable;
     QObject *m_callback;

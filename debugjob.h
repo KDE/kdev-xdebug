@@ -48,11 +48,11 @@ class XDebugJob : public KDevelop::OutputJob
 Q_OBJECT
 public:
     XDebugJob( DebugSession* session, KDevelop::ILaunchConfiguration*, QObject* parent = 0 );
-    virtual void start();
+    void start() override;
 
     KProcess *process() const;
 protected:
-    virtual bool doKill();
+    bool doKill() override;
 
 private:
     KDevelop::OutputModel* model();
@@ -72,9 +72,9 @@ class XDebugBrowserJob : public KJob
     Q_OBJECT
 public:
     XDebugBrowserJob( DebugSession* session, KDevelop::ILaunchConfiguration*, QObject* parent = 0 );
-    virtual void start();
+    void start() override;
 protected:
-    virtual bool doKill();
+    bool doKill() override;
 
 private slots:
     void sessionFinished();
