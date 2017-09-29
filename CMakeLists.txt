@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(xdebug)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${xdebug_SOURCE_DIR}/cmake/)
-
 find_package(KDevPlatform 5.1 CONFIG REQUIRED)
 
 find_package (ECM "5.14.0" REQUIRED NO_MODULE)
