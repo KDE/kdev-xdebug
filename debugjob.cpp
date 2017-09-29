@@ -37,7 +37,6 @@
 
 #include <outputview/outputmodel.h>
 #include <interfaces/ilaunchconfiguration.h>
-#include <util/environmentprofilelist.h>
 #include <execute/iexecuteplugin.h>
 #include <interfaces/iproject.h>
 #include <project/interfaces/iprojectbuilder.h>
@@ -50,6 +49,13 @@
 #include <util/processlinemaker.h>
 #include <executescript/iexecutescriptplugin.h>
 #include <iexecutebrowserplugin.h>
+
+#include <kdevplatform_version.h>
+#if KDEVPLATFORM_VERSION < QT_VERSION_CHECK(5,1,40)
+#include <util/environmentgrouplist.h>
+#else
+#include <util/environmentprofilelist.h>
+#endif
 
 #include "debugsession.h"
 #include "xdebugplugin.h"
@@ -70,8 +76,13 @@ XDebugJob::XDebugJob(DebugSession* session, KDevelop::ILaunchConfiguration* cfg,
     IExecuteScriptPlugin* iface = KDevelop::ICore::self()->pluginController()->pluginForExtension("org.kdevelop.IExecuteScriptPlugin")->extension<IExecuteScriptPlugin>();
     Q_ASSERT(iface);
 
+#if KDEVPLATFORM_VERSION < QT_VERSION_CHECK(5,1,40)
+    KDevelop::EnvironmentGroupList l(KSharedConfig::openConfig());
+    QString envgrp = iface->environmentGroup(cfg);
+#else
     KDevelop::EnvironmentProfileList l(KSharedConfig::openConfig());
     QString envgrp = iface->environmentProfileName(cfg);
+#endif
 
     QString err;
     QString interpreter = iface->interpreter(cfg, err);
@@ -101,7 +112,11 @@ XDebugJob::XDebugJob(DebugSession* session, KDevelop::ILaunchConfiguration* cfg,
         qWarning() << "Launch Configuration:" << cfg->name() << i18n("No environment group specified, looks like a broken "
                                                                      "configuration, please check run configuration '%1'. "
                                                                      "Using default environment group.", cfg->name());
+#if KDEVPLATFORM_VERSION < QT_VERSION_CHECK(5,1,40)
+        envgrp = l.defaultGroup();
+#else
         envgrp = l.defaultProfileName();
+#endif
     }
 
     QStringList arguments = iface->arguments(cfg, err);
