@@ -155,11 +155,13 @@ DebugSession::DebuggerState DebugSession::state() const
 }
 
 void DebugSession::run() {
+    Q_ASSERT(m_connection);
     m_connection->sendCommand("run");
     m_connection->setState(ActiveState);
 }
 
 void DebugSession::stepOut() {
+    Q_ASSERT(m_connection);
     m_connection->sendCommand("step_out");
     m_connection->setState(ActiveState);
 }
@@ -169,6 +171,7 @@ void DebugSession::stepOverInstruction() {
 }
 
 void DebugSession::stepInto() {
+    Q_ASSERT(m_connection);
     m_connection->sendCommand("step_into");
     m_connection->setState(ActiveState);
 }
@@ -178,6 +181,7 @@ void DebugSession::stepIntoInstruction() {
 }
 
 void DebugSession::stepOver() {
+    Q_ASSERT(m_connection);
     m_connection->sendCommand("step_over");
     m_connection->setState(ActiveState);
 }
@@ -208,6 +212,7 @@ void DebugSession::restartDebugger() {
 
 }
 void DebugSession::eval(QByteArray source) {
+    Q_ASSERT(m_connection);
     m_connection->sendCommand("eval", QStringList(), source);
 }
 
