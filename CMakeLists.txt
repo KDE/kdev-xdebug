@@ -17,7 +17,7 @@ include(FeatureSummary)
 set(QT_MIN_VERSION "5.5.0")
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Core Widgets Test)
 set(KF5_DEP_VERSION "5.15.0")
-find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS TextEditor I18n ItemModels KDELibs4Support)
+find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS TextEditor I18n ItemModels)
 
 # TODO: That plugin should install a CMake config file
 find_path(EXECUTEBROWSER_INCLUDE_DIR iexecutebrowserplugin.h PATH_SUFFIXES kdevexecutebrowser)
@@ -47,7 +47,6 @@ target_link_libraries(kdevxdebug
     KDev::OutputView
     KDev::Shell
     KDev::Util
-    KF5::KDELibs4Support
 )
 
 configure_file(kdevxdebug.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kdevxdebug.desktop)
