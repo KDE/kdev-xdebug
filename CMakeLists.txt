@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(xdebug)
 
-find_package(KDevPlatform 5.1 CONFIG REQUIRED)
-
 find_package (ECM "5.14.0" REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH})
 
@@ -18,6 +16,11 @@ set(QT_MIN_VERSION "5.5.0")
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Core Widgets Test)
 set(KF5_DEP_VERSION "5.15.0")
 find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS TextEditor I18n ItemModels)
+
+find_package(KDevPlatform 5.1 CONFIG)
+set_package_properties(KDevPlatform PROPERTIES
+    TYPE REQUIRED
+)
 
 # TODO: That plugin should install a CMake config file
 find_path(EXECUTEBROWSER_INCLUDE_DIR iexecutebrowserplugin.h PATH_SUFFIXES kdevexecutebrowser)
