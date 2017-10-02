@@ -52,7 +52,8 @@
 #include "debugsession.h"
 #include "launchconfig.h"
 
-K_PLUGIN_FACTORY(KDevXDebugDebuggerFactory, registerPlugin<XDebug::XDebugPlugin>(); )
+K_PLUGIN_FACTORY_WITH_JSON(KDevXDebugDebuggerFactory, "kdevxdebug.json",
+                           registerPlugin<XDebug::XDebugPlugin>();)
 
 namespace XDebug {
 XDebugPlugin::XDebugPlugin(QObject* parent, const QVariantList&) :

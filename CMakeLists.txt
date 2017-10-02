@@ -56,9 +56,6 @@ target_link_libraries(kdevxdebug
     KDev::Util
 )
 
-configure_file(kdevxdebug.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/kdevxdebug.desktop)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kdevxdebug.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-
 set(connectiontest_SRCS
     tests/connectiontest.cpp
 )

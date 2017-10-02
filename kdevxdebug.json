@@ -1,0 +1,16 @@
+{
+    "GenericName": "Debugger Frontend",
+    "KPlugin": {
+        "Description": "This plugin provides a frontend for XDebug",
+        "Icon": "debugger",
+        "Id": "kdevxdebug",
+        "License": "GPL",
+        "Name": "XDebug Support",
+        "ServiceTypes": [
+            "KDevelop/Plugin"
+        ]
+    },
+    "X-KDevelop-Category": "Global",
+    "X-KDevelop-Interfaces": ["org.kdevelop.IRunProvider"],
+    "X-KDevelop-Mode": "GUI"
+}
