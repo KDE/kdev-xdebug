@@ -9,7 +9,6 @@ include(ECMAddTests)
 include(ECMQtDeclareLoggingCategory)
 include(KDEInstallDirs)
 include(KDECMakeSettings)
-include(GenerateExportHeader)
 include(FeatureSummary)
 
 set(QT_MIN_VERSION "5.5.0")
@@ -43,11 +42,13 @@ set(kdevxdebug_PART_SRCS
     xdebugplugin.cpp
     launchconfig.cpp
     launchconfigurationpage.cpp
+)
+
+ki18n_wrap_ui(kdevxdebug_PART_SRCS
     launchconfigurationpage.ui
 )
-ki18n_wrap_ui(kdevxdebug_PART_SRCS launchconfigurationpage.ui)
 
-kdevplatform_add_plugin(kdevxdebug SOURCES ${kdevxdebug_PART_SRCS} ${kdevxdebugcore_PART_SRCS})
+kdevplatform_add_plugin(kdevxdebug JSON kdevxdebug.json SOURCES ${kdevxdebug_PART_SRCS} ${kdevxdebugcore_PART_SRCS})
 target_link_libraries(kdevxdebug
     KDev::Interfaces
     KDev::Debugger
