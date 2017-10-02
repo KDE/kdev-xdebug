@@ -57,6 +57,7 @@ target_link_libraries(kdevxdebug
     KDev::Util
 )
 
+if (BUILD_TESTING AND TARGET KDev::Tests)
 set(connectiontest_SRCS
     tests/connectiontest.cpp
 )
@@ -72,5 +73,6 @@ ecm_add_test(${connectiontest_SRCS}
         KDev::Util
         Qt5::Test
 )
+endif()
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
