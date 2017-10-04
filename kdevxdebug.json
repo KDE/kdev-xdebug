@@ -7,11 +7,35 @@
         "Id": "kdevxdebug",
         "License": "GPL",
         "Name": "XDebug Support",
+        "Name[bs]": "XDebug podrška",
+        "Name[ca@valencia]": "Implementació per a XDebug",
+        "Name[ca]": "Implementació per a XDebug",
+        "Name[cs]": "Podpora XDebug",
+        "Name[de]": "XDebug-Unterstützung",
+        "Name[es]": "Implementación de XDebug",
+        "Name[et]": "XDebugi toetus",
+        "Name[fi]": "XDebug-tuki",
+        "Name[fr]": "Prise en charge de XDebug",
+        "Name[ga]": "Tacaíocht XDebug",
+        "Name[gl]": "Compatibilidade con XDebug",
+        "Name[hu]": "XDebug támogatás",
+        "Name[it]": "Supporto XDebug",
+        "Name[nl]": "Ondersteuning van XDebug",
+        "Name[pl]": "Obsługa XDebug",
+        "Name[pt]": "Suporte para o XDebug",
+        "Name[pt_BR]": "Suporte ao XDebug",
+        "Name[sk]": "Podpora XDebug",
+        "Name[sv]": "Stöd för Xdebug",
+        "Name[tr]": "XDebug Desteği",
+        "Name[uk]": "Підтримка XDebug",
+        "Name[x-test]": "xxXDebug Supportxx",
         "ServiceTypes": [
             "KDevelop/Plugin"
         ]
     },
     "X-KDevelop-Category": "Global",
-    "X-KDevelop-Interfaces": ["org.kdevelop.IRunProvider"],
+    "X-KDevelop-Interfaces": [
+        "org.kdevelop.IRunProvider"
+    ],
     "X-KDevelop-Mode": "GUI"
 }
