@@ -3,6 +3,11 @@
     "KPlugin": {
         "Category": "Debugging",
         "Description": "This plugin provides a frontend for XDebug",
+        "Description[ca]": "Aquest connector proveeix d'un frontal pel XDebug",
+        "Description[nl]": "Deze plug-in levert een frontend voor XDebug",
+        "Description[pt]": "Este 'plugin' oferece uma interface para o XDebug",
+        "Description[sv]": "Insticksprogrammet tillhandahåller ett gränssnitt för Xdebug",
+        "Description[x-test]": "xxThis plugin provides a frontend for XDebugxx",
         "Icon": "debugger",
         "Id": "kdevxdebug",
         "License": "GPL",
