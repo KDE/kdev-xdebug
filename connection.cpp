@@ -190,9 +190,10 @@ void Connection::processResponse(const QDomDocument& xml)
 void Connection::setState(DebugSession::DebuggerState state)
 {
     qDebug() << state;
-    if (m_currentState != state) {
-        m_currentState = state;
+    if (m_currentState == state) {
+        return;
     }
+    m_currentState = state;
     emit stateChanged(state);
 }
 
