@@ -25,13 +25,20 @@
 
 #include "framestackmodel.h"
 #include "connection.h"
+
+#include <kdevplatform_version.h>
+
 #include <QDomElement>
 
 namespace XDebug {
 void FrameStackModel::fetchThreads()
 {
     //no multithreading in php, create just one
+#if KDEVPLATFORM_VERSION < QT_VERSION_CHECK(5,2,40)
     QList<KDevelop::FrameStackModel::ThreadItem> threadsList;
+#else
+    QVector<KDevelop::FrameStackModel::ThreadItem> threadsList;
+#endif
     KDevelop::FrameStackModel::ThreadItem i;
     i.nr = 0;
     i.name = "main thread";
@@ -44,7 +51,11 @@ void FrameStackModel::handleStack(const QDomDocument& xml)
 {
     Q_ASSERT(xml.documentElement().attribute("command") == "stack_get");
 
+#if KDEVPLATFORM_VERSION < QT_VERSION_CHECK(5,2,40)
     QList<KDevelop::FrameStackModel::FrameItem> frames;
+#else
+    QVector<KDevelop::FrameStackModel::FrameItem> frames;
+#endif
     QDomElement el = xml.documentElement().firstChildElement("stack");
     while (!el.isNull()) {
         KDevelop::FrameStackModel::FrameItem f;
