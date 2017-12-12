@@ -1,5 +1,4 @@
 {
-    "GenericName": "Debugger Frontend",
     "KPlugin": {
         "Category": "Debugging",
         "Description": "This plugin provides a frontend for XDebug",
