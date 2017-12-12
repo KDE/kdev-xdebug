@@ -27,7 +27,6 @@
 #include <QFile>
 
 #include <QDebug>
-#include <KProcess>
 #include <KLocalizedString>
 
 #include <interfaces/ilaunchconfiguration.h>

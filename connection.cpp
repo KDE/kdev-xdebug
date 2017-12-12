@@ -22,9 +22,8 @@
 
 #include "connection.h"
 
-#include <QtNetwork/QTcpSocket>
-#include <QtCore/QSocketNotifier>
-#include <QtCore/QTextCodec>
+#include <QTcpSocket>
+#include <QTextCodec>
 #include <QDomElement>
 
 #include <QDebug>

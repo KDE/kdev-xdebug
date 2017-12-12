@@ -21,8 +21,6 @@
 
 #include "launchconfigurationpage.h"
 
-#include <QVBoxLayout>
-
 #include <QIcon>
 #include <KLocalizedString>
 

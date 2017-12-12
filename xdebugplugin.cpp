@@ -34,8 +34,7 @@
 #include <QDBusInterface>
 #include <QSignalMapper>
 
-#include <kpluginfactory.h>
-#include <kaboutdata.h>
+#include <KPluginFactory>
 
 #include <interfaces/icore.h>
 #include <interfaces/iuicontroller.h>

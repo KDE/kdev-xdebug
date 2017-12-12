@@ -21,7 +21,6 @@
 
 class QString;
 class QChar;
-class QStringList;
 
 namespace Utils {
 /**

@@ -22,7 +22,7 @@
 #ifndef XDEBUG_DEBUGSESSION_H
 #define XDEBUG_DEBUGSESSION_H
 
-#include <QtCore/QString>
+#include <QString>
 #include <debugger/interfaces/idebugsession.h>
 
 namespace KDevelop {

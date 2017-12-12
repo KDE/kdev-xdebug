@@ -28,7 +28,7 @@
 #include <QPointer>
 #include <QByteArray>
 #include <QLabel>
-#include <QtCore/QVariant>
+#include <QVariant>
 
 #include <KConfigGroup>
 #include <KTextEditor/Cursor>

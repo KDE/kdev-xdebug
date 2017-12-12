@@ -23,8 +23,8 @@
 #ifndef CONNECTION_H
 #define CONNECTION_H
 
-#include <QtCore/QObject>
-#include <QtNetwork/QAbstractSocket>
+#include <QObject>
+#include <QAbstractSocket>
 #include <QStringList>
 
 #include "debugsession.h"

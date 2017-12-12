@@ -23,7 +23,7 @@
 #ifndef XDEBUGVARIABLE_H
 #define XDEBUGVARIABLE_H
 
-#include <QtCore/QMap>
+#include <QMap>
 
 #include <debugger/variable/variablecollection.h>
 

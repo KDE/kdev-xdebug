@@ -20,7 +20,6 @@
 #include <language/duchain/safetycounter.h>
 #include <QString>
 #include <QChar>
-#include <QStringList>
 
 namespace Utils {
 enum { T_ACCESS, T_PAREN, T_BRACKET, T_IDE, T_UNKNOWN, T_TEMP };

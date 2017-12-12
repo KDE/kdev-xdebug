@@ -24,14 +24,6 @@
 
 #include "launchconfig.h"
 
-#include <QFileInfo>
-
-#include <QDebug>
-#include <KProcess>
-#include <kconfiggroup.h>
-#include <kshell.h>
-#include <kmessagebox.h>
-#include <kparts/mainwindow.h>
 #include <KLocalizedString>
 
 #include <outputview/outputmodel.h>

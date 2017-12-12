@@ -29,8 +29,6 @@
 
 #include <QDebug>
 #include <KProcess>
-#include <kconfiggroup.h>
-#include <kshell.h>
 #include <KMessageBox>
 #include <KParts/MainWindow>
 #include <KLocalizedString>
