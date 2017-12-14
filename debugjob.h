@@ -84,6 +84,7 @@ private slots:
     void sessionFinished();
 
 private:
+    void processFailedToStart();
     QUrl m_url;
     QString m_browser;
     DebugSession* m_session;

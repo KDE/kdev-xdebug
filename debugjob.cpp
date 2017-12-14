@@ -263,7 +263,6 @@ void XDebugJob::processError(QProcess::ProcessError error)
         setError(-1);
         QString errmsg =  i18n("Could not start program '%1'. Make sure that the "
                                "path is specified correctly.", m_proc->property("executable").toString());
-        KMessageBox::error(KDevelop::ICore::self()->uiController()->activeMainWindow(), errmsg, i18n("Could not start application"));
         setErrorText(errmsg);
         emitResult();
     }
@@ -271,6 +270,11 @@ void XDebugJob::processError(QProcess::ProcessError error)
 
     if (m_session && m_session->connection()) {
         m_session->connection()->setState(DebugSession::EndedState);
+    }
+    else if(m_session)
+    {
+        m_session->stateChanged(DebugSession::EndedState);
+        m_session->stopDebugger();
     }
 }
 
@@ -293,6 +297,8 @@ XDebugBrowserJob::XDebugBrowserJob(DebugSession* session, KDevelop::ILaunchConfi
     setCapabilities(Killable);
 
     session->setLaunchConfiguration(cfg);
+
+    setObjectName(cfg->name());
 
     IExecuteBrowserPlugin* iface = KDevelop::ICore::self()->pluginController()
                                    ->pluginForExtension("org.kdevelop.IExecuteBrowserPlugin")->extension<IExecuteBrowserPlugin>();
@@ -341,9 +347,33 @@ void XDebugBrowserJob::start()
         }
     } else {
         KProcess proc(this);
+
         proc.setProgram(QStringList() << m_browser << url.url());
-        proc.execute();
-        emitResult();
+        if( !proc.startDetached() )
+        {
+            processFailedToStart();
+        }
+    }
+}
+
+
+void XDebugBrowserJob::processFailedToStart()
+{
+    qWarning() << "Cannot start application" << m_browser;
+    setError(-1);
+    QString errmsg =  i18n("Could not start program '%1'. Make sure that the "
+                            "path is specified correctly.", m_browser);
+    setErrorText(errmsg);
+    emitResult();
+    qDebug() << "Process error";
+
+    if (m_session && m_session->connection()) {
+        m_session->connection()->setState(DebugSession::EndedState);
+    }
+    else if(m_session)
+    {
+        m_session->stateChanged(DebugSession::EndedState);
+        m_session->stopDebugger();
     }
 }
 
@@ -361,4 +391,5 @@ void XDebugBrowserJob::sessionFinished()
 {
     emitResult();
 }
+
 }
