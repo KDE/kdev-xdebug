@@ -141,9 +141,16 @@ XDebugJob::XDebugJob(DebugSession* session, KDevelop::ILaunchConfiguration* cfg,
     m->setFilteringStrategy(KDevelop::OutputModel::ScriptErrorFilter);
     setModel(m);
 
-    connect(m_lineMaker, SIGNAL(receivedStdoutLines(const QStringList&)), model(), SLOT(appendLines(QStringList)));
-    connect(m_proc, SIGNAL(error(QProcess::ProcessError)), SLOT(processError(QProcess::ProcessError)));
-    connect(m_proc, SIGNAL(finished(int,QProcess::ExitStatus)), SLOT(processFinished(int,QProcess::ExitStatus)));
+    connect(m_lineMaker, &KDevelop::ProcessLineMaker::receivedStdoutLines, model(),&KDevelop::OutputModel::appendLines);
+    
+#if QT_VERSION < 0x050600
+    connect(m_proc, static_cast<void(QProcess::*)(QProcess::ProcessError)>(&QProcess::error),
+#else
+    connect(m_proc, &QProcess::errorOccurred,
+#endif    
+    this, &XDebugJob::processError);
+    
+    connect(m_proc, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)> (&QProcess::finished), this, &XDebugJob::processFinished);
 
     QStringList env = l.createEnvironment(envgrp, m_proc->systemEnvironment());
     env << "XDEBUG_CONFIG=\"remote_enable=1 \"";
@@ -303,7 +310,7 @@ XDebugBrowserJob::XDebugBrowserJob(DebugSession* session, KDevelop::ILaunchConfi
 
     setObjectName(cfg->name());
 
-    connect(m_session, SIGNAL(finished()), SLOT(sessionFinished()));
+    connect(m_session, &KDevelop::IDebugSession::finished,this, &XDebugBrowserJob::sessionFinished);
 
     m_session->setAcceptMultipleConnections(true);
 }

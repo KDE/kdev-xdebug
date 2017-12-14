@@ -31,8 +31,8 @@ namespace XDebug {
 BreakpointController::BreakpointController(DebugSession* parent)
     : IBreakpointController(parent)
 {
-    connect(debugSession(), SIGNAL(stateChanged(KDevelop::IDebugSession::DebuggerState)),
-            SLOT(stateChanged(KDevelop::IDebugSession::DebuggerState)));
+    connect(debugSession(), &DebugSession::stateChanged, this,
+            &BreakpointController::stateChanged);
 }
 
 void BreakpointController::sendMaybe(KDevelop::Breakpoint* breakpoint)

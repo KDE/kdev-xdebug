@@ -46,10 +46,10 @@ Connection::Connection(QTcpSocket* socket, QObject* parent)
 
     m_codec = QTextCodec::codecForLocale();
 
-    connect(m_socket, SIGNAL(disconnected()), this, SIGNAL(closed()));
-    connect(m_socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)));
+    connect(m_socket,&QTcpSocket::disconnected, this, &Connection::closed);
+    connect(m_socket,  static_cast<void (QTcpSocket::*) (QAbstractSocket::SocketError)>(&QTcpSocket::error), this, &Connection::error);
 
-    connect(m_socket, SIGNAL(readyRead()), this, SLOT(readyRead()));
+    connect(m_socket, &QTcpSocket::readyRead, this, &Connection::readyRead);
 }
 
 Connection::~Connection()

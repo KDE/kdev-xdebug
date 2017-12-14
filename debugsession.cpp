@@ -73,7 +73,7 @@ bool DebugSession::listenForConnection(QString& error)
     qDebug();
     int remotePortSetting = m_launchConfiguration->config().readEntry("RemotePort", 9000);
     if (m_server->listen(QHostAddress::Any, remotePortSetting)) {
-        connect(m_server, SIGNAL(newConnection()), this, SLOT(incomingConnection()));
+        connect(m_server, &QTcpServer::newConnection, this, &DebugSession::incomingConnection);
     } else {
         error = i18n("Opening port %1 failed: %2.", remotePortSetting, m_server->errorString());
         qWarning() << "Error" << m_server->errorString();
@@ -105,12 +105,12 @@ void DebugSession::incomingConnection()
     }
 
     m_connection = new Connection(client, this);
-    connect(m_connection, SIGNAL(output(QString)), SIGNAL(output(QString)));
-    connect(m_connection, SIGNAL(outputLine(QString)), SIGNAL(outputLine(QString)));
-    connect(m_connection, SIGNAL(stateChanged(KDevelop::IDebugSession::DebuggerState)), SIGNAL(stateChanged(KDevelop::IDebugSession::DebuggerState)));
-    connect(m_connection, SIGNAL(stateChanged(KDevelop::IDebugSession::DebuggerState)), SLOT(_stateChanged(KDevelop::IDebugSession::DebuggerState)));
-    connect(m_connection, SIGNAL(currentPositionChanged(QUrl,int)), SLOT(currentPositionChanged(QUrl,int)));
-    connect(m_connection, SIGNAL(closed()), SLOT(connectionClosed()));
+    connect(m_connection, &Connection::output, this, &DebugSession::output);
+    connect(m_connection, &Connection::outputLine, this, &DebugSession::outputLine);
+    connect(m_connection, &Connection::stateChanged, this, &DebugSession::stateChanged);
+    connect(m_connection, &Connection::stateChanged, this, &DebugSession::_stateChanged);
+    connect(m_connection, &Connection::currentPositionChanged,this, &DebugSession::currentPositionChanged);
+    connect(m_connection, &Connection::closed, this,  &DebugSession::connectionClosed);
 
     if (!m_acceptMultipleConnections) {
         closeServer();

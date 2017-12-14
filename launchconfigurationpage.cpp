@@ -40,7 +40,7 @@ ConfigPage::ConfigPage(QWidget* parent)
     m_ui = new Ui::LaunchConfigurationWidget;
     m_ui->setupUi(this);
 
-    connect(m_ui->pathMappings, SIGNAL(changed()), SIGNAL(changed()));
+    connect(m_ui->pathMappings, &KDevelop::PathMappingsWidget::changed, this, &ConfigPage::changed);
 }
 
 QIcon ConfigPage::icon() const
