@@ -26,6 +26,7 @@
 
 #include "debugsession.h"
 #include "connection.h"
+#include "debuggerdebug.h"
 
 namespace XDebug {
 BreakpointController::BreakpointController(DebugSession* parent)
@@ -54,7 +55,7 @@ void BreakpointController::sendMaybe(KDevelop::Breakpoint* breakpoint)
         if (breakpoint->enabled()) {
             QString cmd = m_ids.contains(breakpoint) ? "breakpoint_update" : "breakpoint_set";
             QStringList args;
-            qDebug() << "breakpoint kind" << breakpoint->kind();
+            qCDebug(KDEV_PHP_DEBUGGER) << "breakpoint kind" << breakpoint->kind();
             if (breakpoint->kind() == KDevelop::Breakpoint::CodeBreakpoint) {
                 if (m_ids.contains(breakpoint)) {
                     args << "-d " + m_ids[breakpoint];
@@ -107,7 +108,7 @@ void BreakpointController::handleSetBreakpoint(KDevelop::Breakpoint* breakpoint,
         m_ids[breakpoint] = xml.documentElement().attribute("id");
     }
     if (!xml.documentElement().firstChildElement("error").isNull()) {
-        qWarning() << "breakpoint error" << xml.documentElement().firstChildElement("error").text();
+        qCWarning(KDEV_PHP_DEBUGGER) << "breakpoint error" << xml.documentElement().firstChildElement("error").text();
         error(breakpoint, xml.documentElement().firstChildElement("error").text(), KDevelop::Breakpoint::LocationColumn);
     }
 }
@@ -119,7 +120,7 @@ DebugSession* BreakpointController::debugSession()
 
 void BreakpointController::stateChanged(KDevelop::IDebugSession::DebuggerState state)
 {
-    qDebug() << state;
+    qCDebug(KDEV_PHP_DEBUGGER) << state;
     if (state == KDevelop::IDebugSession::StartingState) {
         m_ids.clear();
         sendMaybeAll();

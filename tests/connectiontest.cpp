@@ -48,6 +48,7 @@
 #include "debugsession.h"
 #include "launchconfig.h"
 #include "debugjob.h"
+#include "debuggerdebug.h"
 
 using namespace XDebug;
 namespace KParts {
@@ -205,7 +206,7 @@ void ConnectionTest::testShowStepInSource()
 
     QSignalSpy showStepInSourceSpy(session, SIGNAL(showStepInSource(QUrl,int,QString)));
 
-    qDebug() << "************************************************************************************";
+    qCDebug(KDEV_PHP_DEBUGGER) << "************************************************************************************";
     job.start();
     session->waitForConnected();
 
@@ -565,7 +566,7 @@ void ConnectionTest::testBreakpointError()
     job.start();
     session->waitForConnected();
     session->waitForState(DebugSession::PausedState);
-    qDebug() << b->errorText();
+    qCDebug(KDEV_PHP_DEBUGGER) << b->errorText();
     QVERIFY(!b->errorText().isEmpty());
 
     session->run();

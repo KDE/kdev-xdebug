@@ -37,6 +37,7 @@
 #include "framestackmodel.h"
 #include "variablecontroller.h"
 #include "launchconfig.h"
+#include "debuggerdebug.h"
 
 namespace XDebug {
 DebugSession::DebugSession()
@@ -70,13 +71,13 @@ bool DebugSession::listenForConnection(QString& error)
 {
     Q_ASSERT(!m_server);
     m_server = new QTcpServer(this);
-    qDebug();
+    qCDebug(KDEV_PHP_DEBUGGER);
     int remotePortSetting = m_launchConfiguration->config().readEntry("RemotePort", 9000);
     if (m_server->listen(QHostAddress::Any, remotePortSetting)) {
         connect(m_server, &QTcpServer::newConnection, this, &DebugSession::incomingConnection);
     } else {
         error = i18n("Opening port %1 failed: %2.", remotePortSetting, m_server->errorString());
-        qWarning() << "Error" << m_server->errorString();
+        qCWarning(KDEV_PHP_DEBUGGER) << "Error" << m_server->errorString();
         delete m_server;
         m_server = nullptr;
         return false;
@@ -95,7 +96,7 @@ void DebugSession::closeServer()
 
 void DebugSession::incomingConnection()
 {
-    qDebug();
+    qCDebug(KDEV_PHP_DEBUGGER);
     QTcpSocket* client = m_server->nextPendingConnection();
 
     if (m_connection) {
@@ -132,7 +133,7 @@ void DebugSession::connectionClosed()
 
 void DebugSession::_stateChanged(KDevelop::IDebugSession::DebuggerState state)
 {
-    qDebug() << state;
+    qCDebug(KDEV_PHP_DEBUGGER) << state;
     if (state == StartingState) {
         run();
     } else if (state == PausedState) {

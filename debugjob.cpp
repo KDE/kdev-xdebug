@@ -58,6 +58,7 @@
 #include "debugsession.h"
 #include "xdebugplugin.h"
 #include "connection.h"
+#include "debuggerdebug.h"
 
 namespace XDebug {
 XDebugJob::XDebugJob(DebugSession* session, KDevelop::ILaunchConfiguration* cfg, QObject* parent)
@@ -107,7 +108,7 @@ XDebugJob::XDebugJob(DebugSession* session, KDevelop::ILaunchConfiguration* cfg,
     }
 
     if (envgrp.isEmpty()) {
-        qWarning() << "Launch Configuration:" << cfg->name() << i18n("No environment group specified, looks like a broken "
+        qCWarning(KDEV_PHP_DEBUGGER) << "Launch Configuration:" << cfg->name() << i18n("No environment group specified, looks like a broken "
                                                                      "configuration, please check run configuration '%1'. "
                                                                      "Using default environment group.", cfg->name());
 #if KDEVPLATFORM_VERSION < QT_VERSION_CHECK(5,1,40)
@@ -124,7 +125,7 @@ XDebugJob::XDebugJob(DebugSession* session, KDevelop::ILaunchConfiguration* cfg,
     }
 
     if (error() != 0) {
-        qWarning() << "Launch Configuration:" << cfg->name() << "oops, problem" << errorText();
+        qCWarning(KDEV_PHP_DEBUGGER) << "Launch Configuration:" << cfg->name() << "oops, problem" << errorText();
         return;
     }
 
@@ -173,7 +174,7 @@ XDebugJob::XDebugJob(DebugSession* session, KDevelop::ILaunchConfiguration* cfg,
         }
         program << "XDEBUG_CONFIG=\"remote_enable=1 \"";
     }
-    qDebug() << program;
+    qCDebug(KDEV_PHP_DEBUGGER) << program;
     program << interpreter;
     program << "-d xdebug.remote_enable=1";
     QString remoteHostSetting = cfg->config().readEntry("RemoteHost", QString());
@@ -186,7 +187,7 @@ XDebugJob::XDebugJob(DebugSession* session, KDevelop::ILaunchConfiguration* cfg,
     program << script.toLocalFile();
     program << arguments;
 
-    qDebug() << "setting app:" << program;
+    qCDebug(KDEV_PHP_DEBUGGER) << "setting app:" << program;
 
     m_proc->setOutputChannelMode(KProcess::MergedChannels);
 
@@ -198,11 +199,11 @@ XDebugJob::XDebugJob(DebugSession* session, KDevelop::ILaunchConfiguration* cfg,
 
 void XDebugJob::start()
 {
-    qDebug() << "launching?" << m_proc;
+    qCDebug(KDEV_PHP_DEBUGGER) << "launching?" << m_proc;
     if (m_proc) {
         QString err;
         if (!m_session->listenForConnection(err)) {
-            qWarning() << "listening for connection failed";
+            qCWarning(KDEV_PHP_DEBUGGER) << "listening for connection failed";
             setError(-1);
             setErrorText(err);
             emitResult();
@@ -210,12 +211,12 @@ void XDebugJob::start()
         }
 
         startOutput();
-        qDebug() << "starting" << m_proc->program().join(" ");
+        qCDebug(KDEV_PHP_DEBUGGER) << "starting" << m_proc->program().join(" ");
         appendLine(i18n("Starting: %1", m_proc->program().join(" ")));
         m_proc->start();
     } else
     {
-        qWarning() << "No process, something went wrong when creating the job";
+        qCWarning(KDEV_PHP_DEBUGGER) << "No process, something went wrong when creating the job";
         // No process means we've returned early on from the constructor, some bad error happened
         emitResult();
     }
@@ -228,7 +229,7 @@ KProcess* XDebugJob::process() const
 
 bool XDebugJob::doKill()
 {
-    qDebug();
+    qCDebug(KDEV_PHP_DEBUGGER);
     if (m_session) {
         m_session->stopDebugger();
     }
@@ -249,7 +250,7 @@ void XDebugJob::processFinished(int exitCode, QProcess::ExitStatus status)
     } else {
         appendLine(i18n("*** Crashed with return code: %1 ***", QString::number(exitCode)));
     }
-    qDebug() << "Process done";
+    qCDebug(KDEV_PHP_DEBUGGER) << "Process done";
     emitResult();
 
     if (m_session && m_session->connection()) {
@@ -266,7 +267,7 @@ void XDebugJob::processError(QProcess::ProcessError error)
         setErrorText(errmsg);
         emitResult();
     }
-    qDebug() << "Process error";
+    qCDebug(KDEV_PHP_DEBUGGER) << "Process error";
 
     if (m_session && m_session->connection()) {
         m_session->connection()->setState(DebugSession::EndedState);
@@ -323,7 +324,7 @@ XDebugBrowserJob::XDebugBrowserJob(DebugSession* session, KDevelop::ILaunchConfi
 
 void XDebugBrowserJob::start()
 {
-    qDebug() << "launching?" << m_url;
+    qCDebug(KDEV_PHP_DEBUGGER) << "launching?" << m_url;
     if (!m_url.isValid()) {
         emitResult();
         return;
@@ -331,7 +332,7 @@ void XDebugBrowserJob::start()
 
     QString err;
     if (!m_session->listenForConnection(err)) {
-        qWarning() << "listening for connection failed";
+        qCWarning(KDEV_PHP_DEBUGGER) << "listening for connection failed";
         setError(-1);
         setErrorText(err);
         emitResult();
@@ -342,7 +343,7 @@ void XDebugBrowserJob::start()
     url.setQuery("XDEBUG_SESSION_START=kdev");
     if (m_browser.isEmpty()) {
         if (!QDesktopServices::openUrl(url)) {
-            qWarning() << "openUrl failed, something went wrong when creating the job";
+            qCWarning(KDEV_PHP_DEBUGGER) << "openUrl failed, something went wrong when creating the job";
             emitResult();
         }
     } else {
@@ -359,13 +360,13 @@ void XDebugBrowserJob::start()
 
 void XDebugBrowserJob::processFailedToStart()
 {
-    qWarning() << "Cannot start application" << m_browser;
+    qCWarning(KDEV_PHP_DEBUGGER) << "Cannot start application" << m_browser;
     setError(-1);
     QString errmsg =  i18n("Could not start program '%1'. Make sure that the "
                             "path is specified correctly.", m_browser);
     setErrorText(errmsg);
     emitResult();
-    qDebug() << "Process error";
+    qCDebug(KDEV_PHP_DEBUGGER) << "Process error";
 
     if (m_session && m_session->connection()) {
         m_session->connection()->setState(DebugSession::EndedState);
@@ -379,7 +380,7 @@ void XDebugBrowserJob::processFailedToStart()
 
 bool XDebugBrowserJob::doKill()
 {
-    qDebug();
+    qCDebug(KDEV_PHP_DEBUGGER);
     m_session->stopDebugger();
     QUrl url = m_url;
     url.setQuery("XDEBUG_SESSION_STOP_NO_EXEC=kdev");

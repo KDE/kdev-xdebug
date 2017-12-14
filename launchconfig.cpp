@@ -44,6 +44,7 @@
 #include "xdebugplugin.h"
 #include "debugjob.h"
 #include "launchconfigurationpage.h"
+#include "debuggerdebug.h"
 
 namespace XDebug {
 XDebugLauncher::XDebugLauncher(XDebugPlugin* p) : m_plugin(p)
@@ -75,7 +76,7 @@ KJob* XDebugLauncher::start(const QString& launchMode, KDevelop::ILaunchConfigur
     if (launchMode == "debug") {
         return new XDebugJob(m_plugin->createSession(), cfg);
     }
-    qWarning() << "Unknown launch mode" << launchMode << "for config:" << cfg->name();
+    qCWarning(KDEV_PHP_DEBUGGER) << "Unknown launch mode" << launchMode << "for config:" << cfg->name();
     return nullptr;
 }
 
@@ -104,7 +105,7 @@ KJob* XDebugBrowserLauncher::start(const QString& launchMode, KDevelop::ILaunchC
     if (launchMode == "debug") {
         return new XDebugBrowserJob(m_plugin->createSession(), cfg);
     }
-    qWarning() << "Unknown launch mode" << launchMode << "for config:" << cfg->name();
+    qCWarning(KDEV_PHP_DEBUGGER) << "Unknown launch mode" << launchMode << "for config:" << cfg->name();
     return nullptr;
 }
 }

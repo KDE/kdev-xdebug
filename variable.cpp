@@ -33,6 +33,7 @@
 #include <debugger/interfaces/iframestackmodel.h>
 
 #include "connection.h"
+#include "debuggerdebug.h"
 
 namespace XDebug {
 static bool hasStartedSession()
@@ -69,7 +70,7 @@ public:
 
     void execute(const QDomDocument& xml) override
     {
-        qDebug() << xml.toString();
+        qCDebug(KDEV_PHP_DEBUGGER) << xml.toString();
         Q_ASSERT(xml.documentElement().attribute("command") == "property_get");
 
         if (!m_variable) {return;}
@@ -77,7 +78,7 @@ public:
         bool hasValue = false;
         QDomElement el = xml.documentElement().firstChildElement();
         if (el.nodeName() == "error") {
-            qDebug() << el.firstChildElement().text();
+            qCDebug(KDEV_PHP_DEBUGGER) << el.firstChildElement().text();
             //hasValue=false
         } else {
             el = xml.documentElement().firstChildElement("property");
@@ -122,7 +123,7 @@ void Variable::fetchMoreChildren()
         // FIXME: Eventually, should be a property of variable.
         KDevelop::IDebugSession* is = KDevelop::ICore::self()->debugController()->currentSession();
         DebugSession* s = static_cast<DebugSession*>(is);
-        qDebug() << expression() << m_fullName;
+        qCDebug(KDEV_PHP_DEBUGGER) << expression() << m_fullName;
         QStringList args;
         args << "-n " + m_fullName;
         args << QString("-d %0").arg(s->frameStackModel()->currentFrame());
@@ -139,14 +140,14 @@ void Variable::handleProperty(const QDomElement& xml)
     setInScope(true);
 
     m_fullName = xml.attribute("fullname");
-    //qDebug() << m_fullName;
+    //qCDebug(KDEV_PHP_DEBUGGER) << m_fullName;
     if (xml.firstChild().isText()) {
         QString v  = xml.firstChild().toText().data();
         if (xml.attribute("encoding") == "base64") {
             //TODO: use Connection::m_codec->toUnicode
             v = QString::fromUtf8(QByteArray::fromBase64(xml.text().toUtf8()));
         }
-        //qDebug() << "value" << v;
+        //qCDebug(KDEV_PHP_DEBUGGER) << "value" << v;
         setValue(v);
     }
 
@@ -161,7 +162,7 @@ void Variable::handleProperty(const QDomElement& xml)
     QDomElement el = xml.firstChildElement("property");
     while (!el.isNull()) {
         QString name = el.attribute("name");
-        //qDebug() << name;
+        //qCDebug(KDEV_PHP_DEBUGGER) << name;
         current << name;
         Variable* v = nullptr;
         if (!existing.contains(name)) {
@@ -187,7 +188,7 @@ void Variable::handleProperty(const QDomElement& xml)
     }
 
     if (!childCount() && xml.attribute("children") == "1") {
-        qDebug() << "has more" << this;
+        qCDebug(KDEV_PHP_DEBUGGER) << "has more" << this;
         setHasMore(true);
         if (isExpanded()) {
             fetchMoreChildren();

@@ -52,7 +52,15 @@ ki18n_wrap_ui(kdevxdebug_PART_SRCS
     launchconfigurationpage.ui
 )
 
+ecm_qt_declare_logging_category(kdevxdebugcore_PART_SRCS
+    HEADER debuggerdebug.h
+    IDENTIFIER KDEV_PHP_DEBUGGER
+    CATEGORY_NAME "kdevelop.languages.php.debugger"
+)
+
+
 kdevplatform_add_plugin(kdevxdebug JSON kdevxdebug.json SOURCES ${kdevxdebug_PART_SRCS} ${kdevxdebugcore_PART_SRCS})
+
 target_link_libraries(kdevxdebug
     KDev::Interfaces
     KDev::Debugger

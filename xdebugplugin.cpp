@@ -50,6 +50,7 @@
 
 #include "debugsession.h"
 #include "launchconfig.h"
+#include "debuggerdebug.h"
 
 K_PLUGIN_FACTORY_WITH_JSON(KDevXDebugDebuggerFactory, "kdevxdebug.json",
                            registerPlugin<XDebug::XDebugPlugin>();)
@@ -60,7 +61,7 @@ XDebugPlugin::XDebugPlugin(QObject* parent, const QVariantList&) :
 {
     core()->debugController()->initializeUi();
 
-    qDebug();
+    qCDebug(KDEV_PHP_DEBUGGER);
 //     connect(m_server, SIGNAL(sessionStarted(DebugSession*)), SLOT(sessionStarted(DebugSession*)));
 //     connect(m_server, SIGNAL(outputLine(DebugSession*,QString,KDevelop::IRunProvider::OutputTypes)), SLOT(outputLine(DebugSession*,QString,KDevelop::IRunProvider::OutputTypes)));
 //     connect(m_server, SIGNAL(stateChanged(DebugSession*,KDevelop::IDebugSession::DebuggerState)), SLOT(debuggerStateChanged(DebugSession*,KDevelop::IDebugSession::DebuggerState)));
@@ -95,7 +96,7 @@ DebugSession* XDebugPlugin::createSession() const
 
    void XDebugPlugin::sessionStarted(DebugSession* session)
    {
-    qDebug() << session;
+    qCDebug(KDEV_PHP_DEBUGGER) << session;
     KDevelop::ICore::self()->debugController()->addSession(session);
    }
 
@@ -116,7 +117,7 @@ DebugSession* XDebugPlugin::createSession() const
     }
     path += " " + run.arguments().join(" ");
     path = path.trimmed();
-    qDebug() << path;
+    qCDebug(KDEV_PHP_DEBUGGER) << path;
 
     KProcess* process = m_server->startDebugger(path);
     m_jobs[process] = job;
