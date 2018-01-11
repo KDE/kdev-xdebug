@@ -122,7 +122,9 @@ void DebugSession::connectionClosed()
 {
     Q_ASSERT(sender() == m_connection);
 
-    if (m_acceptMultipleConnections && m_server && m_server->isListening()) {
+    if (m_acceptMultipleConnections && m_server && m_server->isListening() 
+         && m_server->hasPendingConnections() 
+       ) {
         m_connection->setState(DebugSession::NotStartedState);
     } else {
         m_connection->setState(DebugSession::EndedState);
