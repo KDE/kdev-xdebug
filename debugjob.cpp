@@ -207,6 +207,7 @@ void XDebugJob::start()
             setError(-1);
             setErrorText(err);
             emitResult();
+            m_session->stopDebugger();
             return;
         }
 
@@ -219,6 +220,7 @@ void XDebugJob::start()
         qCWarning(KDEV_PHP_DEBUGGER) << "No process, something went wrong when creating the job";
         // No process means we've returned early on from the constructor, some bad error happened
         emitResult();
+        m_session->stopDebugger();
     }
 }
 
@@ -252,10 +254,6 @@ void XDebugJob::processFinished(int exitCode, QProcess::ExitStatus status)
     }
     qCDebug(KDEV_PHP_DEBUGGER) << "Process done";
     emitResult();
-
-    if (m_session && m_session->connection()) {
-        m_session->connection()->setState(DebugSession::EndedState);
-    }
 }
 
 void XDebugJob::processError(QProcess::ProcessError error)
@@ -265,18 +263,10 @@ void XDebugJob::processError(QProcess::ProcessError error)
         QString errmsg =  i18n("Could not start program '%1'. Make sure that the "
                                "path is specified correctly.", m_proc->property("executable").toString());
         setErrorText(errmsg);
+        m_session->stopDebugger();
         emitResult();
     }
     qCDebug(KDEV_PHP_DEBUGGER) << "Process error";
-
-    if (m_session && m_session->connection()) {
-        m_session->connection()->setState(DebugSession::EndedState);
-    }
-    else if(m_session)
-    {
-        m_session->stateChanged(DebugSession::EndedState);
-        m_session->stopDebugger();
-    }
 }
 
 void XDebugJob::appendLine(const QString& l)
@@ -336,25 +326,14 @@ void XDebugBrowserJob::start()
         setError(-1);
         setErrorText(err);
         emitResult();
+        m_session->stopDebugger();
         return;
     }
 
     QUrl url = m_url;
     url.setQuery("XDEBUG_SESSION_START=kdev");
-    if (m_browser.isEmpty()) {
-        if (!QDesktopServices::openUrl(url)) {
-            qCWarning(KDEV_PHP_DEBUGGER) << "openUrl failed, something went wrong when creating the job";
-            emitResult();
-        }
-    } else {
-        KProcess proc(this);
 
-        proc.setProgram(QStringList() << m_browser << url.url());
-        if( !proc.startDetached() )
-        {
-            processFailedToStart();
-        }
-    }
+    launchBrowser(url);
 }
 
 
@@ -367,14 +346,26 @@ void XDebugBrowserJob::processFailedToStart()
     setErrorText(errmsg);
     emitResult();
     qCDebug(KDEV_PHP_DEBUGGER) << "Process error";
+    m_session->stopDebugger();
+}
 
-    if (m_session && m_session->connection()) {
-        m_session->connection()->setState(DebugSession::EndedState);
-    }
-    else if(m_session)
-    {
-        m_session->stateChanged(DebugSession::EndedState);
-        m_session->stopDebugger();
+
+void XDebugBrowserJob::launchBrowser(QUrl &url)
+{
+   if (m_browser.isEmpty()) {
+        if (!QDesktopServices::openUrl(url)) {
+            qCWarning(KDEV_PHP_DEBUGGER) << "openUrl failed, something went wrong when creating the job";
+            emitResult();
+            m_session->stopDebugger();
+        }
+    } else {
+        KProcess proc(this);
+
+        proc.setProgram(QStringList() << m_browser << url.url());
+        if( !proc.startDetached() )
+        {
+            processFailedToStart();
+        }
     }
 }
 
@@ -384,7 +375,7 @@ bool XDebugBrowserJob::doKill()
     m_session->stopDebugger();
     QUrl url = m_url;
     url.setQuery("XDEBUG_SESSION_STOP_NO_EXEC=kdev");
-    QDesktopServices::openUrl(url);
+    launchBrowser(url);
     return true;
 }
 

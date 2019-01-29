@@ -79,6 +79,7 @@ public:
 
 protected:
     bool doKill() override;
+    void launchBrowser(QUrl &url);
 
 private slots:
     void sessionFinished();

@@ -939,18 +939,11 @@ void ConnectionTest::testMultipleConnectionsClosed()
 
     QTest::qWait(1000);
 
-    // FIXME: Is this being handled correctly?
-    QVERIFY(!session);
-    return;
-
     QVERIFY(session->connection() != firstConnection); //must be a different connection
 
     session->connection()->close(); //close second connection
     QTest::qWait(1000);
 
-//     firstConnection->close(); //close first connection _after_ second
-
-    QTest::qWait(1000);
     QCOMPARE(session->state(), DebugSession::NotStartedState); //well, it should be EndedState in reality, but this works too
 
     //job seems to gets deleted automatically

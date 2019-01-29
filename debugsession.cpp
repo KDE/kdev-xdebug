@@ -75,6 +75,8 @@ bool DebugSession::listenForConnection(QString& error)
     int remotePortSetting = m_launchConfiguration->config().readEntry("RemotePort", 9000);
     if (m_server->listen(QHostAddress::Any, remotePortSetting)) {
         connect(m_server, &QTcpServer::newConnection, this, &DebugSession::incomingConnection);
+        // avoid 'debug launch' button
+        stateChanged(ActiveState);
     } else {
         error = i18n("Opening port %1 failed: %2.", remotePortSetting, m_server->errorString());
         qCWarning(KDEV_PHP_DEBUGGER) << "Error" << m_server->errorString();
@@ -123,9 +125,11 @@ void DebugSession::connectionClosed()
     Q_ASSERT(sender() == m_connection);
 
     if (m_acceptMultipleConnections && m_server && m_server->isListening() 
-         && m_server->hasPendingConnections() 
        ) {
-        m_connection->setState(DebugSession::NotStartedState);
+        // clear variable widget
+        emit stateChanged(NotStartedState);
+        // avoid 'debug launch' button
+        emit stateChanged(ActiveState);
     } else {
         m_connection->setState(DebugSession::EndedState);
     }
@@ -207,7 +211,9 @@ void DebugSession::interruptDebugger()
 void DebugSession::stopDebugger()
 {
     closeServer();
-    if (!m_connection || m_connection->currentState() == DebugSession::StoppedState || !m_connection->socket()) {
+    // finish debugger when no connection active
+    if ( state() == DebugSession::NotStartedState && !m_connection ) {
+        stateChanged(DebugSession::EndedState);
         emit finished();
     } else {
         m_connection->sendCommand("stop");
