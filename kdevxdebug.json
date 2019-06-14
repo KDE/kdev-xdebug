@@ -20,6 +20,7 @@
         "Description[tr]": "Bu eklenti XDebug içn ön uç sağlar",
         "Description[uk]": "Цей додаток є графічною оболонкою до XDebug",
         "Description[x-test]": "xxThis plugin provides a frontend for XDebugxx",
+        "Description[zh_TW]": "此外掛程式提供 XDebug 的前端",
         "Icon": "debugger",
         "Id": "kdevxdebug",
         "License": "GPL",
@@ -49,6 +50,7 @@
         "Name[tr]": "XDebug Desteği",
         "Name[uk]": "Підтримка XDebug",
         "Name[x-test]": "xxXDebug Supportxx",
+        "Name[zh_TW]": "XDebug 支援",
         "ServiceTypes": [
             "KDevelop/Plugin"
         ]
