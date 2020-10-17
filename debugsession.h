@@ -84,6 +84,7 @@ public Q_SLOTS:
     void runToCursor() override;
     void interruptDebugger() override;
     void stopDebugger() override;
+    void killDebuggerNow() override;
     void restartDebugger() override;
 
     void eval(QByteArray source);

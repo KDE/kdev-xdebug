@@ -220,6 +220,17 @@ void DebugSession::stopDebugger()
     }
 }
 
+void DebugSession::killDebuggerNow()
+{
+    closeServer();
+    if (m_connection) {
+        m_connection->close();
+    } else {
+        emit stateChanged(EndedState);
+        emit finished();
+    }
+}
+
 void DebugSession::restartDebugger()
 {
 }
