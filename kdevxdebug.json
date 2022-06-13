@@ -3,7 +3,7 @@
         "Category": "Debugging",
         "Description": "This plugin provides a frontend for XDebug",
         "Description[az]": "Bu qoşma XDebug üçün interfeysi təmin edir",
-        "Description[ca@valencia]": "Este conector proveeix d'un frontal per al XDebug",
+        "Description[ca@valencia]": "Este connector proveeix d'un frontal per al XDebug",
         "Description[ca]": "Aquest connector proveeix d'un frontal per al XDebug",
         "Description[cs]": "Tento modul poskytuje rozhraní pro XDebug",
         "Description[de]": "Dieses Modul stellt eine Oberfläche für XDebug zur Verfügung",
