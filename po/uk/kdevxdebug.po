@@ -1,0 +1,183 @@
+# Translation of kdevxdebug.po to Ukrainian
+# Copyright (C) 2009-2014 This_file_is_part_of_KDE
+# This file is distributed under the license LGPL version 2.1 or
+# version 3 or later versions approved by the membership of KDE e.V.
+#
+# Yuri Chornoivan <yurchor@ukr.net>, 2009, 2010, 2012, 2013, 2014.
+msgid ""
+msgstr ""
+"Project-Id-Version: kdevxdebug\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:19+0200\n"
+"PO-Revision-Date: 2014-02-03 07:36+0200\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.5\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#: breakpointcontroller.cpp:79
+#, kde-format
+msgid "breakpoint type is not supported"
+msgstr "тип точки зупинки не підтримується"
+
+#: debugjob.cpp:111
+#, kde-format
+msgid ""
+"No environment group specified, looks like a broken configuration, please "
+"check run configuration '%1'. Using default environment group."
+msgstr ""
+"Не вказано групу середовища, схоже, ви припустилися помилки під час "
+"налаштування, будь ласка, перевірте налаштування запуску «%1». Буде "
+"використано типову групу середовища."
+
+#: debugjob.cpp:216
+#, kde-format
+msgid "Starting: %1"
+msgstr "Запуск: %1"
+
+#: debugjob.cpp:245
+#, kde-format
+msgid "*** Exited normally ***"
+msgstr "*** Нормальне завершення ***"
+
+#: debugjob.cpp:248
+#, kde-format
+msgid "*** Exited with return code: %1 ***"
+msgstr "*** Завершення з повернутим кодом: %1 ***"
+
+#: debugjob.cpp:251
+#, kde-format
+msgid "*** Process aborted ***"
+msgstr "*** Аварійне завершення процесу ***"
+
+#: debugjob.cpp:253
+#, kde-format
+msgid "*** Crashed with return code: %1 ***"
+msgstr "*** Аварійне завершення з повернутим кодом: %1 ***"
+
+#: debugjob.cpp:263 debugjob.cpp:344
+#, kde-format
+msgid ""
+"Could not start program '%1'. Make sure that the path is specified correctly."
+msgstr ""
+"Не вдалося запустити програму «%1». Переконайтеся, що шлях вказано правильно."
+
+#: debugsession.cpp:81
+#, kde-format
+msgid "Opening port %1 failed: %2."
+msgstr "Спроба відкриття порту %1 зазнала невдачі: %2."
+
+#: launchconfig.cpp:67
+#, kde-format
+msgid "XDebug"
+msgstr "XDebug"
+
+#: launchconfig.cpp:90
+#, kde-format
+msgid "Executes a PHP script with XDebug enabled"
+msgstr "Виконує скрипт PHP з увімкненим XDebug"
+
+#: launchconfigurationpage.cpp:67
+#, kde-format
+msgid "XDebug Configuration"
+msgstr "Налаштування XDebug"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: launchconfigurationpage.ui:17
+#, kde-format
+msgid "Path Mappings"
+msgstr "Відповідність шляхів"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: launchconfigurationpage.ui:29
+#, kde-format
+msgid "Advanced Settings"
+msgstr "Додаткові параметри"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: launchconfigurationpage.ui:38
+#, kde-format
+msgid "xdebug.remote_host"
+msgstr "xdebug.віддалений_вузол"
+
+#. i18n: ectx: property (placeholderText), widget (QLineEdit, remoteHost)
+#: launchconfigurationpage.ui:48
+#, kde-format
+msgid "yourhost"
+msgstr "вашвузол"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: launchconfigurationpage.ui:55
+#, kde-format
+msgid "xdebug.remote_port"
+msgstr "xdebug.віддалений_порт"
+
+#~ msgid "Could not start application"
+#~ msgstr "Не вдалося запустити програму"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Юрій Чорноіван"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "yurchor@ukr.net"
+
+#~ msgid "XDebug Support"
+#~ msgstr "Підтримка XDebug"
+
+#~ msgid "Support for debugging PHP scripts in XDebug"
+#~ msgstr "Підтримка налагоджування скриптів PHP у XDebug"
+
+#~ msgid "Niko Sams"
+#~ msgstr "Niko Sams"
+
+#~ msgid "Author"
+#~ msgstr "Автор"
+
+#~ msgid "Remote Path"
+#~ msgstr "Віддалений шлях"
+
+#~ msgid "Local Path"
+#~ msgstr "Локальний шлях"
+
+#~ msgid "Delete"
+#~ msgstr "Вилучити"
+
+#~ msgid "&Start with XDebug"
+#~ msgstr "&Запустити за допомогою XDebug"
+
+#~ msgid "Start in debugger"
+#~ msgstr "Запустити у зневаднику"
+
+#~ msgid ""
+#~ "<b>Start in debugger</b><p>Starts the debugger with the project's main "
+#~ "executable. You may set some breakpoints before this, or you can "
+#~ "interrupt the program while it is running, in order to get information "
+#~ "about variables, frame stack, and so on."
+#~ msgstr ""
+#~ "<b>Запуск у зневаднику</b><p>Запускає налагодження головного виконуваного "
+#~ "файла проєкту. Ви можете встановити точки зупинки перед запуском або "
+#~ "перервати виконання програми з метою отримання інформації щодо змінних, "
+#~ "стека викликів та іншого."
+
+#~ msgctxt "@title:menu"
+#~ msgid "Run"
+#~ msgstr "Виконати"
+
+#~ msgid "XDebug Debugger Toolbar"
+#~ msgstr "Панель інструментів XDebug"
+
+#~ msgid "Depth"
+#~ msgstr "Глибина"
+
+#~ msgid "Where"
+#~ msgstr "Місце"
+
+#~ msgid "Source"
+#~ msgstr "Джерело"

@@ -1,0 +1,115 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the kdev-xdebug package.
+#
+# Matjaž Jeran <matjaz.jeran@amis.net>, 2021.
+msgid ""
+msgstr ""
+"Project-Id-Version: kdev-xdebug\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:19+0200\n"
+"PO-Revision-Date: 2021-09-03 09:32+0200\n"
+"Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
+"Language-Team: Slovenian <lugos-slo@lugos.si>\n"
+"Language: sl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 20.12.2\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
+"%100==4 ? 3 : 0);\n"
+
+#: breakpointcontroller.cpp:79
+#, kde-format
+msgid "breakpoint type is not supported"
+msgstr "vrsta prekinitvene točke ni podprta"
+
+#: debugjob.cpp:111
+#, kde-format
+msgid ""
+"No environment group specified, looks like a broken configuration, please "
+"check run configuration '%1'. Using default environment group."
+msgstr ""
+"Ni določena nobena skupina za okolje, izgleda kot napačna nastavitev. Prosim "
+"preverite nastavitev \"%1\". Bo uporabljena privzeto skupino v okolju."
+
+#: debugjob.cpp:216
+#, kde-format
+msgid "Starting: %1"
+msgstr "Začetek: %1"
+
+#: debugjob.cpp:245
+#, kde-format
+msgid "*** Exited normally ***"
+msgstr "*** Normalen izhod ***"
+
+#: debugjob.cpp:248
+#, kde-format
+msgid "*** Exited with return code: %1 ***"
+msgstr "*** Normalen izhod s kodo: %1 ***"
+
+#: debugjob.cpp:251
+#, kde-format
+msgid "*** Process aborted ***"
+msgstr "*** Proces prekinjen ***"
+
+#: debugjob.cpp:253
+#, kde-format
+msgid "*** Crashed with return code: %1 ***"
+msgstr "*** Sesut z zaključno kodo: %1 ***"
+
+#: debugjob.cpp:263 debugjob.cpp:344
+#, kde-format
+msgid ""
+"Could not start program '%1'. Make sure that the path is specified correctly."
+msgstr ""
+"Ni bilo mogoče zagnati programa '%1'. Preverite, da je pot določena pravilno."
+
+#: debugsession.cpp:81
+#, kde-format
+msgid "Opening port %1 failed: %2."
+msgstr "Odpiranje vrat %1 ni uspelo: %2."
+
+#: launchconfig.cpp:67
+#, kde-format
+msgid "XDebug"
+msgstr "XDebug"
+
+#: launchconfig.cpp:90
+#, kde-format
+msgid "Executes a PHP script with XDebug enabled"
+msgstr "Izvede skript PHP z omogočenim XDebug-om"
+
+#: launchconfigurationpage.cpp:67
+#, kde-format
+msgid "XDebug Configuration"
+msgstr "Nastavitev XDebug"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: launchconfigurationpage.ui:17
+#, kde-format
+msgid "Path Mappings"
+msgstr "Preslikave poti"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: launchconfigurationpage.ui:29
+#, kde-format
+msgid "Advanced Settings"
+msgstr "Napredne nastavitve"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: launchconfigurationpage.ui:38
+#, kde-format
+msgid "xdebug.remote_host"
+msgstr "xdebug.remote_host"
+
+#. i18n: ectx: property (placeholderText), widget (QLineEdit, remoteHost)
+#: launchconfigurationpage.ui:48
+#, kde-format
+msgid "yourhost"
+msgstr "yourhost"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: launchconfigurationpage.ui:55
+#, kde-format
+msgid "xdebug.remote_port"
+msgstr "xdebug.remote_port"

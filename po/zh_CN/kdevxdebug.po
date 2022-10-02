@@ -1,0 +1,111 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: kdeorg\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:19+0200\n"
+"PO-Revision-Date: 2022-09-20 01:55\n"
+"Last-Translator: \n"
+"Language-Team: Chinese Simplified\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Crowdin-Project: kdeorg\n"
+"X-Crowdin-Project-ID: 269464\n"
+"X-Crowdin-Language: zh-CN\n"
+"X-Crowdin-File: /kf5-trunk/messages/kdev-xdebug/kdevxdebug.pot\n"
+"X-Crowdin-File-ID: 6470\n"
+
+#: breakpointcontroller.cpp:79
+#, kde-format
+msgid "breakpoint type is not supported"
+msgstr ""
+
+#: debugjob.cpp:111
+#, kde-format
+msgid ""
+"No environment group specified, looks like a broken configuration, please "
+"check run configuration '%1'. Using default environment group."
+msgstr "没有指定环境组，似乎配置损坏，请检查运行配置“%1”。使用默认的环境组。"
+
+#: debugjob.cpp:216
+#, kde-format
+msgid "Starting: %1"
+msgstr "正在启动：%1"
+
+#: debugjob.cpp:245
+#, kde-format
+msgid "*** Exited normally ***"
+msgstr "*** 正常退出 ***"
+
+#: debugjob.cpp:248
+#, kde-format
+msgid "*** Exited with return code: %1 ***"
+msgstr "*** 退出，返回值：%1 ***"
+
+#: debugjob.cpp:251
+#, kde-format
+msgid "*** Process aborted ***"
+msgstr "*** 进程已中止 ***"
+
+#: debugjob.cpp:253
+#, kde-format
+msgid "*** Crashed with return code: %1 ***"
+msgstr "*** 崩溃，返回值：%1 ***"
+
+#: debugjob.cpp:263 debugjob.cpp:344
+#, kde-format
+msgid ""
+"Could not start program '%1'. Make sure that the path is specified correctly."
+msgstr "无法启动程序“%1”。请确保正确指定了路径."
+
+#: debugsession.cpp:81
+#, kde-format
+msgid "Opening port %1 failed: %2."
+msgstr ""
+
+#: launchconfig.cpp:67
+#, kde-format
+msgid "XDebug"
+msgstr ""
+
+#: launchconfig.cpp:90
+#, kde-format
+msgid "Executes a PHP script with XDebug enabled"
+msgstr ""
+
+#: launchconfigurationpage.cpp:67
+#, kde-format
+msgid "XDebug Configuration"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: launchconfigurationpage.ui:17
+#, kde-format
+msgid "Path Mappings"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: launchconfigurationpage.ui:29
+#, kde-format
+msgid "Advanced Settings"
+msgstr "高级设置"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: launchconfigurationpage.ui:38
+#, kde-format
+msgid "xdebug.remote_host"
+msgstr ""
+
+#. i18n: ectx: property (placeholderText), widget (QLineEdit, remoteHost)
+#: launchconfigurationpage.ui:48
+#, kde-format
+msgid "yourhost"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: launchconfigurationpage.ui:55
+#, kde-format
+msgid "xdebug.remote_port"
+msgstr ""

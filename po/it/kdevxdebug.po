@@ -1,0 +1,138 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Valter Mura <valtermura@gmail.com>, 2010, 2014.
+msgid ""
+msgstr ""
+"Project-Id-Version: kdevxdebug\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:19+0200\n"
+"PO-Revision-Date: 2014-03-10 23:57+0100\n"
+"Last-Translator: Valter Mura <valtermura@gmail.com>\n"
+"Language-Team: Italian <kde-i18n-it@kde.org>\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: breakpointcontroller.cpp:79
+#, kde-format
+msgid "breakpoint type is not supported"
+msgstr "Il tipo di breakpoint non è supportato"
+
+#: debugjob.cpp:111
+#, kde-format
+msgid ""
+"No environment group specified, looks like a broken configuration, please "
+"check run configuration '%1'. Using default environment group."
+msgstr ""
+"Non è stato specificato alcun gruppo di ambiente, sembra che la "
+"configurazione sia errata; controllare la configurazione di esecuzione «%1»."
+"Verrà utilizzato il gruppo di ambiente predefinito."
+
+#: debugjob.cpp:216
+#, kde-format
+msgid "Starting: %1"
+msgstr "Avvio in corso: %1"
+
+#: debugjob.cpp:245
+#, kde-format
+msgid "*** Exited normally ***"
+msgstr "*** Uscita normale ***"
+
+#: debugjob.cpp:248
+#, kde-format
+msgid "*** Exited with return code: %1 ***"
+msgstr "*** Uscita con codice restituito: %1 ***"
+
+#: debugjob.cpp:251
+#, kde-format
+msgid "*** Process aborted ***"
+msgstr "*** Processo interrotto ***"
+
+#: debugjob.cpp:253
+#, kde-format
+msgid "*** Crashed with return code: %1 ***"
+msgstr "*** Blocco con codice restituito: %1 ***"
+
+#: debugjob.cpp:263 debugjob.cpp:344
+#, kde-format
+msgid ""
+"Could not start program '%1'. Make sure that the path is specified correctly."
+msgstr ""
+"Impossibile avviare il programma «%1». Assicurati che il percorso sia "
+"specificato correttamente."
+
+#: debugsession.cpp:81
+#, kde-format
+msgid "Opening port %1 failed: %2."
+msgstr "Apertura della porta %1 non riuscita: %2."
+
+#: launchconfig.cpp:67
+#, kde-format
+msgid "XDebug"
+msgstr "XDebug"
+
+#: launchconfig.cpp:90
+#, kde-format
+msgid "Executes a PHP script with XDebug enabled"
+msgstr "Esegue uno script PHP con XDebug abilitato"
+
+#: launchconfigurationpage.cpp:67
+#, kde-format
+msgid "XDebug Configuration"
+msgstr "Configurazione di XDebug"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: launchconfigurationpage.ui:17
+#, kde-format
+msgid "Path Mappings"
+msgstr "Mappature dei percorsi"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: launchconfigurationpage.ui:29
+#, kde-format
+msgid "Advanced Settings"
+msgstr "Impostazioni avanzate"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: launchconfigurationpage.ui:38
+#, kde-format
+msgid "xdebug.remote_host"
+msgstr "xdebug.remote_host"
+
+#. i18n: ectx: property (placeholderText), widget (QLineEdit, remoteHost)
+#: launchconfigurationpage.ui:48
+#, kde-format
+msgid "yourhost"
+msgstr "tuohost"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: launchconfigurationpage.ui:55
+#, kde-format
+msgid "xdebug.remote_port"
+msgstr "xdebug.remote_port"
+
+#~ msgid "Could not start application"
+#~ msgstr "Impossibile avviare l'applicazione"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Valter Mura"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "valtermura@gmail.com"
+
+#~ msgid "XDebug Support"
+#~ msgstr "Supporto XDebug"
+
+#~ msgid "Support for debugging PHP scripts in XDebug"
+#~ msgstr "Supporto per il debugging di script PHP in XDebug"
+
+#~ msgid "Niko Sams"
+#~ msgstr "Niko Sams"
+
+#~ msgid "Author"
+#~ msgstr "Autore"

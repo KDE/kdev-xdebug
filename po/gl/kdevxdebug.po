@@ -1,0 +1,141 @@
+# translation of kdevxdebug.po to galician
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Marce Villarino <mvillarino@users.sourceforge.net>, 2009.
+# Adrián Chaves Fernández <adriyetichaves@gmail.com>, 2015.
+# Adrián Chaves (Gallaecio) <adrian@chaves.io>, 2017, 2019.
+msgid ""
+msgstr ""
+"Project-Id-Version: kdevxdebug\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:19+0200\n"
+"PO-Revision-Date: 2019-03-03 13:24+0100\n"
+"Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
+"Language-Team: Galician <kde-i18n-doc@kde.org>\n"
+"Language: gl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: breakpointcontroller.cpp:79
+#, kde-format
+msgid "breakpoint type is not supported"
+msgstr "O tipo do punto de parada non é compatíbel."
+
+#: debugjob.cpp:111
+#, kde-format
+msgid ""
+"No environment group specified, looks like a broken configuration, please "
+"check run configuration '%1'. Using default environment group."
+msgstr ""
+"Non se especificou ningún grupo de ambiente, semella deberse a unha "
+"configuración corrompida, comprobe a configuración de execución «%1». "
+"Empregarase o grupo de ambiente predeterminado."
+
+#: debugjob.cpp:216
+#, kde-format
+msgid "Starting: %1"
+msgstr "Estase a iniciar: %1"
+
+#: debugjob.cpp:245
+#, kde-format
+msgid "*** Exited normally ***"
+msgstr "*** Saíu con normalidade ***"
+
+#: debugjob.cpp:248
+#, kde-format
+msgid "*** Exited with return code: %1 ***"
+msgstr "*** Saíu co código de retorno: %1 ***"
+
+#: debugjob.cpp:251
+#, kde-format
+msgid "*** Process aborted ***"
+msgstr "*** Interrompeuse o proceso ***"
+
+#: debugjob.cpp:253
+#, kde-format
+msgid "*** Crashed with return code: %1 ***"
+msgstr "*** Quebrou co código de retorno: %1 ***"
+
+#: debugjob.cpp:263 debugjob.cpp:344
+#, kde-format
+msgid ""
+"Could not start program '%1'. Make sure that the path is specified correctly."
+msgstr ""
+"Non se puido iniciar o programa «%1». Asegúrese de que se especificase "
+"correctamente a ruta."
+
+#: debugsession.cpp:81
+#, kde-format
+msgid "Opening port %1 failed: %2."
+msgstr "A apertura do porto %1 fallou: %2."
+
+#: launchconfig.cpp:67
+#, kde-format
+msgid "XDebug"
+msgstr "XDebug"
+
+#: launchconfig.cpp:90
+#, kde-format
+msgid "Executes a PHP script with XDebug enabled"
+msgstr "Executar un script de PHP con XDebug activado."
+
+#: launchconfigurationpage.cpp:67
+#, kde-format
+msgid "XDebug Configuration"
+msgstr "Configuración de XDebug"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: launchconfigurationpage.ui:17
+#, kde-format
+msgid "Path Mappings"
+msgstr "Asociacións de rutas"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: launchconfigurationpage.ui:29
+#, kde-format
+msgid "Advanced Settings"
+msgstr "Configuración avanzada"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: launchconfigurationpage.ui:38
+#, kde-format
+msgid "xdebug.remote_host"
+msgstr "xdebug.remote_host"
+
+#. i18n: ectx: property (placeholderText), widget (QLineEdit, remoteHost)
+#: launchconfigurationpage.ui:48
+#, kde-format
+msgid "yourhost"
+msgstr "o_seu_servidor"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: launchconfigurationpage.ui:55
+#, kde-format
+msgid "xdebug.remote_port"
+msgstr "xdebug.remote_port"
+
+#~ msgid "Could not start application"
+#~ msgstr "Non foi posíbel iniciar o aplicativo."
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Adrián Chaves Fernández"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "adriyetichaves@gmail.com"
+
+#~ msgid "XDebug Support"
+#~ msgstr "Compatibilidade con XDebug"
+
+#~ msgid "Support for debugging PHP scripts in XDebug"
+#~ msgstr "Funcionalidade de depurar scripts de PHP en XDebug."
+
+#~ msgid "Niko Sams"
+#~ msgstr "Niko Sams"
+
+#~ msgid "Author"
+#~ msgstr "Autor"

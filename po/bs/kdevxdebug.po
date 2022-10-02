@@ -1,0 +1,140 @@
+# Bosnian translations for kde package.
+# Copyright (C) 2012 This_file_is_part_of_KDE
+# This file is distributed under the same license as the kde package.
+# Samir Ribic <megaribi@epn.ba>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kde 49i410\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:19+0200\n"
+"PO-Revision-Date: 2014-10-20 19:46+0000\n"
+"Last-Translator: Nermina Ahmić <nahmic1@etf.unsa.ba>\n"
+"Language-Team: Bosnian\n"
+"Language: bs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Launchpad (build 17341)\n"
+"X-Launchpad-Export-Date: 2015-02-17 06:23+0000\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#: breakpointcontroller.cpp:79
+#, kde-format
+msgid "breakpoint type is not supported"
+msgstr "tip prekidne tačke nije podržan"
+
+#: debugjob.cpp:111
+#, kde-format
+msgid ""
+"No environment group specified, looks like a broken configuration, please "
+"check run configuration '%1'. Using default environment group."
+msgstr ""
+"Nema grupe okruženja, izgleda kao slomljena konfiguracija, molimo provjerite "
+"aktivnu konfiguraciju \"%1\". Koristi se podrazumijevana grupa okruženja."
+
+#: debugjob.cpp:216
+#, kde-format
+msgid "Starting: %1"
+msgstr "Pokrećem: %1"
+
+#: debugjob.cpp:245
+#, kde-format
+msgid "*** Exited normally ***"
+msgstr "*** Normalan izlaz ***"
+
+#: debugjob.cpp:248
+#, kde-format
+msgid "*** Exited with return code: %1 ***"
+msgstr "*** Izlaz s povratnim kodom: %1 ***"
+
+#: debugjob.cpp:251
+#, kde-format
+msgid "*** Process aborted ***"
+msgstr "*** Proces prekinut ***"
+
+#: debugjob.cpp:253
+#, kde-format
+msgid "*** Crashed with return code: %1 ***"
+msgstr "*** Krah s izlaznim kodom: %1 ***"
+
+#: debugjob.cpp:263 debugjob.cpp:344
+#, kde-format
+msgid ""
+"Could not start program '%1'. Make sure that the path is specified correctly."
+msgstr ""
+"Ne mogu pokrenuti program '%1'. Provjerite da li je staza pravilno navedena."
+
+#: debugsession.cpp:81
+#, kde-format
+msgid "Opening port %1 failed: %2."
+msgstr "Otvaranje porta %1 neuspjelo: %2."
+
+#: launchconfig.cpp:67
+#, kde-format
+msgid "XDebug"
+msgstr "XDebug"
+
+#: launchconfig.cpp:90
+#, kde-format
+msgid "Executes a PHP script with XDebug enabled"
+msgstr "Izvođenja PHP skripti sa XDebug-om su omogućena"
+
+#: launchconfigurationpage.cpp:67
+#, kde-format
+msgid "XDebug Configuration"
+msgstr "XDebug konfiguracija"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: launchconfigurationpage.ui:17
+#, kde-format
+msgid "Path Mappings"
+msgstr "Mapiranje staza"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: launchconfigurationpage.ui:29
+#, kde-format
+msgid "Advanced Settings"
+msgstr "Napredna podešavanja"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: launchconfigurationpage.ui:38
+#, kde-format
+msgid "xdebug.remote_host"
+msgstr "xdebug.remote_host"
+
+#. i18n: ectx: property (placeholderText), widget (QLineEdit, remoteHost)
+#: launchconfigurationpage.ui:48
+#, kde-format
+msgid "yourhost"
+msgstr "vašračunar"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: launchconfigurationpage.ui:55
+#, kde-format
+msgid "xdebug.remote_port"
+msgstr "xdebug.remote_port"
+
+#~ msgid "Could not start application"
+#~ msgstr "Ne mogu pokrenuti program"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Samir Ribić,Nermina Ahmić"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "Samir.ribic@etf.unsa.ba,nahmic1@etf.unsa.ba"
+
+#~ msgid "XDebug Support"
+#~ msgstr "XDebug podrška"
+
+#~ msgid "Support for debugging PHP scripts in XDebug"
+#~ msgstr "Podrška za uklanjanje grešaka PHP skripti u XDebug-u"
+
+#~ msgid "Niko Sams"
+#~ msgstr "Niko Sams"
+
+#~ msgid "Author"
+#~ msgstr "Autor"
