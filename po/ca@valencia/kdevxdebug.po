@@ -35,7 +35,7 @@ msgid ""
 msgstr ""
 "No s'ha especificat un grup d'entorn, pareix que s'ha malmés la "
 "configuració, comproveu la configuració d'execució «%1». S'utilitzarà el "
-"grup d'entorn per defecte."
+"grup d'entorn predeterminat."
 
 #: debugjob.cpp:216
 #, kde-format
