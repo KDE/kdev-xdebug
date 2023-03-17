@@ -17,7 +17,6 @@
  */
 
 #include <language/duchain/stringhelpers.h>
-#include <language/duchain/safetycounter.h>
 #include <QString>
 #include <QChar>
 
