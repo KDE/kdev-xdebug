@@ -32,7 +32,7 @@ msgid ""
 msgstr ""
 "Non se especificou ningún grupo de ambiente, semella deberse a unha "
 "configuración corrompida, comprobe a configuración de execución «%1». "
-"Empregarase o grupo de ambiente predeterminado."
+"Usarase o grupo de ambiente predeterminado."
 
 #: debugjob.cpp:216
 #, kde-format
