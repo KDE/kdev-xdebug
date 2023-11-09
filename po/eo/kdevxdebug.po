@@ -1,13 +1,16 @@
 # Translation of kdevxdebug into esperanto.
+# Copyright (C) 2009 Free Software Foundation, Inc.
+# This file is distributed under the same license as the kdev-xdebug package.
 # Axel Rousseau <axel@esperanto-jeunes.org>, 2009.
+# Oliver Kellogg <okellogg@users.sourceforge.net>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kdevxdebug\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:28+0000\n"
-"PO-Revision-Date: 2009-11-15 12:06+0100\n"
-"Last-Translator: Axel Rousseau <axel@esperanto-jeunes.org>\n"
+"PO-Revision-Date: 2023-11-08 20:06+0100\n"
+"Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +22,7 @@ msgstr ""
 #: breakpointcontroller.cpp:79
 #, kde-format
 msgid "breakpoint type is not supported"
-msgstr ""
+msgstr "rompopunkto tipo ne estas subtenata"
 
 #: debugjob.cpp:111
 #, kde-format
@@ -27,63 +30,66 @@ msgid ""
 "No environment group specified, looks like a broken configuration, please "
 "check run configuration '%1'. Using default environment group."
 msgstr ""
+"Neniu mediogrupo specifita, aspektas kiel rompita agordo, bonvolu kontroli "
+"rulagordon '%1'. Uzante defaŭltan mediogrupon."
 
 #: debugjob.cpp:216
 #, kde-format
 msgid "Starting: %1"
-msgstr ""
+msgstr "Komencante: %1"
 
 #: debugjob.cpp:245
 #, kde-format
 msgid "*** Exited normally ***"
-msgstr ""
+msgstr "*** Normale eliris ***"
 
 #: debugjob.cpp:248
 #, kde-format
 msgid "*** Exited with return code: %1 ***"
-msgstr ""
+msgstr "*** Eliris kun revenkodo: %1 ***"
 
 #: debugjob.cpp:251
 #, kde-format
 msgid "*** Process aborted ***"
-msgstr ""
+msgstr "*** Procezo ĉesigita ***"
 
 #: debugjob.cpp:253
 #, kde-format
 msgid "*** Crashed with return code: %1 ***"
-msgstr ""
+msgstr "*** Paneis kun revenkodo: %1 ***"
 
 #: debugjob.cpp:263 debugjob.cpp:344
 #, kde-format
 msgid ""
 "Could not start program '%1'. Make sure that the path is specified correctly."
 msgstr ""
+"Ne eblis lanĉi programon '%1'. Certiĝu, ke la vojo estas ĝuste specifita."
 
 #: debugsession.cpp:81
 #, kde-format
 msgid "Opening port %1 failed: %2."
-msgstr ""
+msgstr "Malfermado de pordo %1 malsukcesis: %2."
 
 #: launchconfig.cpp:67
 #, kde-format
 msgid "XDebug"
-msgstr ""
+msgstr "XDebug"
 
 #: launchconfig.cpp:90
 #, kde-format
 msgid "Executes a PHP script with XDebug enabled"
-msgstr ""
+msgstr "Lanĉas PHP-skripton kun XDebug ebligita"
 
 #: launchconfigurationpage.cpp:67
 #, kde-format
 msgid "XDebug Configuration"
-msgstr ""
+msgstr "XDebug Agordo"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: launchconfigurationpage.ui:17
 #, kde-format
 msgid "Path Mappings"
-msgstr ""
+msgstr "Vojomapadoj"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: launchconfigurationpage.ui:29
@@ -95,36 +101,16 @@ msgstr "Plia agordo"
 #: launchconfigurationpage.ui:38
 #, kde-format
 msgid "xdebug.remote_host"
-msgstr ""
+msgstr "xdebug.remote_host"
 
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, remoteHost)
 #: launchconfigurationpage.ui:48
 #, kde-format
 msgid "yourhost"
-msgstr ""
+msgstr "via gastiganto"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: launchconfigurationpage.ui:55
 #, kde-format
 msgid "xdebug.remote_port"
-msgstr ""
-
-#~ msgctxt "NAME OF TRANSLATORS"
-#~ msgid "Your names"
-#~ msgstr "Axel Rousseau"
-
-#~ msgctxt "EMAIL OF TRANSLATORS"
-#~ msgid "Your emails"
-#~ msgstr "axel@esperanto-jeunes.org"
-
-#~ msgid "Niko Sams"
-#~ msgstr "Niko Sams"
-
-#~ msgid "Author"
-#~ msgstr "Aŭtoro"
-
-#~ msgid "Local Path"
-#~ msgstr "Loka vojo"
-
-#~ msgid "Delete"
-#~ msgstr "Forigi"
+msgstr "xdebug.remote_port"
