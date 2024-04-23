@@ -10,3 +10,6 @@ Dependencies:
     'frameworks/kitemmodels': '@stable'
     'kdevelop/kdevelop': '@stable'
     'kdevelop/kdev-executebrowser': '@stable'
+
+Options:
+  require-passing-tests-on: ['Linux', 'FreeBSD', 'Windows']
