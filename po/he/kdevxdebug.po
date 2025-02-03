@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: kdev-xdebug\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:28+0000\n"
-"PO-Revision-Date: 2025-02-01 10:06+0200\n"
+"PO-Revision-Date: 2025-02-02 08:09+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Lokalize 24.12.0\n"
 
 #: breakpointcontroller.cpp:79
@@ -28,37 +28,39 @@ msgid ""
 "No environment group specified, looks like a broken configuration, please "
 "check run configuration '%1'. Using default environment group."
 msgstr ""
+"לא צוינה קבוצת סביבה, זה נראה כמו הגדרות פגומות, נא להריץ בדיקה על ההגדרות "
+"‚%1’. עוברים להשתמש בקבוצת סביבה כברירת מחדל."
 
 #: debugjob.cpp:216
 #, kde-format
 msgid "Starting: %1"
-msgstr ""
+msgstr "מתחיל: %1"
 
 #: debugjob.cpp:245
 #, kde-format
 msgid "*** Exited normally ***"
-msgstr ""
+msgstr "*** הסתיים בצורה רגילה ***"
 
 #: debugjob.cpp:248
 #, kde-format
 msgid "*** Exited with return code: %1 ***"
-msgstr ""
+msgstr "*** הסתיים עם קוד החזרה: %1 ***"
 
 #: debugjob.cpp:251
 #, kde-format
 msgid "*** Process aborted ***"
-msgstr ""
+msgstr "*** התהליך בוטל ***"
 
 #: debugjob.cpp:253
 #, kde-format
 msgid "*** Crashed with return code: %1 ***"
-msgstr ""
+msgstr "*** קרס עם קוד החזרה: %1 ***"
 
 #: debugjob.cpp:263 debugjob.cpp:344
 #, kde-format
 msgid ""
 "Could not start program '%1'. Make sure that the path is specified correctly."
-msgstr ""
+msgstr "לא ניתן להפעיל את התוכנית ‚%1’. נא לוודא שהנתיב מוגדר כראוי."
 
 #: debugsession.cpp:81
 #, kde-format
