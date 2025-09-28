@@ -2,6 +2,7 @@
     "KPlugin": {
         "Category": "Debugging",
         "Description": "This plugin provides a frontend for XDebug",
+        "Description[ar]": "توفّر هذه الملحقة واجهة أمامية لـXDebug",
         "Description[az]": "Bu qoşma XDebug üçün interfeysi təmin edir",
         "Description[ca@valencia]": "Este connector proveïx d'un frontal per a XDebug",
         "Description[ca]": "Aquest connector proveeix d'un frontal per al XDebug",
@@ -38,6 +39,7 @@
         "Id": "kdevxdebug",
         "License": "GPL",
         "Name": "XDebug Support",
+        "Name[ar]": "توفير XDebug",
         "Name[az]": "XDebug dəstəyi",
         "Name[bs]": "XDebug podrška",
         "Name[ca@valencia]": "Implementació d'XDebug",
