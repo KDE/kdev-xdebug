@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: kdev-xdebug\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:28+0000\n"
-"PO-Revision-Date: 2025-05-10 17:44+0400\n"
+"PO-Revision-Date: 2025-09-27 11:40+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -21,7 +21,7 @@ msgstr ""
 #: breakpointcontroller.cpp:79
 #, kde-format
 msgid "breakpoint type is not supported"
-msgstr ""
+msgstr "نوع نقطة التوقف غير مدعوم"
 
 #: debugjob.cpp:111
 #, kde-format
@@ -29,6 +29,8 @@ msgid ""
 "No environment group specified, looks like a broken configuration, please "
 "check run configuration '%1'. Using default environment group."
 msgstr ""
+"لم تحدّد مجموعة بيئة، يبدو أنّ التشكيلة مكسورة، ارجع تشكيلة تشغيل '%1'. "
+"استعمال مجموعة البيئة المبدئية."
 
 #: debugjob.cpp:216
 #, kde-format
@@ -38,33 +40,33 @@ msgstr "يبدأ: %1"
 #: debugjob.cpp:245
 #, kde-format
 msgid "*** Exited normally ***"
-msgstr ""
+msgstr "*** خرج بصفة طبيعية ***"
 
 #: debugjob.cpp:248
 #, kde-format
 msgid "*** Exited with return code: %1 ***"
-msgstr ""
+msgstr "*** خرج برمز إرجاع: %1 ***"
 
 #: debugjob.cpp:251
 #, kde-format
 msgid "*** Process aborted ***"
-msgstr ""
+msgstr "*** أجهِضت العملية ***"
 
 #: debugjob.cpp:253
 #, kde-format
 msgid "*** Crashed with return code: %1 ***"
-msgstr ""
+msgstr "*** تحطّم برمز إرجاع: %1 ***"
 
 #: debugjob.cpp:263 debugjob.cpp:344
 #, kde-format
 msgid ""
 "Could not start program '%1'. Make sure that the path is specified correctly."
-msgstr ""
+msgstr "تعذّر بدء البرنامج '%1'. تأكد من أنّ المسار محدّد بشكل صحيح."
 
 #: debugsession.cpp:81
 #, kde-format
 msgid "Opening port %1 failed: %2."
-msgstr ""
+msgstr "فشل فتح المنفذ %1: %2."
 
 #: launchconfig.cpp:67
 #, kde-format
@@ -74,30 +76,30 @@ msgstr "XDebug"
 #: launchconfig.cpp:90
 #, kde-format
 msgid "Executes a PHP script with XDebug enabled"
-msgstr ""
+msgstr "ينفّذ سكربت PHP مع تفعيل XDebug"
 
 #: launchconfigurationpage.cpp:67
 #, kde-format
 msgid "XDebug Configuration"
-msgstr ""
+msgstr "اضبط XDebug"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: launchconfigurationpage.ui:17
 #, kde-format
 msgid "Path Mappings"
-msgstr ""
+msgstr "تخطيطات المسار"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: launchconfigurationpage.ui:29
 #, kde-format
 msgid "Advanced Settings"
-msgstr ""
+msgstr "الإعدادات المتقدمة"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: launchconfigurationpage.ui:38
 #, kde-format
 msgid "xdebug.remote_host"
-msgstr ""
+msgstr "xdebug.remote_host"
 
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, remoteHost)
 #: launchconfigurationpage.ui:48
