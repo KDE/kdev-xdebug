@@ -73,7 +73,7 @@ msgstr ""
 #: debugsession.cpp:81
 #, kde-format
 msgid "Opening port %1 failed: %2."
-msgstr "No s'ha pogut obrir el port %1: %2."
+msgstr "Ha fallat mentre s'obria el port %1: %2."
 
 #: launchconfig.cpp:67
 #, kde-format
