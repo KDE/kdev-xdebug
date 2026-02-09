@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Alexander Potashev <aspotashev@gmail.com>, 2017.
-# Alexander Yavorsky <kekcuha@gmail.com>, 2022.
+# SPDX-FileCopyrightText: 2022, 2026 Alexander Yavorsky <kekcuha@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 09:00+0000\n"
-"PO-Revision-Date: 2022-08-13 22:51+0300\n"
-"Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
+"PO-Revision-Date: 2026-02-08 19:07+0200\n"
+"Last-Translator: Alexander Yavorskiy <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -17,12 +17,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Lokalize 22.04.3\n"
+"X-Generator: Lokalize 25.12.1\n"
 
 #: breakpointcontroller.cpp:79
 #, kde-format
 msgid "breakpoint type is not supported"
-msgstr ""
+msgstr "тип точки останова не поддерживается"
 
 #: debugjob.cpp:111
 #, kde-format
@@ -30,11 +30,13 @@ msgid ""
 "No environment group specified, looks like a broken configuration, please "
 "check run configuration '%1'. Using default environment group."
 msgstr ""
+"Группа окружения не указана, похоже на повреждённую конфигурацию. Проверьте "
+"конфигурацию запуска «%1». Используется группа окружения по умолчанию."
 
 #: debugjob.cpp:216
 #, kde-format
 msgid "Starting: %1"
-msgstr ""
+msgstr "Запускается %1"
 
 #: debugjob.cpp:245
 #, kde-format
@@ -44,28 +46,28 @@ msgstr "*** Нормальное завершение ***"
 #: debugjob.cpp:248
 #, kde-format
 msgid "*** Exited with return code: %1 ***"
-msgstr ""
+msgstr "*** Завершено с кодом возврата %1 ***"
 
 #: debugjob.cpp:251
 #, kde-format
 msgid "*** Process aborted ***"
-msgstr ""
+msgstr "*** Процесс прерван ***"
 
 #: debugjob.cpp:253
 #, kde-format
 msgid "*** Crashed with return code: %1 ***"
-msgstr ""
+msgstr "*** Сбой с кодом возврата %1 ***"
 
 #: debugjob.cpp:263 debugjob.cpp:344
 #, kde-format
 msgid ""
 "Could not start program '%1'. Make sure that the path is specified correctly."
-msgstr ""
+msgstr "Не удалось запустить программу «%1». Убедитесь, что путь указан верно."
 
 #: debugsession.cpp:81
 #, kde-format
 msgid "Opening port %1 failed: %2."
-msgstr ""
+msgstr "Не удалось открыть порт %1: %2."
 
 #: launchconfig.cpp:67
 #, kde-format
@@ -75,18 +77,18 @@ msgstr "XDebug"
 #: launchconfig.cpp:90
 #, kde-format
 msgid "Executes a PHP script with XDebug enabled"
-msgstr ""
+msgstr "Запускает скрипт PHP с включённым XDebug"
 
 #: launchconfigurationpage.cpp:67
 #, kde-format
 msgid "XDebug Configuration"
-msgstr ""
+msgstr "Настройка XDebug"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: launchconfigurationpage.ui:17
 #, kde-format
 msgid "Path Mappings"
-msgstr ""
+msgstr "Сопоставление путей"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: launchconfigurationpage.ui:29
